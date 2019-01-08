@@ -145,11 +145,19 @@
       	$("#sendMobileCode").click(function () {
           	var phone = $("#phone_number").val();
             if(phone == ''){
-                alert("请填写手机号");
+                swal({
+                    "title":"请填写手机号",
+                    "showConfirmButton":false,
+                    "timer":1000,
+                });
                 return false;
             }
             if (!reg_mobile(phone)) {
-                alert("您填写的手机号码不正确！");
+                swal({
+                    "title":"您的手机号码不正确",
+                    "showConfirmButton":false,
+                    "timer":1000,
+                });
                 return false;
             }
             $("#sendMobileCode").attr("disabled", true);
