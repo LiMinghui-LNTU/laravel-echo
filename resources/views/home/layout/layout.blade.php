@@ -14,13 +14,13 @@
 	<link rel="bookmark" href="{{asset('assets/img/home_logo.ico')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}"/>
-    <link rel="stylesheet" href="{{asset('assets/css/sweetalert.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.css')}}"/>
     @if(strpos(Request::getPathInfo(),'self'))
         <link rel="stylesheet" href="{{asset('assets/css/dlstyle.css')}}"/>
     @endif
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
  	<script src="{{asset('assets/js/public.js')}}"></script>
- 	<script src="{{asset('assets/js/sweetalert.min.js')}}"></script>
+ 	<script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
 </head>
 <body>
 <header class="am-topbar header">
