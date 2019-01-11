@@ -2,6 +2,7 @@
 
 use App\Events\PublicMessageEvent;
 use App\Events\PrivateMessageEvent;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,14 +17,21 @@ use App\Events\PrivateMessageEvent;
 Route::get('/', function () {
     return redirect('home');
 });
-Route::get('chat','ChatController@getIndex');
-Route::get('chatting','ChatController@connect');
-Route::group(['prefix'=>'test'],function (){
-    Route::get('index','TestController@getIndex');
-    Route::get('push','TestController@getPush');
-    Route::get('privatePush','TestController@privatePush');
+Route::get('chat', 'ChatController@getIndex');
+Route::get('chatting', 'ChatController@connect');
+Route::group(['prefix' => 'test'], function () {
+    Route::get('index', 'TestController@getIndex');
+    Route::get('push', 'TestController@getPush');
+    Route::get('privatePush', 'TestController@privatePush');
 });
 Auth::routes();
+
+//前台登录路由
+Route::group(['namespace' => 'Home'], function () {
+    Route::get('login', 'SelfController@getLogin');
+    Route::post('login', 'SelfController@postLogin');
+    Route::get('logout', 'SelfController@getLogout');
+});
 
 Route::group(['namespace' => 'Home'], function () {
     Route::resource('home', 'HomeController');
@@ -33,8 +41,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::resource('activity', 'ActivityController');
     Route::resource('recruit', 'RecruitController');
     Route::resource('about', 'AboutController');
-    Route::resource('self', 'SelfController');
-    Route::resource('register', 'RegisterController');
+    Route::resource('self', 'SelfController')->middleware('member');
 });
 
 //后台登录路由

@@ -24,7 +24,7 @@ class SelfController extends Controller
     public function index()
     {
         $sTitle = '个人中心';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        return '你好啊小逗比';
     }
 
     /**
@@ -91,5 +91,24 @@ class SelfController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //登录页
+    public function getLogin()
+    {
+        $sTitle = '顾客登录/注册';
+        return view($this->sViewPath . 'login', compact('sTitle'));
+    }
+
+    //登录逻辑
+    public function postLogin()
+    {
+
+    }
+
+    //登出
+    public function getLogout()
+    {
+
     }
 }

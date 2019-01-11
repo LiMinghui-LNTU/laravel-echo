@@ -39,13 +39,13 @@ class PublicMessageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('push');
+        return new Channel('push'); //频道名称
     }
 
     //Laravel 默认会使用事件的类名作为广播名称来广播事件，自定义：
     public function broadcastAs()
     {
-        return 'push.message';
+        return 'push.message'; //广播名称
     }
 
     //想更细粒度地控制广播数据:

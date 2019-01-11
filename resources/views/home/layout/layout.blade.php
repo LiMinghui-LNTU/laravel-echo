@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.css')}}"/>
-    @if(strpos(Request::getPathInfo(),'self'))
+    @if(strpos(Request::getPathInfo(),'login'))
         <link rel="stylesheet" href="{{asset('assets/css/dlstyle.css')}}"/>
     @endif
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
