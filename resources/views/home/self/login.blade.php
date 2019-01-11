@@ -29,7 +29,7 @@
                     <form>
                         <div class="user-name">
                             <label for="user"><i class="am-icon-user"></i></label>
-                            <input type="text" name="" id="user" placeholder="邮箱/手机/用户名">
+                            <input type="text" name="" id="user" placeholder="邮箱/手机">
                         </div>
                         <div class="user-pass">
                             <label for="password"><i class="am-icon-lock"></i></label>
@@ -72,36 +72,43 @@
                     </ul>
                     <div class="am-tabs-bd">
                         <div class="am-tab-panel am-active">
-                            <form method="post">
+                            <form id="email-reg" method="post" action="">
 
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <input type="hidden" name="reg-type" value="1">
                                 <div class="user-email">
                                     <label for="email"><i class="am-icon-envelope-o"></i></label>
-                                    <input type="email" name="" id="email" placeholder="请输入邮箱账号">
+                                    <input type="email" name="account-email" id="account-email" placeholder="请输入邮箱账号">
                                 </div>
                                 <div class="user-pass">
                                     <label for="password"><i class="am-icon-lock"></i></label>
-                                    <input type="password" name="" id="password-email" placeholder="设置密码">
+                                    <input type="password" name="password-email" id="password-email" placeholder="设置密码">
                                 </div>
                                 <div class="user-pass">
-                                    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-                                    <input type="password" name="" id="passwordRepeat-email" placeholder="确认密码">
+                                    <label for="passwordRepeat"><i class="am-icon-shield"></i></label>
+                                    <input type="password" name="re-password-email" id="re-password-email"
+                                           placeholder="确认密码">
                                 </div>
 
                             </form>
 
                             <div class="login-links">
                                 <label for="reader-me">
-                                    <input id="reader-me" type="checkbox"> 点击表示您同意商城《服务协议》
+                                    <input name="reader-me" type="checkbox" required> 同意金鹰发艺平台《服务协议》
                                 </label>
                             </div>
                             <div class="am-cf">
-                                <input type="submit" name="" value="注册" class="am-btn am-btn-primary am-btn-sm am-fl">
+                                <input type="button" id="reg-email-btn" value="注册"
+                                       class="am-btn am-btn-primary am-btn-sm am-fl">
                             </div>
 
                         </div>
 
                         <div class="am-tab-panel">
-                            <form method="post">
+                            <form id="phone-reg" method="post" action="">
+
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <input type="hidden" name="reg-type" value="2">
                                 <div class="user-phone">
                                     <label for="phone"><i class="am-icon-mobile-phone am-icon-md"></i></label>
                                     <input type="tel" name="phone_number" id="phone_number" placeholder="请输入手机号">
@@ -111,78 +118,33 @@
                                     <input type="tel" name="check_code" id="check_code" placeholder="请输入验证码">
                                     <button class="btn" id="sendMobileCode">
                                         <span id="dyMobileButton">获取</span>
-                                  	</button>
+                                    </button>
                                 </div>
                                 <div class="user-pass">
                                     <label for="password"><i class="am-icon-lock"></i></label>
-                                    <input type="password" name="" id="password-phone" placeholder="设置密码">
+                                    <input type="password" name="password-phone" id="password-phone" placeholder="设置密码">
                                 </div>
                                 <div class="user-pass">
-                                    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-                                    <input type="password" name="" id="passwordRepeat-phone" placeholder="确认密码">
+                                    <label for="passwordRepeat"><i class="am-icon-shield"></i></label>
+                                    <input type="password" name="re-password-phone" id="re-password-phone"
+                                           placeholder="确认密码">
                                 </div>
                             </form>
                             <div class="login-links">
                                 <label for="reader-me">
-                                    <input id="reader-me" type="checkbox"> 点击表示您同意商城《服务协议》
+                                    <input name="reader-me" type="checkbox" required> 同意金鹰发艺平台《服务协议》
                                 </label>
                             </div>
                             <div class="am-cf">
-                                <input type="button" onclick="" name="" value="注册" class="am-btn am-btn-primary am-btn-sm am-fl">
+                                <input type="button" id="reg-phone-btn" name="reg-phone-btn" value="注册"
+                                       class="am-btn am-btn-primary am-btn-sm am-fl">
                             </div>
 
                             <hr>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-      
-      	$("#sendMobileCode").click(function () {
-          	var phone = $("#phone_number").val();
-            if(phone == ''){
-                tip("请填写手机号");
-                return false;
-            }
-            if (!reg_mobile(phone)) {
-                tip("该手机号有误");
-                return false;
-            }
-            $("#sendMobileCode").attr("disabled", true);
-            settime();
-        });
-
-        var countdown = 60;
-        var _generate_code = $("#dyMobileButton");
-
-        function settime() {
-            if (countdown == 0) {
-                $("#sendMobileCode").attr("disabled", false);
-                _generate_code.text("获取");
-                countdown = 60;
-                return false;
-            } else {
-                $("#sendMobileCode").attr("disabled", true);
-                $("#dyMobileButton").text(countdown + "秒");
-                countdown--;
-            }
-            setTimeout(function () {
-                settime();
-            }, 1000);
-        }
-      
-        <!--登录或注册切换-->
-        function doReg(){
-            $(".login-banner").hide();
-            $(".res-banner").show();
-        }
-        <!--切换注册方式-->
-        $(function () {
-            $('#doc-my-tabs').tabs();
-        });
-    </script>
 @endsection

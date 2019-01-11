@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="{{asset('assets/css/dlstyle.css')}}"/>
     @endif
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
- 	<script src="{{asset('assets/js/public.js')}}"></script>
+ 	{{--<script src="{{asset('assets/js/public.js')}}"></script>--}}
  	<script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
 </head>
 <body>
@@ -106,6 +106,7 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 
 <!--<![endif]-->
+<script src="{{asset('assets/js/public.js')}}"></script>
 <script src="{{asset('assets/js/amazeui.min.js')}}"></script>
 <script src="{{asset('assets/js/scroll.js')}}"></script>
 </html>
