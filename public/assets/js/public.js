@@ -28,11 +28,22 @@ function tip(message) {
         timer: 1000
     });
 }
+
+//等待弹窗
+function wait(message) {
+    swal({
+        html: '<i class="am-icon-spinner am-icon-pulse am-icon-md"></i>&nbsp;<span style="color: #fff;font-size: 18px;">' + message + '</span>',
+        width: 150,
+        height: 60,
+        background: '#000',
+        showConfirmButton: false,
+    });
+}
 //--------------end----------------------------
 
 //------------前台注册方法区--------------------------
 //请求手机短信验证码
-$("#sendMobileCode").click(function () { //保存到库
+$("#sendMobileCode").click(function () {
     var phone = $("#phone_number").val();
     if(phone == ''){
         tip("请填写手机号");
@@ -42,6 +53,9 @@ $("#sendMobileCode").click(function () { //保存到库
         tip("该手机号有误");
         return false;
     }
+    //发送验证码并保存
+
+
     $("#sendMobileCode").attr("disabled", true);
     settime();
 });
@@ -96,7 +110,42 @@ $("#reg-email-btn").click(function () {
         tip("两次密码不一致");
         return false;
     }
-    $("#email-reg").submit();
+    $.post(
+        'check-reg',
+        {
+            _token: $("input[name='_token']").val(),
+            account: email
+        },
+        function (data) {
+            if(data == '1'){
+                tip("该邮箱已注册");
+                return false;
+            }else {
+                wait("请稍后...");
+                $("#reg-email-btn").attr('disabled',true);
+                $.post(
+                    '/reg',
+                    {
+                        _token: $("input[name='_token']").val(),
+                        'reg-type': 1,
+                        'account-email': email,
+                        'password-email': password
+                    },
+                    function (data) {
+                        if(data.success){
+                            tip("注册成功");
+                            window.location.reload();
+                        }else{
+                            tip("注册失败");
+                            return false;
+                        }
+                    },
+                    'json'
+                );
+            }
+        }
+    );
+
 });
 
 //手机号注册
@@ -132,5 +181,78 @@ $("#reg-phone-btn").click(function () {
         tip("两次密码不一致");
         return false;
     }
-    $("#phone-reg").submit();
+    $.post(
+        'check-reg',
+        {
+            _token: $("input[name='_token']").val(),
+            account: phone
+        },
+        function (data) {
+            if(data == '1'){
+                tip("该手机号已注册");
+                return false;
+            }else {
+                wait("请稍后...");
+                $("#reg-phone-btn").attr('disabled',true);
+                $.post(
+                    '/reg',
+                    {
+                        _token: $("input[name='_token']").val(),
+                        'reg-type': 2,
+                        phone_number: phone,
+                        password_phone: password
+                    },
+                    function (data) {
+                        if(data.success){
+                            tip("注册成功");
+                            window.location.reload();
+                        }else{
+                            tip("注册失败");
+                            return false;
+                        }
+                    },
+                    'json'
+                );
+            }
+        }
+    );
 });
+//-------end-----------------
+
+//--------------前台登录方区---------------
+function doLogin() {
+    var account = $("#account").val();
+    var password = $("#password").val();
+    if(account == ''){
+        tip("请输入账号");
+        return false;
+    }
+    if(password == ''){
+        tip("请输入密码");
+        return false;
+    }
+    wait("正在登录...");
+    $.post(
+        '/login',
+        {
+            _token: $("input[name='_token']").val(),
+            account: account,
+            password: password
+        },
+        function (data) {
+            if(data.success){
+                window.location.href = '/self';
+            }else {
+                if(data.code == '1002'){
+                    tip("用户名或密码错误");
+                    return false;
+                }
+                if(data.code == '1003'){
+                    tip("该账号未激活");
+                    return false;
+                }
+            }
+        },
+        'json'
+    );
+}

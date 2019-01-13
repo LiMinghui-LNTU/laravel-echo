@@ -1,5 +1,5 @@
 {
-	"authHost": "http://www.594lang.xin",
+	"authHost": "li.broadcast.cn",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [],
 	"database": "redis",

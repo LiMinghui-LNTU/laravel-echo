@@ -30,6 +30,7 @@ Auth::routes();
 Route::group(['namespace' => 'Home'], function () {
     Route::get('login', 'SelfController@getLogin');
     Route::post('login', 'SelfController@postLogin');
+    Route::post('reg', 'SelfController@postReg');
     Route::get('logout', 'SelfController@getLogout');
 });
 
@@ -42,6 +43,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::resource('recruit', 'RecruitController');
     Route::resource('about', 'AboutController');
     Route::resource('self', 'SelfController')->middleware('member');
+    Route::post('check-reg', 'SelfController@checkReg');
 });
 
 //后台登录路由

@@ -29,11 +29,11 @@
                     <form>
                         <div class="user-name">
                             <label for="user"><i class="am-icon-user"></i></label>
-                            <input type="text" name="" id="user" placeholder="邮箱/手机">
+                            <input type="text" name="account" id="account" placeholder="邮箱/手机">
                         </div>
                         <div class="user-pass">
                             <label for="password"><i class="am-icon-lock"></i></label>
-                            <input type="password" name="" id="password" placeholder="请输入密码">
+                            <input type="password" name="password" id="password" placeholder="请输入密码">
                         </div>
                     </form>
                 </div>
@@ -45,8 +45,8 @@
                     <br/>
                 </div>
                 <div class="am-cf">
-                    <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm"
-                           onclick="window.location.href='info.html';">
+                    <input type="button" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm"
+                           onclick="doLogin()">
                 </div>
                 <div class="partner">
                     <h3>合作账号</h3>
@@ -72,10 +72,9 @@
                     </ul>
                     <div class="am-tabs-bd">
                         <div class="am-tab-panel am-active">
-                            <form id="email-reg" method="post" action="">
+                            <form id="email-reg" method="post" action="/login">
 
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <input type="hidden" name="reg-type" value="1">
                                 <div class="user-email">
                                     <label for="email"><i class="am-icon-envelope-o"></i></label>
                                     <input type="email" name="account-email" id="account-email" placeholder="请输入邮箱账号">
@@ -105,10 +104,7 @@
                         </div>
 
                         <div class="am-tab-panel">
-                            <form id="phone-reg" method="post" action="">
-
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <input type="hidden" name="reg-type" value="2">
+                            <form id="phone-reg" method="post" action="/login">
                                 <div class="user-phone">
                                     <label for="phone"><i class="am-icon-mobile-phone am-icon-md"></i></label>
                                     <input type="tel" name="phone_number" id="phone_number" placeholder="请输入手机号">

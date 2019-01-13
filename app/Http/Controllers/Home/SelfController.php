@@ -10,7 +10,9 @@ namespace App\Http\Controllers\Home;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\Members;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class SelfController extends Controller
 {
@@ -93,22 +95,56 @@ class SelfController extends Controller
         //
     }
 
-    //登录页
+    //登录/注册页
     public function getLogin()
     {
         $sTitle = '顾客登录/注册';
         return view($this->sViewPath . 'login', compact('sTitle'));
     }
 
+    //注册逻辑
+    public function postReg()
+    {
+        //获取注册类型 1-邮箱注册 2-手机号注册
+        $reg_type = Input::get('reg-type');
+        $account = ''; //账号
+        $password = ''; //密码
+        if($reg_type == 1){
+            $account = Input::get('account-email');
+            $password = Input::get('password-email');
+        }else{
+            $account = Input::get('phone_number');
+            $password = Input::get('password_phone');
+        }
+        //入库
+        $res = Members::saveMember($account, $password, $reg_type);
+        return json_encode(['success'=>$res]);
+    }
+
     //登录逻辑
     public function postLogin()
     {
-
+        $account = Input::get('account');
+        $password = Input::get('password');
+        $code = Members::checkAccount($account, $password);
+        $data = ['success'=>false, 'code'=>$code];
+        if($code == 1001){
+            $data['success'] = true;
+            session()->push('member', $account);
+        }
+        return json_encode($data);
     }
 
     //登出
     public function getLogout()
     {
 
+    }
+
+    //检查是已注册
+    public function checkReg()
+    {
+        $account = Input::get('account');
+        return Members::isRegister($account);
     }
 }
