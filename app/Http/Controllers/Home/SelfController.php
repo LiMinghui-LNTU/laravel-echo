@@ -26,7 +26,7 @@ class SelfController extends Controller
     public function index()
     {
         $sTitle = '个人中心';
-        return '你好啊小逗比';
+        return view($this->sViewPath . 'index', compact('sTitle'));
     }
 
     /**
@@ -42,7 +42,7 @@ class SelfController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,7 +53,7 @@ class SelfController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -64,7 +64,7 @@ class SelfController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -75,8 +75,8 @@ class SelfController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -87,7 +87,7 @@ class SelfController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -109,16 +109,16 @@ class SelfController extends Controller
         $reg_type = Input::get('reg-type');
         $account = ''; //账号
         $password = ''; //密码
-        if($reg_type == 1){
+        if ($reg_type == 1) {
             $account = Input::get('account-email');
             $password = Input::get('password-email');
-        }else{
+        } else {
             $account = Input::get('phone_number');
             $password = Input::get('password_phone');
         }
         //入库
         $res = Members::saveMember($account, $password, $reg_type);
-        return json_encode(['success'=>$res]);
+        return json_encode(['success' => $res]);
     }
 
     //登录逻辑
@@ -127,8 +127,8 @@ class SelfController extends Controller
         $account = Input::get('account');
         $password = Input::get('password');
         $code = Members::checkAccount($account, $password);
-        $data = ['success'=>false, 'code'=>$code];
-        if($code == 1001){
+        $data = ['success' => false, 'code' => $code];
+        if ($code == 1001) {
             $data['success'] = true;
             session()->push('member', $account);
         }
