@@ -70,7 +70,7 @@
             </div>
 
             <div class="am-panel am-panel-default">
-                <div class="am-panel-bd am-u-md-4">
+                <div class="am-panel-bd am-u-md-6">
                     <div data-am-widget="tabs" class="am-tabs am-tabs-d2">
                         <ul class="am-tabs-nav am-cf">
                             <li class="am-active"><a href="[data-tab-panel-0]">全部订单</a></li>
@@ -349,21 +349,28 @@
 
                 </div>
 
-                <div class="am-panel-bd am-u-md-8">
-                    <div class="user-info">
-                        <p>等级信息</p>
-                        <div class="am-progress am-progress-sm">
-                            <div class="am-progress-bar" style="width: 60%"></div>
-                        </div>
-                        <p class="user-info-order">当前等级：<strong>LV8</strong> 活跃天数：<strong>587</strong> 距离下一级别：<strong>160</strong>
-                        </p>
+                <div class="am-panel-bd am-u-md-6">
+                    <div class="am-form-group">
+                        <label for="doc-ta-1">留言区域</label><br>
+                        <textarea style="width: 100%;overflow: auto;word-break: break-all;resize: none;" rows="8" id="doc-ta-1"></textarea>
                     </div>
-                    <div class="user-info">
-                        <p>信用信息</p>
-                        <div class="am-progress am-progress-sm">
-                            <div class="am-progress-bar am-progress-bar-success" style="width: 80%"></div>
-                        </div>
-                        <p class="user-info-order">信用等级：正常当前 信用积分：<strong>80</strong></p>
+                    <div class="am-btn-group">
+                        <button type="button" class="am-btn-primary am-round">
+                            <i class="am-icon-envelope"></i>
+                            <span class="am-badge am-badge-danger am-round">4</span>
+                        </button>
+                        <button type="button" class="am-btn-warning am-round">
+                            留言
+                            <i class="am-icon-send"></i>
+                        </button>
+                        <button type="button" class="am-btn-danger am-round">
+                            预定
+                            <i class="am-icon-send"></i>
+                        </button>
+                        <button type="button" class="am-btn-default am-round">
+                            登出
+                            <i class="am-icon-sign-out"></i>
+                        </button>
                     </div>
                 </div>
             </div>
