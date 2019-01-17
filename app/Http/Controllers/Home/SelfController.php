@@ -138,7 +138,8 @@ class SelfController extends Controller
     //登出
     public function getLogout()
     {
-
+        session()->flash('member');
+        return redirect('/login');
     }
 
     //检查是已注册

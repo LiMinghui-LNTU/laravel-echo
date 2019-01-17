@@ -365,9 +365,9 @@
                         </button>
                         <button type="button" class="am-btn-danger am-round">
                             预定
-                            <i class="am-icon-send"></i>
+                            <i class="am-icon-hand-pointer-o"></i>
                         </button>
-                        <button type="button" class="am-btn-default am-round">
+                        <button type="button" class="am-btn-default am-round" onclick="window.location.href='logout';">
                             登出
                             <i class="am-icon-sign-out"></i>
                         </button>
