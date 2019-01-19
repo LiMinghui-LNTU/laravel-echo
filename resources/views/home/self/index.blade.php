@@ -363,7 +363,7 @@
                             留言
                             <i class="am-icon-send"></i>
                         </button>
-                        <button type="button" class="am-btn-danger am-round">
+                        <button type="button" class="am-btn-danger am-round" onclick="window.location.href='self/create';">
                             预定
                             <i class="am-icon-hand-pointer-o"></i>
                         </button>

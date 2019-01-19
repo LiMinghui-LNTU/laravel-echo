@@ -18,6 +18,13 @@
     @if(strpos(Request::getPathInfo(),'login'))
         <link rel="stylesheet" href="{{asset('assets/css/dlstyle.css')}}"/>
     @endif
+    @if(strpos(Request::getPathInfo(),'self'))
+        <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.min.css')}}"/>
+        <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.print.css')}}" media="print"/>
+        <style type="text/css">
+            .fc-toolbar{display: none}
+        </style>
+    @endif
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
  	{{--<script src="{{asset('assets/js/public.js')}}"></script>--}}
  	<script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
@@ -107,6 +114,8 @@
 
 <!--<![endif]-->
 <script src="{{asset('assets/js/public.js')}}"></script>
+<script src="{{asset('assets/js/moment.js')}}"></script>
 <script src="{{asset('assets/js/amazeui.min.js')}}"></script>
+<script src="{{asset('assets/js/fullcalendar.min.js')}}"></script>
 <script src="{{asset('assets/js/scroll.js')}}"></script>
 </html>

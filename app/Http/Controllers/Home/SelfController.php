@@ -36,7 +36,8 @@ class SelfController extends Controller
      */
     public function create()
     {
-        //
+        $sTitle = '订单创建';
+        return view($this->sViewPath . 'order-create', compact('sTitle'));
     }
 
     /**
