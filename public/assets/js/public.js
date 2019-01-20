@@ -256,3 +256,22 @@ function doLogin() {
         'json'
     );
 }
+//-------------end-------------------
+
+//-----------留言-------------
+function leaveWords() {
+    $("#area").slideDown();
+    $(".am-comments-list").slideUp();
+    if($("#comment-area").val() == ''){
+        $("#comment-area").val("请留下您的宝贵意见...");
+        return false;
+    }else{
+        alert("留言成功");
+    }
+}
+
+function messages() {
+    $("#comment-area").val("");
+    $("#area").slideUp();
+    $(".am-comments-list").slideDown();
+}

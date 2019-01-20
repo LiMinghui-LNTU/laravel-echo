@@ -71,10 +71,7 @@ class UserController extends Controller
                 return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
                 break;
             case 2: //店长
-                $sTitle = '店长首页';
-                $sidebar = 'admin.layout.sidebar2';
-                $content = 'admin.shopowner.content';
-                return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
+                return redirect('/admin/shopowner');
                 break;
             case 3: //店员
                 $sTitle = '店员首页';

@@ -97,7 +97,7 @@
             </a>
             <ul class="sidebar-nav sidebar-nav-sub">
                 <li class="sidebar-nav-link">
-                    <a href="table-list.html">
+                    <a href="/admin/message-list">
                         <span class="am-icon-download sidebar-nav-link-logo"></span> 收消息
                     </a>
                 </li>

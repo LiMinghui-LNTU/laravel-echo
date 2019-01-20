@@ -56,4 +56,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 //后台用户路由
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('/', 'UserController');
+    Route::resource('/shopowner', 'ShopownerController');
+    Route::get('message-list', 'ShopownerController@messageList');
 });

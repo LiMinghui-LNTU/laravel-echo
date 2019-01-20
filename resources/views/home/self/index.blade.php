@@ -197,10 +197,12 @@
                                             <td>2018-12-20 10:30:00</td>
                                             <td>
                                                 <a href="javascript:;">
-                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i> <small>修改</small>
+                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i>
+                                                    <small>修改</small>
                                                 </a>
                                                 <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i> <small>退订</small>
+                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                    <small>退订</small>
                                                 </a>
                                             </td>
                                         </tr>
@@ -211,10 +213,12 @@
                                             <td>2018-12-15 12:00:00</td>
                                             <td>
                                                 <a href="javascript:;">
-                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i> <small>修改</small>
+                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i>
+                                                    <small>修改</small>
                                                 </a>
                                                 <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i> <small>退订</small>
+                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                    <small>退订</small>
                                                 </a>
                                             </td>
                                         </tr>
@@ -225,10 +229,12 @@
                                             <td>2018-12-20 13:30:00</td>
                                             <td>
                                                 <a href="javascript:;">
-                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i> <small>修改</small>
+                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i>
+                                                    <small>修改</small>
                                                 </a>
                                                 <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i> <small>退订</small>
+                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                    <small>退订</small>
                                                 </a>
                                             </td>
                                         </tr>
@@ -258,7 +264,8 @@
                                             <td>2018-12-04 11:52:36</td>
                                             <td>
                                                 <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i> <small>删除</small>
+                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                    <small>删除</small>
                                                 </a>
                                             </td>
                                         </tr>
@@ -270,7 +277,8 @@
                                             <td>2018-09-10 08:03:05</td>
                                             <td>
                                                 <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i> <small>删除</small>
+                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                    <small>删除</small>
                                                 </a>
                                             </td>
                                         </tr>
@@ -282,7 +290,8 @@
                                             <td>2018-09-14 11:50:07</td>
                                             <td>
                                                 <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i> <small>删除</small>
+                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                    <small>删除</small>
                                                 </a>
                                             </td>
                                         </tr>
@@ -294,7 +303,8 @@
                                             <td>2018-12-05 18:17:11</td>
                                             <td>
                                                 <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i> <small>删除</small>
+                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                    <small>删除</small>
                                                 </a>
                                             </td>
                                         </tr>
@@ -350,20 +360,123 @@
                 </div>
 
                 <div class="am-panel-bd am-u-md-6">
-                    <div class="am-form-group">
+                    <div class="am-form-group" id="area">
                         <label for="doc-ta-1">留言区域</label><br>
-                        <textarea style="width: 100%;overflow: auto;word-break: break-all;resize: none;" rows="8" id="doc-ta-1"></textarea>
+                        <textarea style="width: 100%;overflow: auto;word-break: break-all;resize: none;" rows="8" id="comment-area"></textarea>
                     </div>
+                    <ul class="am-comments-list am-comments-list-flip am-scrollable-vertical" style="display: none;">
+                        <li class="am-comment am-comment-primary">
+                            <a href="#link-to-user-home">
+                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96" alt="" class="am-comment-avatar" width="48" height="48">
+                            </a>
+                            <div class="am-comment-main">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta">
+                                        <a href="#link-to-user" class="am-comment-author">路人乙</a> 评论于
+                                        <time datetime="2013-07-27T04:54:29-07:00"
+                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:30
+                                        </time>
+                                    </div>
+                                </header>
+                                <div class="am-comment-bd">
+                                    <p><a href="#lin-to-user">@某人</a> 撸主保重！</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="am-comment am-comment-flip am-comment-secondary">
+                            <a href="#link-to-user-home">
+                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96" alt="" class="am-comment-avatar" width="48" height="48">
+                            </a>
+                            <div class="am-comment-main">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta">
+                                        <a href="#link-to-user" class="am-comment-author">某人</a> 评论于
+                                        <time datetime="2013-07-27T04:54:29-07:00"
+                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
+                                        </time>
+                                    </div>
+                                </header>
+                                <div class="am-comment-bd">
+                                    <p><a href="#lurenyi">@路人乙</a> 朕知道了！</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="am-comment am-comment-highlight">
+                            <a href="#link-to-user-home">
+                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96" alt="" class="am-comment-avatar" width="48" height="48">
+                            </a>
+                            <div class="am-comment-main">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta">
+                                        <a href="#link-to-user" class="am-comment-author">路人乙</a> 评论于
+                                        <time datetime="2013-07-27T04:54:29-07:00"
+                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:32
+                                        </time>
+                                    </div>
+                                </header>
+                                <div class="am-comment-bd">
+                                    <p><a href="#lin-to-user">@某人</a> 艹民告退！</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="am-comment am-comment-flip am-comment-danger">
+                            <a href="#link-to-user-home">
+                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96" alt="" class="am-comment-avatar" width="48" height="48">
+                            </a>
+                            <div class="am-comment-main">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta">
+                                        <a href="#link-to-user" class="am-comment-author">某人</a> 评论于
+                                        <time datetime="2013-07-27T04:54:29-07:00"
+                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
+                                        </time>
+                                    </div>
+                                </header>
+                                <div class="am-comment-bd"><p><a href="#lurenyi">@路人乙</a> 滚！</p></div>
+                            </div>
+                        </li>
+                        <li class="am-comment am-comment-warning"><a href="#link-to-user-home"><img
+                                        src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
+                                        alt="" class="am-comment-avatar" width="48" height="48"></a>
+                            <div class="am-comment-main">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta"><a href="#link-to-user"
+                                                                    class="am-comment-author">路人乙</a> 评论于
+                                        <time datetime="2013-07-27T04:54:29-07:00"
+                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:32
+                                        </time>
+                                    </div>
+                                </header>
+                                <div class="am-comment-bd"><p><a href="#lin-to-user">@某人</a> 你妹！</p></div>
+                            </div>
+                        </li>
+                        <li class="am-comment am-comment-flip am-comment-success"><a href="#link-to-user-home"><img
+                                        src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
+                                        alt="" class="am-comment-avatar" width="48" height="48"></a>
+                            <div class="am-comment-main">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta"><a href="#link-to-user"
+                                                                    class="am-comment-author">某人</a> 评论于
+                                        <time datetime="2013-07-27T04:54:29-07:00"
+                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
+                                        </time>
+                                    </div>
+                                </header>
+                                <div class="am-comment-bd"><p><a href="#lurenyi">@路人乙</a> 你妹你妹！</p></div>
+                            </div>
+                        </li>
+                    </ul>
                     <div class="am-btn-group">
-                        <button type="button" class="am-btn-primary am-round">
+                        <button type="button" class="am-btn-primary am-round" onclick="messages()">
                             <i class="am-icon-envelope"></i>
                             <span class="am-badge am-badge-danger am-round">4</span>
                         </button>
-                        <button type="button" class="am-btn-warning am-round">
+                        <button type="button" class="am-btn-warning am-round" onclick="leaveWords()">
                             留言
                             <i class="am-icon-send"></i>
                         </button>
-                        <button type="button" class="am-btn-danger am-round" onclick="window.location.href='self/create';">
+                        <button type="button" class="am-btn-danger am-round"
+                                onclick="window.location.href='self/create';">
                             预定
                             <i class="am-icon-hand-pointer-o"></i>
                         </button>
