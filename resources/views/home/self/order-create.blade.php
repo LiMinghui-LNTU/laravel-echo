@@ -64,51 +64,30 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr class="am-active">
-                                                    <td>
-                                                        <input type="checkbox" name="order">
-                                                    </td>
-                                                    <td>
-                                                        jyfy1001
-                                                    </td>
-                                                    <td>
-                                                        洗发
-                                                    </td>
-                                                    <td>&yen;10</td>
-                                                    <td>10分钟</td>
-                                                    <td>10</td>
-                                                    <td>洗的很好，很干净！</td>
-                                                </tr>
-                                                <tr class="am-active">
-                                                    <td>
-                                                        <input type="checkbox" name="order">
-                                                    </td>
-                                                    <td>
-                                                        jyfy2001
-                                                    </td>
-                                                    <td>
-                                                        造型
-                                                    </td>
-                                                    <td>&yen;16</td>
-                                                    <td>10分钟</td>
-                                                    <td>10</td>
-                                                    <td>很有型，很时尚！</td>
-                                                </tr>
-                                                <tr class="am-active">
-                                                    <td>
-                                                        <input type="checkbox" name="order">
-                                                    </td>
-                                                    <td>
-                                                        jyfy3001
-                                                    </td>
-                                                    <td>
-                                                        剪发
-                                                    </td>
-                                                    <td>&yen;20</td>
-                                                    <td>30分钟</td>
-                                                    <td>20</td>
-                                                    <td>剪的很好，很优惠！</td>
-                                                </tr>
+                                                <?php $i = 0; ?>
+                                                @foreach($oShortServices as $shortService)
+                                                    <tr class="am-active">
+                                                        <td>
+                                                            <input type="checkbox" name="order{{$i}}" onclick="alert(this.value)">
+                                                        </td>
+                                                        <td id="number{{$i}}">
+                                                        </td>
+                                                        <td>
+                                                            {{$shortService[0]->name}}
+                                                        </td>
+                                                        <td>
+                                                            @foreach($oShortServices[$shortService[0]->name] as $obj)
+                                                                <input type="radio" name="charge{{$i}}"
+                                                                       onclick="showOrder('{{$i}}','{{$obj->number}}','{{$obj->continue_to}}','{{$obj->reputation_val}}','{{$obj->introduction}}')">
+                                                                &yen;{{$obj->price}}
+                                                            @endforeach
+                                                        </td>
+                                                        <td id="time{{$i}}"></td>
+                                                        <td id="reputation{{$i}}"></td>
+                                                        <td id="introduction{{$i}}"></td>
+                                                    </tr>
+                                                    <?php $i++; ?>
+                                                @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -299,8 +278,11 @@
                                     <div data-tab-panel-2 class="am-tab-panel ">
                                         <div id="calendar"></div>
                                     </div>
-                                    <button type="button" class="am-btn am-btn-danger am-btn-block">立即预定（Reservation）</button>
-                                    <button type="button" class="am-btn am-btn-primary am-btn-block" onclick="window.location.href='/self';">我的订单（My Order）</button>
+                                    <button type="button" class="am-btn am-btn-danger am-btn-block">立即预定（Reservation）
+                                    </button>
+                                    <button type="button" class="am-btn am-btn-primary am-btn-block"
+                                            onclick="window.location.href='/self';">我的订单（My Order）
+                                    </button>
 
                                 </div>
                             </div>
@@ -313,19 +295,39 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            // $('#calendar').fullCalendar('incrementDate', 1,0,0);
-            var editBox = $('#calendar-edit-box');
-
-            $('.edit-box-close').on('click', function () {
-                $('#calendar').fullCalendar('unselect');
-            });
-            // $('#calendar').fullCalendar( 'incrementDate', {days:5, hours:0, minutes:0} ); //日期视图向前或向后移动固定的时间，duration可以为={ days:1, hours:23, minutes:59 }
+            // $('#calendar').fullCalendar( 'incrementDate', {days:5, hour, minutes:0} ); //日期视图向前或向后移动固定的时间，duration可以为={ days:1, hours:23, minutes:59 }
             $('#calendar').fullCalendar({
+                events: [
+                    {
+                        title: '休息',
+                        start: '2019-01-16T09:30:00',
+                        end: '2019-01-16T10:30:00',
+                        textColor: 'green',
+                        backgroundColor: 'lightblue',
+                        block: true
+                    },
+                    {
+                        title: 'event2',
+                        start: '2019-01-17T15:30:00',
+                        end: '2019-01-17T16:30:00',
+                        block: true
+                    },
+                    {
+                        title: 'event3',
+                        start: '2019-01-18T11:30:00',
+                        end: '2019-01-18T12:30:00',
+                        block: true
+                    }
+                ],
 
                 header: {
                     left: '',
                     center: '',
                     right: ''
+                },
+                height: window.innerHeight - 120,
+                windowResize: function (view) {
+                    $('#calendar').fullCalendar('option', 'height', window.innerHeight - 120);
                 },
                 // defaultView: 'agendaWeek',//日历初始化时默认视图
                 defaultView: 'agendaFiveDay',
@@ -341,6 +343,7 @@
                 slotEventOverlap: false,//	设置视图中的事件显示是否可以重叠覆盖
                 slotLabelFormat: "H(:mm)a",//日期视图左边那一列显示的每一格日期时间格式
                 timeFormat: 'H:mm',//事件按24小时制计算
+                columnFormat: 'MM-DD',//每列头部信息
                 monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
                 monthNamesShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
                 dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
@@ -368,18 +371,20 @@
                         block: true
                     };
                     if (eventData) {
-                        $('#calendar').fullCalendar('unselectable');
+                        // $('#calendar').fullCalendar('unselectable');
                         // alert(start+"#"+end);
                     }
                 },
                 // defaultEventMinutes:60,
                 editable: false,
-                eventLimit: true, // allow "more" link when too many events
+                eventLimit: true, // allow /more" link when too many events
                 slotEventOverlap: false,
+                unselectAuto: false,
                 selectOverlap: function (event) {
                     return !event.block;
                 }
             });
+
         });
     </script>
 @endsection

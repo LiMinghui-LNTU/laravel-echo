@@ -10,9 +10,9 @@ function reg_mobile(mobile) {
 
 //邮箱正则验证
 function reg_email(email) {
-    if(!/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(email)){
+    if (!/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(email)) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -39,13 +39,14 @@ function wait(message) {
         showConfirmButton: false,
     });
 }
+
 //--------------end----------------------------
 
 //------------前台注册方法区--------------------------
 //请求手机短信验证码
 $("#sendMobileCode").click(function () {
     var phone = $("#phone_number").val();
-    if(phone == ''){
+    if (phone == '') {
         tip("请填写手机号");
         return false;
     }
@@ -80,10 +81,11 @@ function settime() {
 }
 
 <!--登录或注册切换-->
-function doReg(){
+function doReg() {
     $(".login-banner").hide();
     $(".res-banner").show();
 }
+
 <!--切换注册方式-->
 $(function () {
     $('#doc-my-tabs').tabs();
@@ -94,19 +96,19 @@ $("#reg-email-btn").click(function () {
     var email = $("#account-email").val();
     var password = $("#password-email").val();
     var repassword = $("#re-password-email").val();
-    if(email == ''){
+    if (email == '') {
         tip("请填写邮箱");
         return false;
     }
-    if(!reg_email(email)){
+    if (!reg_email(email)) {
         tip("该邮箱有误");
         return false;
     }
-    if(password.length < 6){
+    if (password.length < 6) {
         tip("密码至少6位");
         return false;
     }
-    if(repassword != password){
+    if (repassword != password) {
         tip("两次密码不一致");
         return false;
     }
@@ -117,12 +119,12 @@ $("#reg-email-btn").click(function () {
             account: email
         },
         function (data) {
-            if(data == '1'){
+            if (data == '1') {
                 tip("该邮箱已注册");
                 return false;
-            }else {
+            } else {
                 wait("请稍后...");
-                $("#reg-email-btn").attr('disabled',true);
+                $("#reg-email-btn").attr('disabled', true);
                 $.post(
                     '/reg',
                     {
@@ -132,10 +134,10 @@ $("#reg-email-btn").click(function () {
                         'password-email': password
                     },
                     function (data) {
-                        if(data.success){
+                        if (data.success) {
                             tip("注册成功");
                             window.location.reload();
-                        }else{
+                        } else {
                             tip("注册失败");
                             return false;
                         }
@@ -157,7 +159,7 @@ $("#reg-phone-btn").click(function () {
     var check_code = $("#check_code").val();
     var password = $("#password-phone").val();
     var repassword = $("#re-password-phone").val();
-    if(phone == ''){
+    if (phone == '') {
         tip("请填写手机号");
         return false;
     }
@@ -165,19 +167,19 @@ $("#reg-phone-btn").click(function () {
         tip("该手机号有误");
         return false;
     }
-    if(check_code == ''){
+    if (check_code == '') {
         tip("请填写验证码");
         return false;
     }
-    if(check_code != c){ //可在此验证发送的验证码
+    if (check_code != c) { //可在此验证发送的验证码
         tip("验证码错误");
         return false;
     }
-    if(password.length < 6){
+    if (password.length < 6) {
         tip("密码至少6位");
         return false;
     }
-    if(repassword != password){
+    if (repassword != password) {
         tip("两次密码不一致");
         return false;
     }
@@ -188,12 +190,12 @@ $("#reg-phone-btn").click(function () {
             account: phone
         },
         function (data) {
-            if(data == '1'){
+            if (data == '1') {
                 tip("该手机号已注册");
                 return false;
-            }else {
+            } else {
                 wait("请稍后...");
-                $("#reg-phone-btn").attr('disabled',true);
+                $("#reg-phone-btn").attr('disabled', true);
                 $.post(
                     '/reg',
                     {
@@ -203,10 +205,10 @@ $("#reg-phone-btn").click(function () {
                         password_phone: password
                     },
                     function (data) {
-                        if(data.success){
+                        if (data.success) {
                             tip("注册成功");
                             window.location.reload();
-                        }else{
+                        } else {
                             tip("注册失败");
                             return false;
                         }
@@ -223,11 +225,11 @@ $("#reg-phone-btn").click(function () {
 function doLogin() {
     var account = $("#account").val();
     var password = $("#password").val();
-    if(account == ''){
+    if (account == '') {
         tip("请输入账号");
         return false;
     }
-    if(password == ''){
+    if (password == '') {
         tip("请输入密码");
         return false;
     }
@@ -240,14 +242,14 @@ function doLogin() {
             password: password
         },
         function (data) {
-            if(data.success){
+            if (data.success) {
                 window.location.href = '/self';
-            }else {
-                if(data.code == '1002'){
+            } else {
+                if (data.code == '1002') {
                     tip("用户名或密码错误");
                     return false;
                 }
-                if(data.code == '1003'){
+                if (data.code == '1003') {
                     tip("该账号未激活");
                     return false;
                 }
@@ -256,16 +258,17 @@ function doLogin() {
         'json'
     );
 }
+
 //-------------end-------------------
 
 //-----------留言-------------
 function leaveWords() {
     $("#area").slideDown();
     $(".am-comments-list").slideUp();
-    if($("#comment-area").val() == ''){
+    if ($("#comment-area").val() == '') {
         $("#comment-area").val("请留下您的宝贵意见...");
         return false;
-    }else{
+    } else {
         alert("留言成功");
     }
 }
@@ -274,4 +277,15 @@ function messages() {
     $("#comment-area").val("");
     $("#area").slideUp();
     $(".am-comments-list").slideDown();
+}
+
+//----------end--------------------
+
+//--------我的订单-------------
+function showOrder(index, number, time, reputation, intro) {
+    $("#number" + index).html(number); //显示单号
+    $("#time" + index).html(time + "分钟"); //显示时间
+    $("#reputation" + index).html(reputation); //显示信誉值
+    $("#introduction" + index).html(intro); //显示简介
+    $("input[name='order" + index + "']").val(number); //设置单号
 }

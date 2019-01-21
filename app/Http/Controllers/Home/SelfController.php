@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Model\Members;
+use App\Model\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -37,7 +38,11 @@ class SelfController extends Controller
     public function create()
     {
         $sTitle = '订单创建';
-        return view($this->sViewPath . 'order-create', compact('sTitle'));
+        //拿到短发服务
+        $oShortServices = Service::getServices(1);
+        //拿到长发服务
+        $oLongServices = Service::getServices(2);
+        return view($this->sViewPath . 'order-create', compact('sTitle', 'oShortServices', 'oLongServices'));
     }
 
     /**
