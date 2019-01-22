@@ -54,8 +54,8 @@
                                                     <th>服务名称</th>
                                                     <th>
                                                         价位(
-                                                        <input type="radio" name="type" checked="checked">短发
-                                                        <input type="radio" name="type">长发
+                                                        <input type="radio" name="type" checked="checked" onclick="changePrice(1)">短发
+                                                        <input type="radio" name="type" onclick="changePrice(2)">长发
                                                         )
                                                     </th>
                                                     <th>服务时长</th>
@@ -63,7 +63,7 @@
                                                     <th>服务简介</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="short-hair">
                                                 <?php $i = 0; ?>
                                                 @foreach($oShortServices as $shortService)
                                                     <tr class="am-active">
@@ -87,6 +87,32 @@
                                                         <td id="introduction{{$i}}"></td>
                                                     </tr>
                                                     <?php $i++; ?>
+                                                @endforeach
+                                                </tbody>
+                                                <tbody id="long-hair" style="display: none;">
+                                                <?php $j = 0; ?>
+                                                @foreach($oLongServices as $longService)
+                                                    <tr class="am-active">
+                                                        <td>
+                                                            <input type="checkbox" name="order{{$j}}" onclick="alert(this.value)">
+                                                        </td>
+                                                        <td id="number{{$j}}">
+                                                        </td>
+                                                        <td>
+                                                            {{$longService[0]->name}}
+                                                        </td>
+                                                        <td>
+                                                            @foreach($oLongServices[$longService[0]->name] as $obj)
+                                                                <input type="radio" name="charge{{$j}}"
+                                                                       onclick="showOrder('{{$j}}','{{$obj->number}}','{{$obj->continue_to}}','{{$obj->reputation_val}}','{{$obj->introduction}}')">
+                                                                &yen;{{$obj->price}}
+                                                            @endforeach
+                                                        </td>
+                                                        <td id="time{{$j}}"></td>
+                                                        <td id="reputation{{$j}}"></td>
+                                                        <td id="introduction{{$j}}"></td>
+                                                    </tr>
+                                                    <?php $j++; ?>
                                                 @endforeach
                                                 </tbody>
                                             </table>

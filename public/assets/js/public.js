@@ -289,3 +289,15 @@ function showOrder(index, number, time, reputation, intro) {
     $("#introduction" + index).html(intro); //显示简介
     $("input[name='order" + index + "']").val(number); //设置单号
 }
+
+function changePrice(type) {
+    $("input[type='checkbox']").attr("checked",false);
+    $("input[name!='type']").attr("checked",false);
+    if(type == '1'){ //显示短发价位
+        $("#short-hair").show();
+        $("#long-hair").hide();
+    }else{
+        $("#short-hair").hide();
+        $("#long-hair").show();
+    }
+}
