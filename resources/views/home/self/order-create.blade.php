@@ -54,7 +54,8 @@
                                                     <th>服务名称</th>
                                                     <th>
                                                         价位(
-                                                        <input type="radio" name="type" checked="checked" onclick="changePrice(1)">短发
+                                                        <input type="radio" name="type" checked="checked"
+                                                               onclick="changePrice(1)">短发
                                                         <input type="radio" name="type" onclick="changePrice(2)">长发
                                                         )
                                                     </th>
@@ -68,7 +69,8 @@
                                                 @foreach($oShortServices as $shortService)
                                                     <tr class="am-active">
                                                         <td>
-                                                            <input type="checkbox" name="order{{$i}}" onclick="alert(this.value)">
+                                                            <input type="checkbox" name="order{{$i}}"
+                                                                   onclick="alert(this.value)">
                                                         </td>
                                                         <td id="number{{$i}}">
                                                         </td>
@@ -94,7 +96,8 @@
                                                 @foreach($oLongServices as $longService)
                                                     <tr class="am-active">
                                                         <td>
-                                                            <input type="checkbox" name="order{{$j}}" onclick="alert(this.value)">
+                                                            <input type="checkbox" name="order{{$j}}"
+                                                                   onclick="alert(this.value)">
                                                         </td>
                                                         <td id="number{{$j}}">
                                                         </td>
@@ -119,186 +122,63 @@
                                         </div>
                                     </div>
                                     <div data-tab-panel-1 class="am-tab-panel ">
-                                        <ul class="news-content-ul">
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-7">
-                                                        <span class="news-right-title">关关</span>
-                                                        <p>专业造型师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
+                                        <ul class="news-content-ul am-scrollable-vertical">
+                                            <?php $i = 0; $j = 0; ?>
+                                            @foreach($oDesigners as $designer)
+                                                @if($j % 2 == 0)
+                                                    <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
+                                                        <a href="#">
+                                                            <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
+                                                                <div class="news-img">
+                                                                    <img src="{{$designer->photo}}" class="am-circle"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class=" am-u-sm-12 am-u-md-12 am-u-lg-7">
+                                                                <span class="news-right-title">{{$designer->name}}</span>
+                                                                <p>{{$designer->title}}</p>
+                                                                <p>
+                                                                    @for($k = 0; $k < $designer->starts; $k++)
+                                                                        <i class="am-icon-star"></i>
+                                                                     @endfor
+                                                                </p>
+                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs">
+                                                                    选择他/她
+                                                                </button>
+                                                            </div>
+                                                            <div class="clear"></div>
+                                                        </a>
+                                                    </li>
+                                                @else
+                                                    <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
+                                                        <a href="#">
+                                                            <div class=" am-u-sm-12 am-u-md-12 am-u-lg-4">
+                                                                <span class="news-right-title">{{$designer->name}}</span>
+                                                                <p>{{$designer->title}}</p>
+                                                                <p>
+                                                                    @for($k = 0; $k < $designer->starts; $k++)
+                                                                        <i class="am-icon-star"></i>
+                                                                    @endfor
+                                                                </p>
+                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs">
+                                                                    选择他/她
+                                                                </button>
+                                                            </div>
+                                                            <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
+                                                                <div class="news-img">
+                                                                    <img src="{{$designer->photo}}" class="am-circle"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clear"></div>
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                                <?php $i++; if ($i % 4 == 0) $j++; ?>
+                                                @if($i != 0 && $i % 4 == 0)
                                                     <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news1.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-7">
-                                                        <span class="news-right-title">晓晓</span>
-                                                        <p>美发师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news1.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-7">
-                                                        <span class="news-right-title">阿成</span>
-                                                        <p>发型设计师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news1.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-7">
-                                                        <span class="news-right-title">维诺</span>
-                                                        <p>染烫师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            <div class="clear"></div>
-                                            <hr>
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-4">
-                                                        <span class="news-right-title">关关</span>
-                                                        <p>专业造型师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-4">
-                                                        <span class="news-right-title">晓晓</span>
-                                                        <p>美发师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news1.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-4">
-                                                        <span class="news-right-title">阿成</span>
-                                                        <p>发型设计师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news1.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            <li class="am-u-sm-12 am-u-md-3 am-u-lg-3">
-                                                <a href="#">
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-4">
-                                                        <span class="news-right-title">维诺</span>
-                                                        <p>染烫师</p>
-                                                        <p>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                            <i class="am-icon-star"></i>
-                                                        </p>
-                                                        <button type="button"
-                                                                class="am-btn am-btn-primary am-round am-btn-xs">默认样式
-                                                        </button>
-                                                    </div>
-                                                    <div class=" am-u-sm-12 am-u-md-12 am-u-lg-5">
-                                                        <div class="news-img">
-                                                            <img src="{{'/assets/img/news1.png'}}" class="am-circle"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </a>
-                                            </li>
-                                            {{--<div class="clear"></div>--}}
-                                            <hr>
+                                                    <hr>
+                                                @endif
+                                                @if($i == count($oDesigners)) <hr> @endif
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <div data-tab-panel-2 class="am-tab-panel ">

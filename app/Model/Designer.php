@@ -20,4 +20,11 @@ class Designer extends Model
 
     protected $guarded = ['deleted_at'];
 
+    /**
+     * 获取全部理发师
+     */
+    public static function getAllDesigners()
+    {
+        return self::orderBy('created_at', 'desc')->get();
+    }
 }

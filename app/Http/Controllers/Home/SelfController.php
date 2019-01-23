@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Home;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\Designer;
 use App\Model\Members;
 use App\Model\Service;
 use Illuminate\Http\Request;
@@ -42,7 +43,9 @@ class SelfController extends Controller
         $oShortServices = Service::getServices(1);
         //拿到长发服务
         $oLongServices = Service::getServices(2);
-        return view($this->sViewPath . 'order-create', compact('sTitle', 'oShortServices', 'oLongServices'));
+        //拿到造型师
+        $oDesigners = Designer::getAllDesigners();
+        return view($this->sViewPath . 'order-create', compact('sTitle', 'oShortServices', 'oLongServices','oDesigners'));
     }
 
     /**
