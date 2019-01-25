@@ -141,7 +141,7 @@
                                                                         <i class="am-icon-star"></i>
                                                                      @endfor
                                                                 </p>
-                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs">
+                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs" onclick="selectMe(this)">
                                                                     选择他/她
                                                                 </button>
                                                             </div>
@@ -159,7 +159,7 @@
                                                                         <i class="am-icon-star"></i>
                                                                     @endfor
                                                                 </p>
-                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs">
+                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs" onclick="selectMe(this)">
                                                                     选择他/她
                                                                 </button>
                                                             </div>

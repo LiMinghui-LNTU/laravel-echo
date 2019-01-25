@@ -301,3 +301,13 @@ function changePrice(type) {
         $("#long-hair").show();
     }
 }
+
+function selectMe(obj) {
+    for (var i=0;i<$(".am-tab-panel button").length;i++){
+        if($(".am-tab-panel button")[i].className == 'am-btn am-btn-danger am-round am-btn-xs'){
+            $(".am-tab-panel button")[i].className = 'am-btn am-btn-primary am-round am-btn-xs';
+            alert($(".am-tab-panel button")[i].text);
+        }
+    }
+    obj.className = "am-btn am-btn-danger am-round am-btn-xs";
+}
