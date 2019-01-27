@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.datatables.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
+    @if(strpos(Request::getPathInfo(),'clerk'))
+        <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.min.css')}}"/>
+        <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.print.css')}}" media="print"/>
+        <style type="text/css">
+            .fc-toolbar{display: none}
+        </style>
+    @endif
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('assets/js/admin.js')}}"></script>
 
@@ -34,11 +41,12 @@
 <!--内容区域-->
     @yield('content')
 </div>
+</body>
+<script src="{{asset('assets/js/moment.js')}}"></script>
 <script src="{{asset('assets/js/amazeui.min.js')}}"></script>
 <script src="{{asset('assets/js/amazeui.datatables.min.js')}}"></script>
 <script src="{{asset('assets/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('assets/js/fullcalendar.min.js')}}"></script>
 <script src="{{asset('assets/js/app.js')}}"></script>
-
-</body>
 
 </html>

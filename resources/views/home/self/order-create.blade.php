@@ -70,7 +70,7 @@
                                                     <tr class="am-active">
                                                         <td>
                                                             <input type="checkbox" name="order{{$i}}"
-                                                                   onclick="alert(this.value)">
+                                                                   onclick="checkPrice(this)">
                                                         </td>
                                                         <td id="number{{$i}}">
                                                         </td>
@@ -92,12 +92,12 @@
                                                 @endforeach
                                                 </tbody>
                                                 <tbody id="long-hair" style="display: none;">
-                                                <?php $j = 0; ?>
+                                                <?php $j = $i; ?>
                                                 @foreach($oLongServices as $longService)
                                                     <tr class="am-active">
                                                         <td>
                                                             <input type="checkbox" name="order{{$j}}"
-                                                                   onclick="alert(this.value)">
+                                                                   onclick="checkPrice(this)">
                                                         </td>
                                                         <td id="number{{$j}}">
                                                         </td>
@@ -122,6 +122,7 @@
                                         </div>
                                     </div>
                                     <div data-tab-panel-1 class="am-tab-panel ">
+                                        <input type="hidden" id="designer-checked">
                                         <ul class="news-content-ul am-scrollable-vertical">
                                             <?php $i = 0; $j = 0; ?>
                                             @foreach($oDesigners as $designer)
@@ -141,7 +142,7 @@
                                                                         <i class="am-icon-star"></i>
                                                                      @endfor
                                                                 </p>
-                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs" onclick="selectMe(this)">
+                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs" onclick="selectMe(this, '{{$designer->id}}')">
                                                                     选择他/她
                                                                 </button>
                                                             </div>

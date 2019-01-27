@@ -16,8 +16,13 @@
     <!-- 菜单 -->
     <ul class="sidebar-nav">
         <li class="sidebar-nav-link">
-            <a href="/admin" @if(Request::getPathInfo() =='/admin')class="active"@endif>
-                <i class="am-icon-list-alt sidebar-nav-link-logo"></i> 我的业绩
+            <a href="/admin/clerk" @if(Request::getPathInfo() =='/admin/clerk')class="active"@endif>
+                <i class="am-icon-list-alt sidebar-nav-link-logo"></i> 我的订单
+            </a>
+        </li>
+        <li class="sidebar-nav-link">
+            <a href="/admin/clerk/create" @if(Request::getPathInfo() =='/admin/clerk/create')class="active"@endif>
+                <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日程管理
             </a>
         </li>
         <li class="sidebar-nav-link">
@@ -44,6 +49,11 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <li class="sidebar-nav-link">
+            <a href="tables.html">
+                <i class="am-icon-child sidebar-nav-link-logo"></i> 个人信息
+            </a>
         </li>
         <li class="sidebar-nav-link">
             <a href="tables.html">

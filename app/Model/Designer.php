@@ -27,4 +27,12 @@ class Designer extends Model
     {
         return self::orderBy('created_at', 'desc')->get();
     }
+
+    /**
+     * 根据后台用户id获取对应前台造型师id
+     */
+    public static function getDesignerIdByUserId($iUserId = 0)
+    {
+        return self::where('user_id', $iUserId)->pluck('id');
+    }
 }

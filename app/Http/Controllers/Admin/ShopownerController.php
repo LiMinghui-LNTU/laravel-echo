@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ShopownerController extends Controller
 {
     private $sViewPath = 'admin.';
+    private $sidebar = 'admin.layout.sidebar2';
     protected $oUser;
 
     public function __construct()
@@ -25,10 +28,12 @@ class ShopownerController extends Controller
 
     public function index()
     {
-        $sTitle = '店长首页';
-        $sidebar = 'admin.layout.sidebar2';
-        $content = 'admin.shopowner.content';
-        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
+        $sTitle = '员工列表';
+        $sidebar = $this->sidebar;
+        $content = 'admin.shopowner.clerk-list';
+        //取出店员
+        $oUser = User::getAllClerks();
+        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oUser'));
     }
 
     /**
@@ -38,7 +43,10 @@ class ShopownerController extends Controller
      */
     public function create()
     {
-        //
+        $sTitle = '新增店员';
+        $sidebar = $this->sidebar;
+        $content = 'admin.shopowner.clerk-create';
+        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
     }
 
     /**
@@ -49,7 +57,17 @@ class ShopownerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aData = $request->all();
+        //保存数据
+        $sRes = User::saveClerk($aData);
+        if ($sRes == '1005'){
+            Session::flash('error', '该账号已存在');
+            return redirect()->back()->withInput();
+        }elseif($sRes == '1004'){
+            Session::flash('error', '入库失败');
+            return redirect()->back()->withInput();
+        }
+        return redirect('/admin/shopowner');
     }
 
     /**
@@ -101,7 +119,7 @@ class ShopownerController extends Controller
     public function messageList()
     {
         $sTitle = '消息列表';
-        $sidebar = 'admin.layout.sidebar2';
+        $sidebar = $this->sidebar;
         $content = 'admin.shopowner.message-list';
         return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
     }

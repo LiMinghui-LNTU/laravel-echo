@@ -290,8 +290,10 @@ function showOrder(index, number, time, reputation, intro) {
     $("input[name='order" + index + "']").val(number); //设置单号
 }
 
+//短发/长发价位切换
 function changePrice(type) {
     $("input[type='checkbox']").attr("checked",false);
+    $("input[type='checkbox']").val("on");
     $("input[name!='type']").attr("checked",false);
     if(type == '1'){ //显示短发价位
         $("#short-hair").show();
@@ -302,12 +304,23 @@ function changePrice(type) {
     }
 }
 
-function selectMe(obj) {
+//检验订单选择状态
+function checkPrice(obj) {
+    if(obj.value == 'on'){
+        obj.checked = false;
+        tip("请选择价位");
+        return false;
+    }
+}
+
+function selectMe(obj, id) {
     for (var i=0;i<$(".am-tab-panel button").length;i++){
         if($(".am-tab-panel button")[i].className == 'am-btn am-btn-danger am-round am-btn-xs'){
             $(".am-tab-panel button")[i].className = 'am-btn am-btn-primary am-round am-btn-xs';
-            alert($(".am-tab-panel button")[i].text);
+            $(".am-tab-panel button")[i].innerHTML = "选择他/她";
         }
     }
+    obj.innerHTML = "<i class='am-icon-check-square-o'></i>已选";
     obj.className = "am-btn am-btn-danger am-round am-btn-xs";
+    $("#designer-checked").val(id);
 }

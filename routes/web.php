@@ -58,4 +58,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::resource('/', 'UserController');
     Route::resource('/shopowner', 'ShopownerController');
     Route::get('message-list', 'ShopownerController@messageList');
+    Route::resource('/clerk', 'ClerkController');
+    Route::get('calendar-list', 'ClerkController@calendarList');
 });

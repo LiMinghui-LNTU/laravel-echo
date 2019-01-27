@@ -17,6 +17,25 @@
     <ul class="sidebar-nav">
         <li class="sidebar-nav-link">
             <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-users sidebar-nav-link-logo"></i> 我的员工
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/shopowner" @if(Request::getPathInfo() =='/admin/shopowner')class="active"@endif>
+                        <span class="am-icon-table sidebar-nav-link-logo"></span> 员工列表
+                    </a>
+                </li>
+
+                <li class="sidebar-nav-link">
+                    <a href="table-list-img.html">
+                        <span class="am-icon-street-view sidebar-nav-link-logo"></span> 应聘申请
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
                 <i class="am-icon-gear sidebar-nav-link-logo"></i> 网站设置
                 <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
             </a>
@@ -52,44 +71,25 @@
                 </li>
             </ul>
         </li>
-        <li class="sidebar-nav-link">
-            <a href="javascript:;" class="sidebar-nav-sub-title">
-                <i class="am-icon-users sidebar-nav-link-logo"></i> 我的员工
-                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-            </a>
-            <ul class="sidebar-nav sidebar-nav-sub">
-                <li class="sidebar-nav-link">
-                    <a href="table-list.html">
-                        <span class="am-icon-table sidebar-nav-link-logo"></span> 员工列表
-                    </a>
-                </li>
+        {{--<li class="sidebar-nav-link">--}}
+            {{--<a href="javascript:;" class="sidebar-nav-sub-title">--}}
+                {{--<i class="am-icon-child sidebar-nav-link-logo"></i> 我的顾客--}}
+                {{--<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>--}}
+            {{--</a>--}}
+            {{--<ul class="sidebar-nav sidebar-nav-sub">--}}
+                {{--<li class="sidebar-nav-link">--}}
+                    {{--<a href="table-list.html">--}}
+                        {{--<span class="am-icon-list-ol sidebar-nav-link-logo"></span> 顾客列表--}}
+                    {{--</a>--}}
+                {{--</li>--}}
 
-                <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-street-view sidebar-nav-link-logo"></span> 应聘申请
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sidebar-nav-link">
-            <a href="javascript:;" class="sidebar-nav-sub-title">
-                <i class="am-icon-child sidebar-nav-link-logo"></i> 我的顾客
-                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-            </a>
-            <ul class="sidebar-nav sidebar-nav-sub">
-                <li class="sidebar-nav-link">
-                    <a href="table-list.html">
-                        <span class="am-icon-list-ol sidebar-nav-link-logo"></span> 顾客列表
-                    </a>
-                </li>
-
-                <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-tags sidebar-nav-link-logo"></span> 预约列表
-                    </a>
-                </li>
-            </ul>
-        </li>
+                {{--<li class="sidebar-nav-link">--}}
+                    {{--<a href="table-list-img.html">--}}
+                        {{--<span class="am-icon-tags sidebar-nav-link-logo"></span> 预约列表--}}
+                    {{--</a>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
+        {{--</li>--}}
         <li class="sidebar-nav-link">
             <a href="javascript:;" class="sidebar-nav-sub-title">
                 <i class="am-icon-comments sidebar-nav-link-logo"></i> 消息收发

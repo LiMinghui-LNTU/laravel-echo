@@ -22,6 +22,14 @@ class Members extends Model
     protected $guarded = ['deleted_at'];
 
     /**
+     * 根据id获取姓名
+     */
+    public static function getNameById($iId = 0)
+    {
+        return self::where('id', $iId)->pluck('nickname');
+    }
+
+    /**
      * 判断账户是否已注册
      */
     public static function isRegister($account = '')

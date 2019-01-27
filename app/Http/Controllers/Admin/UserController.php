@@ -58,8 +58,8 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/admin');
     }
-  
-  	//后台首页
+
+    //后台首页
     public function index()
     {
         $role_id = session()->get('role_id');
@@ -74,10 +74,7 @@ class UserController extends Controller
                 return redirect('/admin/shopowner');
                 break;
             case 3: //店员
-                $sTitle = '店员首页';
-                $sidebar = 'admin.layout.sidebar3';
-                $content = 'admin.clerk.content';
-                return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
+                return redirect('/admin/clerk');
                 break;
             default:
                 abort('503');
