@@ -140,9 +140,11 @@
                                                                 <p>
                                                                     @for($k = 0; $k < $designer->starts; $k++)
                                                                         <i class="am-icon-star"></i>
-                                                                     @endfor
+                                                                    @endfor
                                                                 </p>
-                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs" onclick="selectMe(this, '{{$designer->id}}')">
+                                                                <button type="button"
+                                                                        class="am-btn am-btn-primary am-round am-btn-xs"
+                                                                        onclick="selectMe(this, '{{$designer->id}}')">
                                                                     选择他/她
                                                                 </button>
                                                             </div>
@@ -160,7 +162,9 @@
                                                                         <i class="am-icon-star"></i>
                                                                     @endfor
                                                                 </p>
-                                                                <button type="button" class="am-btn am-btn-primary am-round am-btn-xs" onclick="selectMe(this)">
+                                                                <button type="button"
+                                                                        class="am-btn am-btn-primary am-round am-btn-xs"
+                                                                        onclick="selectMe(this)">
                                                                     选择他/她
                                                                 </button>
                                                             </div>
@@ -178,14 +182,17 @@
                                                     <div class="clear"></div>
                                                     <hr>
                                                 @endif
-                                                @if($i == count($oDesigners)) <hr> @endif
+                                                @if($i == count($oDesigners))
+                                                    <hr> @endif
                                             @endforeach
                                         </ul>
                                     </div>
                                     <div data-tab-panel-2 class="am-tab-panel ">
-                                        <div id="calendar"></div>
+                                        {{--<div id="calendar-tip" style="color: #f00">请先选择造型师</div>--}}
+                                        <div id="calendar" style=""></div>
                                     </div>
-                                    <button type="button" class="am-btn am-btn-danger am-btn-block">立即预定（Reservation）
+                                    <button type="button" class="am-btn am-btn-danger am-btn-block" onclick="test()">
+                                        立即预定（Reservation）
                                     </button>
                                     <button type="button" class="am-btn am-btn-primary am-btn-block"
                                             onclick="window.location.href='/self';">我的订单（My Order）
@@ -201,32 +208,10 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            // $('#calendar').fullCalendar( 'incrementDate', {days:5, hour, minutes:0} ); //日期视图向前或向后移动固定的时间，duration可以为={ days:1, hours:23, minutes:59 }
+        // $('#calendar').fullCalendar( 'incrementDate', {days:5, hour, minutes:0} ); //日期视图向前或向后移动固定的时间，duration可以为={ days:1, hours:23, minutes:59 }
+        function selectMe(obj, id) {
             $('#calendar').fullCalendar({
-                events: [
-                    {
-                        title: '休息',
-                        start: '2019-01-16T09:30:00',
-                        end: '2019-01-16T10:30:00',
-                        textColor: 'green',
-                        backgroundColor: 'lightblue',
-                        block: true
-                    },
-                    {
-                        title: 'event2',
-                        start: '2019-01-17T15:30:00',
-                        end: '2019-01-17T16:30:00',
-                        block: true
-                    },
-                    {
-                        title: 'event3',
-                        start: '2019-01-18T11:30:00',
-                        end: '2019-01-18T12:30:00',
-                        block: true
-                    }
-                ],
-
+                events: [],
                 header: {
                     left: '',
                     center: '',
@@ -255,17 +240,9 @@
                 monthNamesShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
                 dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
                 dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-                buttonText: {
-                    today: '今天',
-                    month: '月',
-                    week: '周',
-                    day: '日',
-                    prev: '前一天',
-                    next: '后一天'
-                },
                 aspectRatio: 1.976,
                 // height:800,
-                defaultDate: '2019-01-16',
+                defaultDate: "{{date('Y-m-d')}}",
                 lang: 'zh-cn',
                 navLinks: false, // can click day/week names to navigate views
                 selectable: true,
@@ -292,6 +269,29 @@
                 }
             });
 
-        });
+            for (var i = 0; i < $(".am-tab-panel button").length; i++) {
+                if ($(".am-tab-panel button")[i].className == 'am-btn am-btn-danger am-round am-btn-xs') {
+                    $(".am-tab-panel button")[i].className = 'am-btn am-btn-primary am-round am-btn-xs';
+                    $(".am-tab-panel button")[i].innerHTML = "选择他/她";
+                }
+            }
+            obj.innerHTML = "<i class='am-icon-check-square-o'></i>已选";
+            obj.className = "am-btn am-btn-danger am-round am-btn-xs";
+            $("#designer-checked").val(id);
+
+            //请求该造型师的日程
+            var events = {
+                url: "/get-schedule",
+                type: 'POST',
+                data: {
+                    _token:"{{csrf_token()}}",
+                    designer_id: id
+                }
+            };
+            $('#calendar').fullCalendar( 'removeEventSource', events);
+            $('#calendar').fullCalendar( 'addEventSource', events);
+            $('#calendar').fullCalendar( 'refetchEvents' );
+
+        }
     </script>
 @endsection

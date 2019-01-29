@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Model\Designer;
 use App\Model\Members;
+use App\Model\Schedule;
 use App\Model\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -156,5 +157,13 @@ class SelfController extends Controller
     {
         $account = Input::get('account');
         return Members::isRegister($account);
+    }
+
+    //前台获取某造型师日程
+    public function postThisDesignerSchedule()
+    {
+        $iDesignerId = Input::get('designer_id');
+        $aSchedule = Schedule::getScheduleById($iDesignerId);
+        return json_encode($aSchedule);
     }
 }

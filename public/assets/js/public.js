@@ -312,15 +312,3 @@ function checkPrice(obj) {
         return false;
     }
 }
-
-function selectMe(obj, id) {
-    for (var i=0;i<$(".am-tab-panel button").length;i++){
-        if($(".am-tab-panel button")[i].className == 'am-btn am-btn-danger am-round am-btn-xs'){
-            $(".am-tab-panel button")[i].className = 'am-btn am-btn-primary am-round am-btn-xs';
-            $(".am-tab-panel button")[i].innerHTML = "选择他/她";
-        }
-    }
-    obj.innerHTML = "<i class='am-icon-check-square-o'></i>已选";
-    obj.className = "am-btn am-btn-danger am-round am-btn-xs";
-    $("#designer-checked").val(id);
-}

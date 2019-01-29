@@ -44,6 +44,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::resource('about', 'AboutController');
     Route::resource('self', 'SelfController')->middleware('member');
     Route::post('check-reg', 'SelfController@checkReg');
+    Route::post('get-schedule', 'SelfController@postThisDesignerSchedule');
 });
 
 //后台登录路由

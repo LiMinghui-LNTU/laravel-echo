@@ -73,9 +73,9 @@
                 center: '',
                 right: ''
             },
-            height: window.innerHeight - 10,
+            height: window.innerHeight - 130,
             windowResize: function (view) {
-                $('#calendar').fullCalendar('option', 'height', window.innerHeight - 10);
+                $('#calendar').fullCalendar('option', 'height', window.innerHeight - 130);
             },
             // defaultView: 'agendaWeek',//日历初始化时默认视图
             defaultView: 'agendaFiveDay',
