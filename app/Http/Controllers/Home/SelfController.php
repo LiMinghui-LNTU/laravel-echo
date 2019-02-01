@@ -46,7 +46,7 @@ class SelfController extends Controller
         $oLongServices = Service::getServices(2);
         //拿到造型师
         $oDesigners = Designer::getAllDesigners();
-        return view($this->sViewPath . 'order-create', compact('sTitle', 'oShortServices', 'oLongServices','oDesigners'));
+        return view($this->sViewPath . 'order-create', compact('sTitle', 'oShortServices', 'oLongServices', 'oDesigners'));
     }
 
     /**
@@ -157,6 +157,14 @@ class SelfController extends Controller
     {
         $account = Input::get('account');
         return Members::isRegister($account);
+    }
+
+    //前台获取服务id对应的服务时长及价位
+    public function postTimeAndPrice()
+    {
+        $sServiceNum = Input::get('service_num');
+        $oService = Service::getServiceByNum($sServiceNum);
+        return json_encode(['price' => $oService->price, 'time' => $oService->continue_to]);
     }
 
     //前台获取某造型师日程

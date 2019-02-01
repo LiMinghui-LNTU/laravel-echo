@@ -164,7 +164,7 @@
                                                                 </p>
                                                                 <button type="button"
                                                                         class="am-btn am-btn-primary am-round am-btn-xs"
-                                                                        onclick="selectMe(this)">
+                                                                        onclick="selectMe(this, '{{$designer->id}}')">
                                                                     选择他/她
                                                                 </button>
                                                             </div>
@@ -188,8 +188,8 @@
                                         </ul>
                                     </div>
                                     <div data-tab-panel-2 class="am-tab-panel ">
-                                        {{--<div id="calendar-tip" style="color: #f00">请先选择造型师</div>--}}
-                                        <div id="calendar" style=""></div>
+                                        <div id="designer-tip" style="color: #f00">请先选择造型师</div>
+                                        <div id="service-tip" style="color: #0f9ae0;">您的服务总额为：<span style="color: #f00;">&yen;</span><span id="service-price" style="color: #f00;">0</span>，服务时长为：<span id="service-time" style="color: #f00;">0</span>分钟。</div>
                                     </div>
                                     <button type="button" class="am-btn am-btn-danger am-btn-block" onclick="test()">
                                         立即预定（Reservation）
@@ -210,6 +210,16 @@
     <script type="text/javascript">
         // $('#calendar').fullCalendar( 'incrementDate', {days:5, hour, minutes:0} ); //日期视图向前或向后移动固定的时间，duration可以为={ days:1, hours:23, minutes:59 }
         function selectMe(obj, id) {
+            var servicesList = $("input[type='checkbox']");
+            for (var i=0;i<servicesList.length;i++){
+                // alert(servicesList[i].value);
+                if(servicesList[i].value != 'on'){
+                    break;
+                }else{
+                    alert('请先选择服务');
+                }
+                // return false;
+            }
             $('#calendar').fullCalendar({
                 events: [],
                 header: {
@@ -255,7 +265,7 @@
                         block: true
                     };
                     if (eventData) {
-                        // $('#calendar').fullCalendar('unselectable');
+                        $('#calendar').fullCalendar('unselect');
                         // alert(start+"#"+end);
                     }
                 },

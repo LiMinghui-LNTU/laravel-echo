@@ -44,6 +44,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::resource('about', 'AboutController');
     Route::resource('self', 'SelfController')->middleware('member');
     Route::post('check-reg', 'SelfController@checkReg');
+    Route::post('get-service', 'SelfController@postTimeAndPrice');
     Route::post('get-schedule', 'SelfController@postThisDesignerSchedule');
 });
 

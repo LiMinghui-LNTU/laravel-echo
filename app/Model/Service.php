@@ -33,4 +33,12 @@ class Service extends Model
         }
         return $data;
     }
+
+    /**
+     * 根据服务单号获取服务
+     */
+    public static function getServiceByNum($sNum = '')
+    {
+        return self::where('number', $sNum)->first();
+    }
 }

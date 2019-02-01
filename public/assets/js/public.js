@@ -311,4 +311,23 @@ function checkPrice(obj) {
         tip("请选择价位");
         return false;
     }
+    if(obj.checked){
+        $.post(
+            '/get-service',//token不正确！！！！！！！！！！！！
+            {'_token':$("#_token").val(),'service_num':obj.value},
+            function (data) {
+                console.log(data);
+            },
+            'json'
+        );
+    }else {
+        $.post(
+            '/get-service',
+            {'_token':$("#_token").val(),'service_num':obj.value},
+            function (data) {
+                console.log(data);
+            },
+            'json'
+        );
+    }
 }
