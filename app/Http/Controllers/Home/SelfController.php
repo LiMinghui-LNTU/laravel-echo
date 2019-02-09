@@ -12,8 +12,10 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Model\Designer;
 use App\Model\Members;
+use App\Model\Order;
 use App\Model\Schedule;
 use App\Model\Service;
+use ArrayObject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -29,7 +31,13 @@ class SelfController extends Controller
     public function index()
     {
         $sTitle = '个人中心';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        //获取登录顾客账号
+        $sAccount = session()->get('member');
+        //查询顾客个人信息
+        $oInfo = Members::getInfoByAccount($sAccount);
+        //查询全部订单
+        $oOrders = Order::getOrdersByMemberId($oInfo->id);
+        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo', 'oOrders'));
     }
 
     /**
@@ -46,7 +54,9 @@ class SelfController extends Controller
         $oLongServices = Service::getServices(2);
         //拿到造型师
         $oDesigners = Designer::getAllDesigners();
-        return view($this->sViewPath . 'order-create', compact('sTitle', 'oShortServices', 'oLongServices', 'oDesigners'));
+        //拿到预订者账号
+        $sAccount = session()->get('member');
+        return view($this->sViewPath . 'order-create', compact('sTitle', 'oShortServices', 'oLongServices', 'oDesigners', 'sAccount'));
     }
 
     /**
@@ -57,7 +67,31 @@ class SelfController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aInput = $request->all();
+        //获取入库日程id
+        $iScheduleId = Schedule::saveScheduleGetId($aInput);
+        //创建订单号
+        $sOrderNumber = Order::createOrderNumber(6);
+        //获取预订人
+        $oMember = Members::getInfoByAccount(session()->get('member'));
+        //组织入库数据
+        $aData = [
+            'order_number' => $sOrderNumber,
+            'member_id' => $oMember->id,
+            'service_number' => json_encode(new arrayobject($aInput['service_number'])),
+            'designer_id' => $aInput['designer_id'],
+            'schedule_id' => $iScheduleId,
+            'total_money' => $aInput['total_money'],
+            'status' => 2,
+            'pay' => 1,
+            'created_at' => date('Y-m-d'),
+            'updated_at' => date('Y-m-d', (time() - 120))
+        ];
+        $sCode = Order::saveTheOrder($aData);
+        if ($sCode != '1001') {
+            return json_encode(['success' => 0, 'code' => $sCode]);
+        }
+        return json_encode(['success' => 1]);
     }
 
     /**

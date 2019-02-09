@@ -221,7 +221,7 @@ $("#reg-phone-btn").click(function () {
 });
 //-------end-----------------
 
-//--------------前台登录方区---------------
+//--------------前台登录方法---------------
 function doLogin() {
     var account = $("#account").val();
     var password = $("#password").val();
@@ -288,46 +288,117 @@ function showOrder(index, number, time, reputation, intro) {
     $("#reputation" + index).html(reputation); //显示信誉值
     $("#introduction" + index).html(intro); //显示简介
     $("input[name='order" + index + "']").val(number); //设置单号
+    // var status = $("input[name='order" + index + "']").prop('checked');
 }
 
 //短发/长发价位切换
 function changePrice(type) {
-    $("input[type='checkbox']").attr("checked",false);
+    $("input[type='checkbox']").attr("checked", false);
     $("input[type='checkbox']").val("on");
-    $("input[name!='type']").attr("checked",false);
-    if(type == '1'){ //显示短发价位
+    $("input[name!='type']").attr("checked", false);
+    $("input[name!='type']").attr("disabled", false);
+    $("tr").attr("style", "");
+    $("#service-price").html(0);
+    $("#service-time").html(0);
+    if (type == '1') { //显示短发价位
         $("#short-hair").show();
         $("#long-hair").hide();
-    }else{
+    } else {
         $("#short-hair").hide();
         $("#long-hair").show();
     }
 }
 
 //检验订单选择状态
-function checkPrice(obj) {
-    if(obj.value == 'on'){
+function checkPrice(obj, index) {
+    if (obj.value == 'on') {
         obj.checked = false;
         tip("请选择价位");
         return false;
     }
-    if(obj.checked){
+    //清空日程选择表
+    if ($("#start-time").val() != '' || $("#end-time").val() != '') {
+        $('#calendar').fullCalendar('unselect');
+        $("#start-time").val("");
+        $("#end-time").val("");
+    }
+    //动态增加或减少预定时间
+    if (obj.checked) {
+        $("#tr" + index).attr("style", "color:#f00");
+        $("input[name='charge" + index + "']").attr("disabled", true);
         $.post(
-            '/get-service',//token不正确！！！！！！！！！！！！
-            {'_token':$("#_token").val(),'service_num':obj.value},
+            '/get-service',
+            {'_token': $("#_token").val(), 'service_num': obj.value},
             function (data) {
-                console.log(data);
+                var old_price = $("#service-price").html();
+                var old_time = $("#service-time").html();
+                $("#service-price").html(parseInt(old_price) + data.price);
+                $("#service-time").html(parseInt(old_time) + parseInt(data.time));
             },
             'json'
         );
-    }else {
+    } else {
+        $("#tr" + index).attr("style", "");
+        $("input[name='charge" + index + "']").attr("disabled", false);
         $.post(
             '/get-service',
-            {'_token':$("#_token").val(),'service_num':obj.value},
+            {'_token': $("#_token").val(), 'service_num': obj.value},
             function (data) {
-                console.log(data);
+                var old_price = $("#service-price").html();
+                var old_time = $("#service-time").html();
+                $("#service-price").html(parseInt(old_price) - data.price);
+                $("#service-time").html(parseInt(old_time) - parseInt(data.time));
             },
             'json'
         );
     }
+}
+
+//提交预定
+function doReservation() {
+    var total_money = $("#service-price").text();//订单总价
+    var designer_id = $("#designer-id").val();//造型师id
+    var start_time = $("#start-time").val();//日程开始时间
+    var end_time = $("#end-time").val();//日程结束时间
+    if (total_money == '0') {
+        tip("请选择服务项目");
+        return false;
+    }
+    if (designer_id == '') {
+        tip("请翻牌造型师");
+        return false;
+    }
+    if (start_time == '' || end_time == '') {
+        tip("请勾选预定时间");
+        return false;
+    }
+    var length = $("input[type='checkbox']").length;
+    var service_arr = [];
+    for (var i = 0; i < length; i++) {
+        if ($("input[name='order" + i + "']").prop('checked')) {
+            service_arr.push($("input[name='order" + i + "']").val());
+        }
+    }
+    wait("预定中...");
+    $.post(
+        '/self',
+        {
+            '_token': $("#_token").val(),
+            'service_number': service_arr,
+            'designer_id': designer_id,
+            'total_money': total_money,
+            'start': $("#start-time").val(),
+            'end': $("#end-time").val()
+        },
+        function (data) {
+            if (data.success) {
+                tip("预订成功");
+                window.location.href = '/self';
+            } else {
+                tip(data.code + ":预定失败");
+                return false;
+            }
+        },
+        'json'
+    );
 }

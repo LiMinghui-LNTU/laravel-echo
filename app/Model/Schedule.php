@@ -72,4 +72,32 @@ class Schedule extends Model
         }
         return '1001';
     }
+
+    /**
+     * 根据id获取日程开始/结束时间
+     */
+    public static function getTimeById($iId = 0, $column = 'start')
+    {
+        return self::where('id', $iId)->pluck($column);
+    }
+
+    /**
+     * 入库获取日程id
+     */
+    public static function saveScheduleGetId($aInput = null)
+    {
+        $oMember = Members::getInfoByAccount(session()->get('member'));
+        $sTitle = count($aInput['service_number']) > 1 ? "综合服务" : Service::getServiceNameByNum($aInput['service_number'][0])[0];
+        $aData = [
+            'setter_id' => $oMember->id,
+            'setter_type' => 2,
+            'designer_id' => $aInput['designer_id'],
+            'title' => $sTitle,
+            'start' => date('Y-m-d H:i:s', strtotime($aInput['start']) - 60 * 60 * 8),
+            'end' => date('Y-m-d H:i:s', strtotime($aInput['end']) - 60 * 60 * 8),
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+        $iId = self::insertGetId($aData);
+        return $iId;
+    }
 }

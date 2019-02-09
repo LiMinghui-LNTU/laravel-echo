@@ -27,19 +27,19 @@
                                     <li class="am-active">
                                         <a href="[data-tab-panel-0]">
                                             <i class="am-icon-hand-paper-o"></i>
-                                            1.选择服务项目
+                                            1/3选择服务项目
                                         </a>
                                     </li>
                                     <li class="">
                                         <a href="[data-tab-panel-1]">
                                             <i class="am-icon-user-secret"></i>
-                                            2.翻牌造型师
+                                            2/3翻牌造型师
                                         </a>
                                     </li>
                                     <li class="">
                                         <a href="[data-tab-panel-2]">
                                             <i class="am-icon-clock-o"></i>
-                                            3.预定时间
+                                            3/3预定时间
                                         </a>
                                     </li>
                                 </ul>
@@ -67,10 +67,10 @@
                                                 <tbody id="short-hair">
                                                 <?php $i = 0; ?>
                                                 @foreach($oShortServices as $shortService)
-                                                    <tr class="am-active">
+                                                    <tr class="am-active" id="tr{{$i}}">
                                                         <td>
                                                             <input type="checkbox" name="order{{$i}}"
-                                                                   onclick="checkPrice(this)">
+                                                                   onclick="checkPrice(this, '{{$i}}')">
                                                         </td>
                                                         <td id="number{{$i}}">
                                                         </td>
@@ -94,10 +94,10 @@
                                                 <tbody id="long-hair" style="display: none;">
                                                 <?php $j = $i; ?>
                                                 @foreach($oLongServices as $longService)
-                                                    <tr class="am-active">
+                                                    <tr class="am-active" id="tr{{$j}}">
                                                         <td>
                                                             <input type="checkbox" name="order{{$j}}"
-                                                                   onclick="checkPrice(this)">
+                                                                   onclick="checkPrice(this, '{{$j}}')">
                                                         </td>
                                                         <td id="number{{$j}}">
                                                         </td>
@@ -189,9 +189,14 @@
                                     </div>
                                     <div data-tab-panel-2 class="am-tab-panel ">
                                         <div id="designer-tip" style="color: #f00">请先选择造型师</div>
-                                        <div id="service-tip" style="color: #0f9ae0;">您的服务总额为：<span style="color: #f00;">&yen;</span><span id="service-price" style="color: #f00;">0</span>，服务时长为：<span id="service-time" style="color: #f00;">0</span>分钟。</div>
+                                        <div id="service-tip" style="color: #0f9ae0;">您的服务总额为：<span
+                                                    style="color: #f00;">&yen;</span><span id="service-price"
+                                                                                           style="color: #f00;">0</span>，服务时长为：<span
+                                                    id="service-time" style="color: #f00;">0</span>分钟。
+                                        </div>
+                                        <div id="calendar" style="display: none;"></div>
                                     </div>
-                                    <button type="button" class="am-btn am-btn-danger am-btn-block" onclick="test()">
+                                    <button type="button" class="am-btn am-btn-danger am-btn-block" onclick="doReservation()">
                                         立即预定（Reservation）
                                     </button>
                                     <button type="button" class="am-btn am-btn-primary am-btn-block"
@@ -206,20 +211,21 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="_token" value="{{csrf_token()}}">
+    <input type="hidden" id="start-time">
+    <input type="hidden" id="end-time">
+    <input type="hidden" id="designer-id">
 
     <script type="text/javascript">
         // $('#calendar').fullCalendar( 'incrementDate', {days:5, hour, minutes:0} ); //日期视图向前或向后移动固定的时间，duration可以为={ days:1, hours:23, minutes:59 }
         function selectMe(obj, id) {
-            var servicesList = $("input[type='checkbox']");
-            for (var i=0;i<servicesList.length;i++){
-                // alert(servicesList[i].value);
-                if(servicesList[i].value != 'on'){
-                    break;
-                }else{
-                    alert('请先选择服务');
-                }
-                // return false;
+            if ($("#service-price").text() == '0') {
+                tip("请先选择服务项目");
+                return false;
             }
+            $("#designer-tip").hide();
+            $("#calendar").show();
+            $("#designer-id").val(id);
             $('#calendar').fullCalendar({
                 events: [],
                 header: {
@@ -258,15 +264,23 @@
                 selectable: true,
                 selectHelper: true,
                 select: function (start, end) {
+                    var order_time = parseInt($("#service-time").text()); //预订时长
                     var eventData;
                     eventData = {
                         start: start,
                         end: end,
                         block: true
                     };
+                    var select_time = (end - start) / 60000; //选择的预订时长
                     if (eventData) {
-                        $('#calendar').fullCalendar('unselect');
-                        // alert(start+"#"+end);
+                        if ((select_time - order_time) < 0 || (select_time - order_time) >= 30) {
+                            $('#calendar').fullCalendar('unselect');
+                            tip("请勾选适当时长");
+                            return false;
+                        }else {
+                            $("#start-time").val(start);
+                            $("#end-time").val(end);
+                        }
                     }
                 },
                 // defaultEventMinutes:60,
@@ -294,13 +308,13 @@
                 url: "/get-schedule",
                 type: 'POST',
                 data: {
-                    _token:"{{csrf_token()}}",
+                    _token: "{{csrf_token()}}",
                     designer_id: id
                 }
             };
-            $('#calendar').fullCalendar( 'removeEventSource', events);
-            $('#calendar').fullCalendar( 'addEventSource', events);
-            $('#calendar').fullCalendar( 'refetchEvents' );
+            $('#calendar').fullCalendar('removeEventSource', events);
+            $('#calendar').fullCalendar('addEventSource', events);
+            // $('#calendar').fullCalendar('refetchEvents');
 
         }
     </script>

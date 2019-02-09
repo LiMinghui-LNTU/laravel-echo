@@ -29,19 +29,19 @@
                         <div class="am-u-md-4">
                             <label class="am-u-sm-4 am-form-label">账号：</label>
                             <div class="am-u-sm-8">
-                                <small>13582853262</small>
+                                <small>{{$oInfo->account_number}}</small>
                             </div>
                             <label class="am-u-sm-4 am-form-label">昵称：</label>
                             <div class="am-u-sm-8">
-                                <small>包子入侵</small>
+                                <small>{{$oInfo->nickname}}</small>
                             </div>
                             <label class="am-u-sm-4 am-form-label">优惠券：</label>
                             <div class="am-u-sm-8">
-                                <small>3张</small>
+                                <small>{{$oInfo->ticket}}张</small>
                             </div>
                             <label class="am-u-sm-4 am-form-label">头衔：</label>
                             <div class="am-u-sm-8">
-                                <small>钻石VIP</small>
+                                <small>{{$oInfo->title}}</small>
                             </div>
                             <button class="am-btn am-btn-primary am-btn-xs">
                                 <i class="am-icon-edit"></i>
@@ -52,17 +52,20 @@
                             <div class="user-info">
                                 <p>金鹰发币</p>
                                 <div class="am-progress am-progress-sm">
-                                    <div class="am-progress-bar" style="width: 60%"></div>
+                                    <div class="am-progress-bar" style="width: {{$oInfo->coins}}%"></div>
                                 </div>
-                                <p class="user-info-order">当前发币：<strong>83枚</strong> 可抵现金：<strong>&yen;8.30元</strong>
+                                <p class="user-info-order">当前发币：<strong>{{$oInfo->coins}}枚</strong>
+                                    可抵现金：<strong>&yen;{{$oInfo->coins / 10}}元</strong>
                                 </p>
                             </div>
                             <div class="user-info">
                                 <p>信誉积分</p>
                                 <div class="am-progress am-progress-sm">
-                                    <div class="am-progress-bar am-progress-bar-success" style="width: 80%"></div>
+                                    <div class="am-progress-bar am-progress-bar-success"
+                                         style="width: {{$oInfo->reputation_value}}%"></div>
                                 </div>
-                                <p class="user-info-order">信用等级：正常当前 信用积分：<strong>80</strong></p>
+                                <p class="user-info-order">信用等级：极好 信用积分：<strong>{{$oInfo->reputation_value}}</strong>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -93,86 +96,23 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>JY88D5RF</td>
-                                            <td>剪发</td>
-                                            <td>瓜瓜</td>
-                                            <td>&yen;20</td>
-                                            <td>已完成</td>
-                                            <td>2018-12-03 16:52:36</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JYS44EWF</td>
-                                            <td>离子拉直</td>
-                                            <td>倩倩</td>
-                                            <td>&yen;130</td>
-                                            <td>待赴约</td>
-                                            <td>2018-12-18 10:20:05</td>
-                                        </tr>
-                                        <tr class="am-active">
-                                            <td>JYSX8552</td>
-                                            <td>剪刘海</td>
-                                            <td>琪琪</td>
-                                            <td>&yen;12</td>
-                                            <td>失约</td>
-                                            <td>2018-10-06 09:52:14</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY247DEC</td>
-                                            <td>营养护理</td>
-                                            <td>甜甜</td>
-                                            <td>&yen;258</td>
-                                            <td>已完成</td>
-                                            <td>2018-09-07 12:36:25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JYA44SWX</td>
-                                            <td>生化烫</td>
-                                            <td>华子</td>
-                                            <td>&yen;120</td>
-                                            <td>已完成</td>
-                                            <td>2018-09-13 08:36:14</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY11A1XC</td>
-                                            <td>黑发</td>
-                                            <td>小七</td>
-                                            <td>&yen;68</td>
-                                            <td>待赴约</td>
-                                            <td>2018-12-12 13:25:10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY77CD85</td>
-                                            <td>数码烫</td>
-                                            <td>欢欢</td>
-                                            <td>&yen;238</td>
-                                            <td>失约</td>
-                                            <td>2018-12-19 11:08:06</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY2V99BT</td>
-                                            <td>彩色染色</td>
-                                            <td>阿果</td>
-                                            <td>&yen;168</td>
-                                            <td>已完成</td>
-                                            <td>2018-12-05 18:17:11</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JYX77XD1</td>
-                                            <td>造型</td>
-                                            <td>王子</td>
-                                            <td>&yen;25</td>
-                                            <td>失约</td>
-                                            <td>2018-12-01 11:25:25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY02C6DB</td>
-                                            <td>洗发</td>
-                                            <td>阿成</td>
-                                            <td>&yen;18</td>
-                                            <td>待赴约</td>
-                                            <td>2018-12-18 07:13:40</td>
-                                        </tr>
+                                        @foreach($oOrders as $order)
+                                            <tr>
+                                                <td>{{$order->order_number}}</td>
+                                                <td>
+                                                    @if(count(json_decode($order->service_number, true)) > 1)
+                                                        综合服务
+                                                    @else
+                                                        {{\App\Model\Service::getServiceNameByNum(json_decode($order->service_number, true)[0])[0]}}
+                                                    @endif
+                                                </td>
+                                                <td>{{\App\Model\Designer::getDesignerNameById($order->designer_id)[0]}}</td>
+                                                <td>&yen;{{$order->total_money}}</td>
+                                                <td>@if($order->status == 1)已完成@elseif($order->status == 2)待赴约@else
+                                                        失约@endif</td>
+                                                <td>{{$order->created_at}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -186,58 +126,42 @@
                                             <th>服务类型</th>
                                             <th>预定金额</th>
                                             <th>赴约时间</th>
+                                            <th>支付状态</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>JYS44EWF</td>
-                                            <td>离子拉直</td>
-                                            <td>&yen;130</td>
-                                            <td>2018-12-20 10:30:00</td>
-                                            <td>
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i>
-                                                    <small>修改</small>
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                    <small>退订</small>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY11A1XC</td>
-                                            <td>黑发</td>
-                                            <td>&yen;68</td>
-                                            <td>2018-12-15 12:00:00</td>
-                                            <td>
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i>
-                                                    <small>修改</small>
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                    <small>退订</small>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY02C6DB</td>
-                                            <td>洗发</td>
-                                            <td>&yen;18</td>
-                                            <td>2018-12-20 13:30:00</td>
-                                            <td>
-                                                <a href="javascript:;">
-                                                    <i class="am-icon-pencil am-btn-group am-btn-group-xs"></i>
-                                                    <small>修改</small>
-                                                </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                    <small>退订</small>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach($oOrders as $order)
+                                            @if($order->status == 2)
+                                                <tr>
+                                                    <td>{{$order->order_number}}</td>
+                                                    <td>
+                                                        @if(count(json_decode($order->service_number, true)) > 1)
+                                                            综合服务
+                                                        @else
+                                                            {{\App\Model\Service::getServiceNameByNum(json_decode($order->service_number, true)[0])[0]}}
+                                                        @endif
+                                                    </td>
+                                                    <td>&yen;{{$order->total_money}}</td>
+                                                    <td>{{\App\Model\Schedule::getTimeById($order->schedule_id, 'start')[0]}}</td>
+                                                    <td>
+                                                        @if($order->pay == 0)
+                                                            待付款
+                                                        @elseif($order->pay == 1)
+                                                            已支付
+                                                        @else
+                                                            已退款
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                            <small>取消订单</small>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -256,58 +180,29 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>JY88D5RF</td>
-                                            <td>剪发</td>
-                                            <td>瓜瓜</td>
-                                            <td>&yen;20</td>
-                                            <td>2018-12-04 11:52:36</td>
-                                            <td>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                    <small>删除</small>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY247DEC</td>
-                                            <td>营养护理</td>
-                                            <td>甜甜</td>
-                                            <td>&yen;258</td>
-                                            <td>2018-09-10 08:03:05</td>
-                                            <td>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                    <small>删除</small>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>JYA44SWX</td>
-                                            <td>生化烫</td>
-                                            <td>华子</td>
-                                            <td>&yen;120</td>
-                                            <td>2018-09-14 11:50:07</td>
-                                            <td>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                    <small>删除</small>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY2V99BT</td>
-                                            <td>彩色染色</td>
-                                            <td>阿果</td>
-                                            <td>&yen;168</td>
-                                            <td>2018-12-05 18:17:11</td>
-                                            <td>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                    <small>删除</small>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach($oOrders as $order)
+                                            @if($order->status == 1)
+                                                <tr>
+                                                    <td>{{$order->order_number}}</td>
+                                                    <td>
+                                                        @if(count(json_decode($order->service_number, true)) > 1)
+                                                            综合服务
+                                                        @else
+                                                            {{\App\Model\Service::getServiceNameByNum(json_decode($order->service_number, true)[0])[0]}}
+                                                        @endif
+                                                    </td>
+                                                    <td>{{\App\Model\Designer::getDesignerNameById($order->designer_id)[0]}}</td>
+                                                    <td>&yen;{{$order->total_money}}</td>
+                                                    <td>{{$order->updated_at}}</td>
+                                                    <td>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
+                                                            <small>删除</small>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -317,39 +212,46 @@
                                     <table class="am-table am-table-bordered am-table-striped am-text-nowrap am-table-compact">
                                         <thead>
                                         <tr>
-                                            <th>订单号</th>
                                             <th>服务类型</th>
                                             <th>造型师</th>
                                             <th>预定金额</th>
                                             <th>失约时间</th>
                                             <th>信誉值</th>
+                                            <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="am-active">
-                                            <td>JYSX8552</td>
-                                            <td>剪刘海</td>
-                                            <td>琪琪</td>
-                                            <td>&yen;12</td>
-                                            <td>2018-10-10 12:30:00</td>
-                                            <td>-10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JY77CD85</td>
-                                            <td>数码烫</td>
-                                            <td>欢欢</td>
-                                            <td>&yen;238</td>
-                                            <td>2018-12-20 07:30:00</td>
-                                            <td>-100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JYX77XD1</td>
-                                            <td>造型</td>
-                                            <td>王子</td>
-                                            <td>&yen;25</td>
-                                            <td>2018-12-02 10:00:00</td>
-                                            <td>-10</td>
-                                        </tr>
+                                        @foreach($oOrders as $order)
+                                            @if($order->status == 3)
+                                                <tr class="am-active">
+                                                    <td>
+                                                        @if(count(json_decode($order->service_number, true)) > 1)
+                                                            综合服务
+                                                        @else
+                                                            {{\App\Model\Service::getServiceNameByNum(json_decode($order->service_number, true)[0])[0]}}
+                                                        @endif
+                                                    </td>
+                                                    <td>{{\App\Model\Designer::getDesignerNameById($order->designer_id)[0]}}</td>
+                                                    <td>&yen;{{$order->total_money}}</td>
+                                                    <td>{{\App\Model\Schedule::getTimeById($order->schedule_id, 'end')[0]}}</td>
+                                                    <td>
+                                                        -{{\App\Model\Service::calculateReputationValue(json_decode($order->service_number, true))}}</td>
+                                                    <td>
+                                                        @if($order->pay == 0)
+                                                            未支付
+                                                        @elseif($order->pay == 1)
+                                                            <a href="javascript:;"
+                                                               class="tpl-table-black-operation-del">
+                                                                <i class="am-icon-money am-btn-group am-btn-group-xs"></i>
+                                                                <small>申请退款</small>
+                                                            </a>
+                                                        @else
+                                                            已退款
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -362,12 +264,14 @@
                 <div class="am-panel-bd am-u-md-6">
                     <div class="am-form-group" id="area">
                         <label for="doc-ta-1">留言区域</label><br>
-                        <textarea style="width: 100%;overflow: auto;word-break: break-all;resize: none;" rows="8" id="comment-area"></textarea>
+                        <textarea style="width: 100%;overflow: auto;word-break: break-all;resize: none;" rows="8"
+                                  id="comment-area"></textarea>
                     </div>
                     <ul class="am-comments-list am-comments-list-flip am-scrollable-vertical" style="display: none;">
                         <li class="am-comment am-comment-primary">
                             <a href="#link-to-user-home">
-                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96" alt="" class="am-comment-avatar" width="48" height="48">
+                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
+                                     alt="" class="am-comment-avatar" width="48" height="48">
                             </a>
                             <div class="am-comment-main">
                                 <header class="am-comment-hd">
@@ -385,7 +289,8 @@
                         </li>
                         <li class="am-comment am-comment-flip am-comment-secondary">
                             <a href="#link-to-user-home">
-                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96" alt="" class="am-comment-avatar" width="48" height="48">
+                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
+                                     alt="" class="am-comment-avatar" width="48" height="48">
                             </a>
                             <div class="am-comment-main">
                                 <header class="am-comment-hd">
@@ -403,7 +308,8 @@
                         </li>
                         <li class="am-comment am-comment-highlight">
                             <a href="#link-to-user-home">
-                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96" alt="" class="am-comment-avatar" width="48" height="48">
+                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
+                                     alt="" class="am-comment-avatar" width="48" height="48">
                             </a>
                             <div class="am-comment-main">
                                 <header class="am-comment-hd">
@@ -421,7 +327,8 @@
                         </li>
                         <li class="am-comment am-comment-flip am-comment-danger">
                             <a href="#link-to-user-home">
-                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96" alt="" class="am-comment-avatar" width="48" height="48">
+                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
+                                     alt="" class="am-comment-avatar" width="48" height="48">
                             </a>
                             <div class="am-comment-main">
                                 <header class="am-comment-hd">

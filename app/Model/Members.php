@@ -78,4 +78,12 @@ class Members extends Model
             }
         }
     }
+
+    /**
+     * 根据账号查询个人信息
+     */
+    public static function getInfoByAccount($sAccount = '')
+    {
+        return self::where('account_number', $sAccount)->first();
+    }
 }

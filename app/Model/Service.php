@@ -41,4 +41,20 @@ class Service extends Model
     {
         return self::where('number', $sNum)->first();
     }
+
+    /**
+     * 根据服务单号获取服务名称
+     */
+    public static function getServiceNameByNum($sNum = '')
+    {
+        return self::where('number', $sNum)->pluck('name');
+    }
+
+    /**
+     * 根据单号计算信誉值
+     */
+    public static function calculateReputationValue($aNumber = null)
+    {
+        return self::whereIn('number', $aNumber)->sum('reputation_val');
+    }
 }
