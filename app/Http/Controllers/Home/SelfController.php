@@ -198,7 +198,7 @@ class SelfController extends Controller
     {
         $sServiceNum = Input::get('service_num');
         $oService = Service::getServiceByNum($sServiceNum);
-        return json_encode(['price' => $oService->price, 'time' => $oService->continue_to]);
+        return json_encode(['price' => $oService->price, 'time' => $oService->continue_to, 'reputation'=>$oService->reputation_val]);
     }
 
     //前台获取某造型师日程

@@ -189,10 +189,11 @@
                                     </div>
                                     <div data-tab-panel-2 class="am-tab-panel ">
                                         <div id="designer-tip" style="color: #f00">请先选择造型师</div>
-                                        <div id="service-tip" style="color: #0f9ae0;">您的服务总额为：<span
-                                                    style="color: #f00;">&yen;</span><span id="service-price"
-                                                                                           style="color: #f00;">0</span>，服务时长为：<span
-                                                    id="service-time" style="color: #f00;">0</span>分钟。
+                                        <div id="service-tip" style="color: #0f9ae0;">您的服务总额为：
+                                            <span style="color: #f00;">&yen;</span>
+                                            <span id="service-price" style="color: #f00;">0</span>元，信誉积分为：
+                                            <span id="service-reputation" style="color: #f00;">0</span>个，服务时长为：
+                                            <span id="service-time" style="color: #f00;">0</span>分钟。
                                         </div>
                                         <div id="calendar" style="display: none;"></div>
                                     </div>

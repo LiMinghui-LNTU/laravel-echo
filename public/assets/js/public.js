@@ -29,6 +29,11 @@ function tip(message) {
     });
 }
 
+//支付弹框
+function pay(message, number, title, designer, money, ticket) {
+
+}
+
 //等待弹窗
 function wait(message) {
     swal({
@@ -300,6 +305,7 @@ function changePrice(type) {
     $("tr").attr("style", "");
     $("#service-price").html(0);
     $("#service-time").html(0);
+    $("#service-reputation").html(0);
     if (type == '1') { //显示短发价位
         $("#short-hair").show();
         $("#long-hair").hide();
@@ -332,8 +338,10 @@ function checkPrice(obj, index) {
             function (data) {
                 var old_price = $("#service-price").html();
                 var old_time = $("#service-time").html();
+                var old_reputation = $("#service-reputation").html();
                 $("#service-price").html(parseInt(old_price) + data.price);
                 $("#service-time").html(parseInt(old_time) + parseInt(data.time));
+                $("#service-reputation").html(parseInt(old_reputation) + parseInt(data.reputation));
             },
             'json'
         );
@@ -346,8 +354,10 @@ function checkPrice(obj, index) {
             function (data) {
                 var old_price = $("#service-price").html();
                 var old_time = $("#service-time").html();
+                var old_reputation = $("#service-reputation").html();
                 $("#service-price").html(parseInt(old_price) - data.price);
                 $("#service-time").html(parseInt(old_time) - parseInt(data.time));
+                $("#service-reputation").html(parseInt(old_reputation) - parseInt(data.reputation));
             },
             'json'
         );
