@@ -60,7 +60,7 @@
                                 @foreach($oSchedule as $schedule)
                                     <tr class="gradeX">
                                         <td>{{$schedule->id}}</td>
-                                        <td>@if($schedule->setter_type == 1)自己@else{{\App\Model\Members::getNameById($schedule->setter_id)}}@endif</td>
+                                        <td>@if($schedule->setter_type == 1)自己@else{{\App\Model\Members::getNameById($schedule->setter_id)[0]}}@endif</td>
                                         <td>{{$schedule->title}}</td>
                                         <td>{{$schedule->start}}</td>
                                         <td>{{$schedule->end}}</td>

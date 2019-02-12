@@ -19,13 +19,13 @@
 
         <ul class="am-tabs-nav am-cf solutions-tabs-ul ">
             <li class="am-active solutions-tabs-ul-li1"><a href="[data-tab-panel-0]"><i
-                            class=" am-icon-desktop"></i><span>网站解决方案</span></a></li>
+                            class=" am-icon-desktop"></i><span>最新流行</span></a></li>
             <li class="solutions-tabs-ul-li2"><a href="[data-tab-panel-1]"><i
-                            class=" am-icon-mobile-phone mobile-phone"></i><span>解决方案</span></a></li>
+                            class=" am-icon-mobile-phone mobile-phone"></i><span>男士风尚</span></a></li>
             <li class="solutions-tabs-ul-li3"><a href="[data-tab-panel-2]"><i
-                            class=" am-icon-desktop"></i><span>网站解决方案</span></a></li>
+                            class=" am-icon-desktop"></i><span>女性潮流</span></a></li>
             <li class="solutions-tabs-ul-li4"><a href="[data-tab-panel-3]"><i
-                            class=" am-icon-mobile-phone mobile-phone"></i><span>解决方案</span></a></li>
+                            class=" am-icon-mobile-phone mobile-phone"></i><span>优秀作品</span></a></li>
         </ul>
 
         <div class="am-tabs-bd solutions-tabs-content ">

@@ -20,4 +20,11 @@ class Vip extends Model
 
     protected $guarded = ['deleted_at'];
 
+    /**
+     * 根据会员id获取会员头衔
+     */
+    public static function getTitleById($iId = 1)
+    {
+        return self::where('id', $iId)->pluck('title');
+    }
 }

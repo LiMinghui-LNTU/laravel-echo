@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Home;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\Designer;
 use Illuminate\Http\Request;
 
 class DesignerController extends Controller
@@ -24,7 +25,9 @@ class DesignerController extends Controller
     public function index()
     {
         $sTitle = '设计师团';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        //获取全部造型师
+        $oDesigners = Designer::getAllDesigners();
+        return view($this->sViewPath . 'index', compact('sTitle', 'oDesigners'));
     }
 
     /**
