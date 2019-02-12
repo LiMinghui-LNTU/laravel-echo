@@ -51,7 +51,7 @@
             </ul>
         </li>
         <li class="sidebar-nav-link">
-            <a href="tables.html">
+            <a href="/admin/clerk/{{\Illuminate\Support\Facades\Auth::user()->id}}">
                 <i class="am-icon-child sidebar-nav-link-logo"></i> 个人信息
             </a>
         </li>

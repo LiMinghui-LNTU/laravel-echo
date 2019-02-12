@@ -43,4 +43,12 @@ class Designer extends Model
     {
         return self::where('id', $iId)->pluck('name');
     }
+
+    /**
+     * 根据后台用户id获取造型师
+     */
+    public static function getDesignerByUserId($iUserId = 0)
+    {
+        return self::where('user_id', $iUserId)->first();
+    }
 }

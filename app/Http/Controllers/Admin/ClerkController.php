@@ -91,7 +91,14 @@ class ClerkController extends Controller
      */
     public function show($id)
     {
-        //
+        $sTitle = '个人信息';
+        $sidebar = $this->sidebar;
+        $content = 'admin.clerk.info';
+        if ($id != $this->oUser->id) {
+            return redirect('/admin/clerk/' . $this->oUser->id);
+        }
+        $oDesigner = Designer::getDesignerByUserId($id);
+        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oDesigner'));
     }
 
     /**
