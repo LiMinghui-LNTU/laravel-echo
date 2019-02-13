@@ -11,8 +11,9 @@
                 @include('admin.common.error')
                 <div class="widget-body am-fr">
 
-                    <form action="/admin/shopowner" class="am-form tpl-form-border-form" method="post">
+                    <form action="/admin/clerk/{{\Illuminate\Support\Facades\Auth::user()->id}}" class="am-form tpl-form-border-form" method="post">
                         @csrf
+                        <input name="_method" type="hidden" value="PUT">
                         <div class="am-form-group">
                             <label for="name" class="am-u-sm-12 am-form-label am-text-left">
                                 姓名
@@ -25,41 +26,68 @@
                         </div>
 
                         <div class="am-form-group">
-                            <label for="user-password" class="am-u-sm-12 am-form-label am-text-left">
-                                设置密码
-                                <span class="tpl-form-line-small-title">Password</span>
+                            <label for="gander" class="am-u-sm-12 am-form-label am-text-left">
+                                性别
+                                <span class="tpl-form-line-small-title">Gander</span>
                             </label>
                             <div class="am-u-sm-12">
-                                <input type="password" name="password" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请设置密码" required>
-                                <small>该密码用于后台登录。</small>
+                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" @if(!is_null($oDesigner) && $oDesigner->sex == 1){{'checked'}}@endif required>男
+                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" @if(!is_null($oDesigner) && $oDesigner->sex == 2){{'checked'}}@endif required>女
+                                <br>
+                                <small>设置性别方便顾客做出选择。</small>
                             </div>
                         </div>
 
                         <div class="am-form-group">
-                            <label for="user-email" class="am-u-sm-12 am-form-label am-text-left">
-                                电子邮箱
-                                <span class="tpl-form-line-small-title">Email</span>
+                            <label for="photo" class="am-u-sm-12 am-form-label  am-text-left">
+                                个人写真
+                                <span class="tpl-form-line-small-title">Photo</span>
                             </label>
-                            <div class="am-u-sm-12">
-                                <input type="email" name="email" value="{{old('email')}}" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请填写邮箱">
-                                <small>非必填，登录后可自行更改。</small>
+                            <div class="am-u-sm-12 am-margin-top-xs">
+                                <div class="am-form-group am-form-file">
+                                    <div class="tpl-form-file-img">
+                                        <img src="@if(!is_null($oDesigner)){{$oDesigner->photo}}@endif">
+                                        <input type="hidden" id="hide-photo" value="@if(!is_null($oDesigner)){{$oDesigner->photo}}@endif">
+                                    </div>
+                                    <button type="button" class="am-btn am-btn-primary am-btn-sm ">
+                                        <i class="am-icon-cloud-upload"></i> 上传写真</button>
+                                    <input id="doc-form-file" type="file">
+                                </div>
                             </div>
                         </div>
 
                         <div class="am-form-group">
-                            <label for="user-phone" class="am-u-sm-12 am-form-label am-text-left">
-                                联系电话
-                                <span class="tpl-form-line-small-title">Phone</span>
+                            <label for="title" class="am-u-sm-12 am-form-label am-text-left">
+                                头衔
+                                <span class="tpl-form-line-small-title">Title</span>
                             </label>
                             <div class="am-u-sm-12">
-                                <input type="number" name="phone" value="{{old('phone')}}" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请填写联系电话">
-                                <small>非必填，登录后可自行更改。</small>
+                                <input type="text" name="title" value="@if(!is_null($oDesigner)){{$oDesigner->title}}@endif" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请设置头衔" required>
+                                <small>可以展示自己的技术等级。</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="work-year" class="am-u-sm-12 am-form-label am-text-left">
+                                工龄
+                                <span class="tpl-form-line-small-title">Work Year</span>
+                            </label>
+                            <div class="am-u-sm-12">
+                                <input type="number" name="work-year" value="@if(!is_null($oDesigner)){{$oDesigner->work_year}}@endif" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请设置工龄" required>
+                                <small>展示自己的阅历。</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="introduction" class="am-u-sm-12 am-form-label  am-text-left">个人简介</label>
+                            <div class="am-u-sm-12 am-margin-top-xs">
+                                <textarea class="" rows="10" id="introduction" placeholder="输入个人简介，让顾客更好地了解你。" required>@if(!is_null($oDesigner)){{$oDesigner->introduction}}@endif</textarea>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <div class="am-u-sm-12 am-u-sm-push-12">
-                                <input type="submit" class="am-btn am-btn-success tpl-btn-bg-color-success ">
-                                <input type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" value="返回" onclick="window.location.href='/admin/shopowner';">
+                                <input type="submit" class="am-btn am-btn-success tpl-btn-bg-color-success" value="保存">
+                                <input type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" value="退出" onclick="window.location.href='/admin/clerk';">
                             </div>
                         </div>
                     </form>
