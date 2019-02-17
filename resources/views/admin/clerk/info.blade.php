@@ -31,8 +31,8 @@
                                 <span class="tpl-form-line-small-title">Gander</span>
                             </label>
                             <div class="am-u-sm-12">
-                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" @if(!is_null($oDesigner) && $oDesigner->sex == 1){{'checked'}}@endif required>男
-                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" @if(!is_null($oDesigner) && $oDesigner->sex == 2){{'checked'}}@endif required>女
+                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" value="1" @if(!is_null($oDesigner) && $oDesigner->sex == 1){{'checked'}}@endif required>男
+                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" value="2" @if(!is_null($oDesigner) && $oDesigner->sex == 2){{'checked'}}@endif required>女
                                 <br>
                                 <small>设置性别方便顾客做出选择。</small>
                             </div>
@@ -46,12 +46,12 @@
                             <div class="am-u-sm-12 am-margin-top-xs">
                                 <div class="am-form-group am-form-file">
                                     <div class="tpl-form-file-img">
-                                        <img src="@if(!is_null($oDesigner)){{$oDesigner->photo}}@endif">
-                                        <input type="hidden" id="hide-photo" value="@if(!is_null($oDesigner)){{$oDesigner->photo}}@endif">
+                                        <img id="show_photo" width="200" src="@if(!is_null($oDesigner)){{$oDesigner->photo}}@endif">
+                                        <input type="hidden" id="hide_photo" name="photo" value="@if(!is_null($oDesigner)){{$oDesigner->photo}}@endif">
                                     </div>
                                     <button type="button" class="am-btn am-btn-primary am-btn-sm ">
                                         <i class="am-icon-cloud-upload"></i> 上传写真</button>
-                                    <input id="doc-form-file" type="file">
+                                    <input id="file_photo" name="file_photo" type="file" onchange="uploadThumb('/admin/upload-photo', 'file_photo', 'show_photo', 'hide_photo')">
                                 </div>
                             </div>
                         </div>
@@ -81,13 +81,15 @@
                         <div class="am-form-group">
                             <label for="introduction" class="am-u-sm-12 am-form-label  am-text-left">个人简介</label>
                             <div class="am-u-sm-12 am-margin-top-xs">
-                                <textarea class="" rows="10" id="introduction" placeholder="输入个人简介，让顾客更好地了解你。" required>@if(!is_null($oDesigner)){{$oDesigner->introduction}}@endif</textarea>
+                                <textarea name="introduction" rows="10" id="introduction" placeholder="输入个人简介，让顾客更好地了解你。" required>@if(!is_null($oDesigner)){{$oDesigner->introduction}}@endif</textarea>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <div class="am-u-sm-12 am-u-sm-push-12">
                                 <input type="submit" class="am-btn am-btn-success tpl-btn-bg-color-success" value="保存">
-                                <input type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" value="退出" onclick="window.location.href='/admin/clerk';">
+                                @if(!is_null($oDesigner))
+                                    <input type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success" value="退出" onclick="window.location.href='/admin/clerk';">
+                                @endif
                             </div>
                         </div>
                     </form>

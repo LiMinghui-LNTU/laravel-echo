@@ -47,8 +47,8 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="table-list.html">
-                        <span class="am-icon-book sidebar-nav-link-logo"></span> 资料展示
+                    <a href="/admin/case-show">
+                        <span class="am-icon-book sidebar-nav-link-logo"></span> 发型展示
                     </a>
                 </li>
 

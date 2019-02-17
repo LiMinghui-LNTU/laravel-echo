@@ -13,10 +13,18 @@
                             <div class="am-form-group">
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 审核</button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+                                        <button type="button" class="am-btn am-btn-default am-btn-success"><span
+                                                    class="am-icon-plus"></span> 新增
+                                        </button>
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
+                                                    class="am-icon-save"></span> 保存
+                                        </button>
+                                        <button type="button" class="am-btn am-btn-default am-btn-warning"><span
+                                                    class="am-icon-archive"></span> 审核
+                                        </button>
+                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span
+                                                    class="am-icon-trash-o"></span> 删除
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -38,113 +46,76 @@
                             <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                 <input type="text" class="am-form-field ">
                                 <span class="am-input-group-btn">
-            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                    type="button"></button>
           </span>
                             </div>
                         </div>
 
                         <div class="am-u-sm-12">
-                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black ">
                                 <thead>
                                 <tr>
-                                    <th>文章标题</th>
-                                    <th>作者</th>
-                                    <th>时间</th>
+                                    <th>订单号</th>
+                                    <th>预订人昵称</th>
+                                    <th>预定项目</th>
+                                    <th>预定总额</th>
+                                    <th>订单状态</th>
+                                    <th>支付状态</th>
+                                    <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="gradeX">
-                                    <td>Amaze UI 模式窗口</td>
-                                    <td>张鹏飞</td>
-                                    <td>2016-09-26</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="even gradeC">
-                                    <td>有适配微信小程序的计划吗</td>
-                                    <td>天纵之人</td>
-                                    <td>2016-09-26</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="gradeX">
-                                    <td>请问有没有amazeui 分享插件</td>
-                                    <td>王宽师</td>
-                                    <td>2016-09-26</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="even gradeC">
-                                    <td>关于input输入框的问题</td>
-                                    <td>着迷</td>
-                                    <td>2016-09-26</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="even gradeC">
-                                    <td>有没有发现官网上的下载包不好用</td>
-                                    <td>醉里挑灯看键</td>
-                                    <td>2016-09-26</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr class="even gradeC">
-                                    <td>我建议WEB版本文件引入问题</td>
-                                    <td>罢了</td>
-                                    <td>2016-09-26</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @foreach($oOrders as $order)
+                                    <tr>
+                                        <td>{{$order->order_number}}</td>
+                                        <td data-am-popover="{content: '{{$order->title}}<br>{{$order->account_number}}', trigger: 'hover focus'}"
+                                            style="color: orange;">
+                                            {{$order->nickname}}
+                                        </td>
+                                        <td>
+                                            <?php $aServiceNum = json_decode($order->service_number, true); $iCount = count($aServiceNum); ?>
+                                            @for($i = 0; $i < $iCount; $i++)
+                                                {{\App\Model\Service::getServiceNameByNum($aServiceNum[$i])[0]}}
+                                                @if($i != $iCount-1),@endif
+                                            @endfor
+                                        </td>
+                                        <td>&yen;{{$order->total_money}}</td>
+                                        <td>
+                                            @if($order->status == 1)已完成
+                                            @elseif($order->status == 2)待赴约
+                                            @else失约
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($order->pay == 0)未支付
+                                            @elseif($order->pay == 1)支付成功
+                                            @else已退款
+                                            @endif
+                                        </td>
+                                        <td>{{$order->created_at}}</td>
+                                        <td>
+                                            <div class="tpl-table-black-operation">
+                                                @if($order->status == 2)
+                                                    <a href="javascript:;">
+                                                        <i class="am-icon-close"></i> 取消订单
+                                                    </a>
+                                                @endif
+                                                @if($order->status == 1 || ($order->status == 3 && $order->pay == 0) || ($order->status == 3 && $order->pay == 2))
+                                                    <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+                                                    </a>
+                                                @endif
+                                                @if($order->pay == 1 && $order->status != 1)
+                                                    <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-undo"></i> 退款
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 <!-- more data -->
                                 </tbody>
                             </table>

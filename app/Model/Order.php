@@ -52,4 +52,17 @@ class Order extends Model
         }
         return '1001';
     }
+
+    /**
+     * 获取某造型师所有订单
+     */
+    public static function getAllOrdersByDesignerId($iDesignerId = 0)
+    {
+        $oOrders = self::leftJoin('members as m', 'member_id', '=', 'm.id')->leftJoin('vip as v', 'm.vip_id', '=', 'v.id')
+            ->select('order_number', 'm.nickname', 'v.title', 'service_number', 'total_money', 'status', 'pay', 'm.account_number', 'orders.created_at')
+            ->where('designer_id', $iDesignerId)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        return $oOrders;
+    }
 }

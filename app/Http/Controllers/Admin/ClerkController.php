@@ -11,20 +11,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Designer;
+use App\Model\Order;
 use App\Model\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class ClerkController extends Controller
 {
     private $sViewPath = 'admin.';
     private $sidebar = 'admin.layout.sidebar3';
     protected $oUser;
+    protected $iDesignerId;
 
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             $this->oUser = Auth::user();
+            $this->iDesignerId = Designer::getDesignerIdByUserId($this->oUser->id);
             if ($this->oUser->role_id == 3) {
                 return $next($request);
             } else {
@@ -38,7 +43,13 @@ class ClerkController extends Controller
         $sTitle = '我的订单';
         $sidebar = $this->sidebar;
         $content = 'admin.clerk.order';
-        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
+        if (count($this->iDesignerId)) { //已经完善个人信息成为造型师
+            //获取本人所有订单
+            $oOrders = Order::getAllOrdersByDesignerId($this->iDesignerId);
+            return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oOrders'));
+        } else {
+            return redirect('/admin/clerk/' . $this->oUser->id);
+        }
     }
 
     /**
@@ -51,11 +62,13 @@ class ClerkController extends Controller
         $sTitle = '日程管理';
         $sidebar = $this->sidebar;
         $content = 'admin.clerk.calendar';
-        //获取本人id
-        $iDesignerId = Designer::getDesignerIdByUserId($this->oUser->id);
-        //获取日程
-        $oSchedule = json_encode(Schedule::getScheduleById($iDesignerId), true);
-        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oSchedule'));
+        if (count($this->iDesignerId)) {
+            //获取日程
+            $oSchedule = json_encode(Schedule::getScheduleById($this->iDesignerId), true);
+            return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oSchedule'));
+        } else {
+            return redirect('/admin/clerk/' . $this->oUser->id);
+        }
     }
 
     /**
@@ -67,11 +80,10 @@ class ClerkController extends Controller
     public function store(Request $request)
     {
         $aInput = $request->all();
-        $iDesignerId = Designer::getDesignerIdByUserId($this->oUser->id);
         $aData = [
-            'setter_id' => $iDesignerId[0],
+            'setter_id' => $this->iDesignerId[0],
             'setter_type' => 1,
-            'designer_id' => $iDesignerId[0],
+            'designer_id' => $this->iDesignerId[0],
             'title' => $aInput['title'],
             'start' => date('Y-m-d H:i:s', strtotime($aInput['start']) - 60 * 60 * 8),
             'end' => date('Y-m-d H:i:s', strtotime($aInput['end']) - 60 * 60 * 8),
@@ -121,7 +133,29 @@ class ClerkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        $data = array(
+            'user_id' => $id,
+            'name' => trim(Input::get('name')),
+            'gender' => trim(Input::get('gender')),
+            'photo' => trim(Input::get('photo')),
+            'title' => trim(Input::get('title')),
+            'work_year' => trim(Input::get('work_year')),
+            'introduction' => trim(Input::get('introduction'))
+        );
+        $validator = Designer::clerkValid($data);
+        if ($validator->fails()) {
+            Session::flash('warning', $validator->messages()->first());
+            return redirect()->back()->withInput();
+        } else {
+            //保存数据
+            $bRes = Designer::saveClerk($data);
+            if ($bRes) {
+                return redirect('/admin/clerk');
+            } else {
+                Session::flash('warning', '保存失败');
+                return redirect()->back()->withInput();
+            }
+        }
     }
 
     /**
@@ -141,10 +175,8 @@ class ClerkController extends Controller
         $sTitle = '日程列表';
         $sidebar = $this->sidebar;
         $content = 'admin.clerk.calendar-list';
-        //获取本人id
-        $iDesignerId = Designer::getDesignerIdByUserId($this->oUser->id);
         //获取日程
-        $oSchedule = Schedule::getScheduleListById($iDesignerId);
+        $oSchedule = Schedule::getScheduleListById($this->iDesignerId);
         return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oSchedule'));
     }
 

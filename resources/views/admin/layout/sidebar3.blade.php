@@ -15,16 +15,23 @@
 
     <!-- 菜单 -->
     <ul class="sidebar-nav">
-        <li class="sidebar-nav-link">
-            <a href="/admin/clerk" @if(Request::getPathInfo() =='/admin/clerk')class="active"@endif>
-                <i class="am-icon-list-alt sidebar-nav-link-logo"></i> 我的订单
-            </a>
-        </li>
-        <li class="sidebar-nav-link">
-            <a href="/admin/clerk/create" @if(Request::getPathInfo() =='/admin/clerk/create')class="active"@endif>
-                <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日程管理
-            </a>
-        </li>
+        @if(!is_null(\App\Model\Designer::getDesignerByUserId(\Illuminate\Support\Facades\Auth::user()->id)))
+            <li class="sidebar-nav-link">
+                <a href="/admin/clerk" @if(Request::getPathInfo() =='/admin/clerk')class="active"@endif>
+                    <i class="am-icon-list-alt sidebar-nav-link-logo"></i> 我的订单
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="/admin/clerk/create" @if(Request::getPathInfo() =='/admin/clerk/create')class="active"@endif>
+                    <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日程管理
+                </a>
+            </li>
+        @endif
+            <li class="sidebar-nav-link">
+                <a href="/admin/clerk/{{\Illuminate\Support\Facades\Auth::user()->id}}" @if(Request::getPathInfo() =='/admin/clerk/'.\Illuminate\Support\Facades\Auth::user()->id)class="active"@endif>
+                    <i class="am-icon-child sidebar-nav-link-logo"></i> 个人信息
+                </a>
+            </li>
         <li class="sidebar-nav-link">
             <a href="javascript:;" class="sidebar-nav-sub-title">
                 <i class="am-icon-comments sidebar-nav-link-logo"></i> 消息收发
@@ -49,11 +56,6 @@
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="sidebar-nav-link">
-            <a href="/admin/clerk/{{\Illuminate\Support\Facades\Auth::user()->id}}">
-                <i class="am-icon-child sidebar-nav-link-logo"></i> 个人信息
-            </a>
         </li>
         <li class="sidebar-nav-link">
             <a href="tables.html">

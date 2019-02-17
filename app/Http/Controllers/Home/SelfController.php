@@ -84,7 +84,7 @@ class SelfController extends Controller
             'total_money' => $aInput['total_money'],
             'status' => 2,
             'pay' => 1,
-            'created_at' => date('Y-m-d'),
+            'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d', (time() - 120))
         ];
         $sCode = Order::saveTheOrder($aData);

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.datatables.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.css')}}"/>
     @if(strpos(Request::getPathInfo(),'clerk'))
         <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.min.css')}}"/>
         <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.print.css')}}" media="print"/>
@@ -25,6 +26,8 @@
         </style>
     @endif
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/js/ajaxfileupload.js')}}"></script>
     <script src="{{asset('assets/js/admin.js')}}"></script>
 
 </head>

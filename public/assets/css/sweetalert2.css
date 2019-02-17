@@ -601,7 +601,7 @@ body.swal2-no-backdrop .swal2-shown {
   justify-content: center;
   padding: 10px;
   background-color: transparent;
-  z-index: 1060;
+  z-index: 2060;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch; }
   .swal2-container.swal2-top {

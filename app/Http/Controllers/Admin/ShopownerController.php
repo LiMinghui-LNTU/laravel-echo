@@ -123,4 +123,10 @@ class ShopownerController extends Controller
         $content = 'admin.shopowner.message-list';
         return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
     }
+
+    //发型展示列表
+    public function caseShow()
+    {
+        return 'hello';
+    }
 }

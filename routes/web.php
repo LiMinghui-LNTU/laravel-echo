@@ -59,7 +59,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('/', 'UserController');
     Route::resource('/shopowner', 'ShopownerController');
-    Route::get('message-list', 'ShopownerController@messageList');
+    Route::get('message-list', 'ShopownerController@messageList');//消息列表
+    Route::get('case-show', 'ShopownerController@caseShow');//发型列表
     Route::resource('/clerk', 'ClerkController');
     Route::get('calendar-list', 'ClerkController@calendarList');
+    Route::post('upload-photo', 'UploadController@uploadFile');
 });

@@ -34,10 +34,10 @@ class Members extends Model
      */
     public static function isRegister($account = '')
     {
-        $obj = self::where('account_number',$account)->first();
-        if(is_null($obj)){
+        $obj = self::where('account_number', $account)->first();
+        if (is_null($obj)) {
             return 0;
-        }else{
+        } else {
             return 1;
         }
     }
@@ -49,9 +49,9 @@ class Members extends Model
     {
         //判断是否已注册
         $is_reg = self::isRegister($account);
-        if($is_reg){
+        if ($is_reg) {
             return false;
-        }else {
+        } else {
             $data = ['account_number' => $account, 'password' => Hash::make($password), 'regist_type' => $regist_type, 'created_at' => date('Y-m-d H:i:s')];
             return self::insert($data);
         }
@@ -63,17 +63,17 @@ class Members extends Model
     public static function checkAccount($account = '', $password = '')
     {
         $obj = self::where('account_number', $account)->first();
-        if(is_null($obj)){
+        if (is_null($obj)) {
             return 1002;
-        }else{
+        } else {
             //校验密码
-            if(Hash::check($password, $obj->password)){
-                if($obj->is_active){
+            if (Hash::check($password, $obj->password)) {
+                if ($obj->is_active) {
                     return 1001;
-                }else{
+                } else {
                     return 1003;
                 }
-            }else{
+            } else {
                 return 1002;
             }
         }
@@ -84,6 +84,14 @@ class Members extends Model
      */
     public static function getInfoByAccount($sAccount = '')
     {
-        return self::where('account_number', $sAccount)->first();
+        return self::leftJoin('vip as v', 'vip_id', '=', 'v.id')->select('members.id', 'account_number', 'nickname', 'title', 'ticket', 'members.coins', 'members.reputation_value')->where('account_number', $sAccount)->first();
+    }
+
+    /**
+     * 根据id查询顾客
+     */
+    public static function getMemberById($iId = 0)
+    {
+        return self::where('id', $iId)->first();
     }
 }

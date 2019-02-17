@@ -41,7 +41,7 @@
                             </div>
                             <label class="am-u-sm-4 am-form-label">头衔：</label>
                             <div class="am-u-sm-8">
-                                <small>{{\App\Model\Vip::getTitleById($oInfo->vip_id)[0]}}</small>
+                                <small>{{$oInfo->title}}</small>
                             </div>
                             <button class="am-btn am-btn-primary am-btn-xs">
                                 <i class="am-icon-edit"></i>
