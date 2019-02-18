@@ -73,7 +73,7 @@
                                 <span class="tpl-form-line-small-title">Work Year</span>
                             </label>
                             <div class="am-u-sm-12">
-                                <input type="number" name="work-year" value="@if(!is_null($oDesigner)){{$oDesigner->work_year}}@endif" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请设置工龄" required>
+                                <input type="number" name="work_year" value="@if(!is_null($oDesigner)){{$oDesigner->work_year}}@endif" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请设置工龄" required>
                                 <small>展示自己的阅历。</small>
                             </div>
                         </div>

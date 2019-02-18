@@ -80,10 +80,16 @@ class Designer extends Model
     /**
      * 保存数据
      */
-    public static function saveClerk($aData = null)
+    public static function saveClerk($iUserId = 0, $aData = null)
     {
-        $aData['stars'] = 1;
-        $aData['created_at'] = date('Y-m-d H:i:s');
-        return self::insert($aData);
+        $oDesigner = self::where('user_id', $iUserId)->first();
+        if(is_null($oDesigner)){ //首次编辑
+            $aData['stars'] = 1;
+            $aData['created_at'] = date('Y-m-d H:i:s');
+            return self::insert($aData);
+        }else{
+            $aData['updated_at'] = date('Y-m-d H:i:s');
+            return self::where('user_id', $iUserId)->update($aData);
+        }
     }
 }

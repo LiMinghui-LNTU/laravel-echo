@@ -135,12 +135,12 @@ class ClerkController extends Controller
     {
         $data = array(
             'user_id' => $id,
-            'name' => trim(Input::get('name')),
-            'gender' => trim(Input::get('gender')),
-            'photo' => trim(Input::get('photo')),
-            'title' => trim(Input::get('title')),
-            'work_year' => trim(Input::get('work_year')),
-            'introduction' => trim(Input::get('introduction'))
+            'name' => trim($request->input('name')),
+            'sex' => trim($request->input('gander')),
+            'photo' => trim($request->input('photo')),
+            'title' => trim($request->input('title')),
+            'work_year' => trim($request->input('work_year')),
+            'introduction' => trim($request->input('introduction'))
         );
         $validator = Designer::clerkValid($data);
         if ($validator->fails()) {
@@ -148,7 +148,7 @@ class ClerkController extends Controller
             return redirect()->back()->withInput();
         } else {
             //保存数据
-            $bRes = Designer::saveClerk($data);
+            $bRes = Designer::saveClerk($id, $data);
             if ($bRes) {
                 return redirect('/admin/clerk');
             } else {
