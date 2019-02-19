@@ -31,9 +31,13 @@
                                 <span class="tpl-form-line-small-title">Gander</span>
                             </label>
                             <div class="am-u-sm-12">
-                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" value="1" @if(!is_null($oDesigner) && $oDesigner->sex == 1){{'checked'}}@endif required>男
-                                <input type="radio" name="gander" class="tpl-form-no-bg am-margin-top-xs" value="2" @if(!is_null($oDesigner) && $oDesigner->sex == 2){{'checked'}}@endif required>女
-                                <br>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gander" value="1" @if(!is_null($oDesigner) && $oDesigner->sex == 1){{'checked'}}@endif required data-am-ucheck>男
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gander" value="2" @if(!is_null($oDesigner) && $oDesigner->sex == 2){{'checked'}}@endif required data-am-ucheck>女
+                                </label>
+                                    <br>
                                 <small>设置性别方便顾客做出选择。</small>
                             </div>
                         </div>
@@ -51,7 +55,7 @@
                                     </div>
                                     <button type="button" class="am-btn am-btn-primary am-btn-sm ">
                                         <i class="am-icon-cloud-upload"></i> 上传写真</button>
-                                    <input id="file_photo" name="file_photo" type="file" onchange="uploadThumb('/admin/upload-photo', 'file_photo', 'show_photo', 'hide_photo')">
+                                    <input type="file" id="file_photo" name="file_photo" onchange="uploadThumb('/admin/upload-photo', 'file_photo', 'show_photo', 'hide_photo')">
                                 </div>
                             </div>
                         </div>

@@ -10,17 +10,17 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 
 class UploadController extends Controller
 {
     private $iMaxSize = 6;
 
     //文件上传
-    public function uploadFile()
+    public function uploadFile(Request $request)
     {
-        $sFileId = Input::get('file_id');
-        $oFile = Input::file($sFileId);
+        $sFileId = $request->input('file_id');
+        $oFile = $request->file($sFileId);
         //检验一下上传的文件是否有效
         if ($oFile->isValid()) {
             $sMimeType = $oFile->getMimeType();
