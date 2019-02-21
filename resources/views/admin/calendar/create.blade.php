@@ -5,7 +5,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">日程管理</div>
+                        <div class="widget-title  am-cf">添加日程</div>
                     </div>
                     <div class="widget-body  am-fr">
 
@@ -13,11 +13,8 @@
                             <div class="am-form-group">
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success"><span
-                                                    class="am-icon-plus"></span> 创建日程
-                                        </button>
                                         <button type="button" class="am-btn am-btn-default am-btn-secondary"
-                                                onclick="window.location.href='/admin/calendar-list';"><span
+                                                onclick="window.location.href='/admin/calendar';"><span
                                                     class="am-icon-list"></span> 日程列表
                                         </button>
                                     </div>
@@ -137,7 +134,7 @@
 
     function createSchedule(title, start, end) {
         $.post(
-            '/admin/clerk',
+            '/admin/calendar',
             {'_token': "{{csrf_token()}}", 'title': title, 'start': start, 'end': end},
             function (data) {
                 if (data.code != '1001') {

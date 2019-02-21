@@ -13,8 +13,8 @@
                             <div class="am-form-group">
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success" onclick="window.location.href='/admin/clerk/create';">
-                                            <span class="am-icon-reply"></span> 返回日程
+                                        <button type="button" class="am-btn am-btn-default am-btn-success" onclick="window.location.href='/admin/calendar/create';">
+                                            <span class="am-icon-plus"></span> 添加日程
                                         </button>
                                     </div>
                                 </div>

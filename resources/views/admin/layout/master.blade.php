@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.datatables.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.css')}}"/>
-    @if(strpos(Request::getPathInfo(),'clerk'))
+    @if(strpos(Request::getPathInfo(),'calendar'))
         <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.min.css')}}"/>
         <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.print.css')}}" media="print"/>
         <style type="text/css">

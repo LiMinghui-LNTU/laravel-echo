@@ -47,7 +47,7 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="/admin/case-show">
+                    <a href="/admin/case" @if(Request::getPathInfo() =='/admin/case')class="active"@endif>
                         <span class="am-icon-book sidebar-nav-link-logo"></span> 发型展示
                     </a>
                 </li>
@@ -97,7 +97,7 @@
             </a>
             <ul class="sidebar-nav sidebar-nav-sub">
                 <li class="sidebar-nav-link">
-                    <a href="/admin/message-list">
+                    <a href="/admin/message" @if(Request::getPathInfo() =='/admin/message')class="active"@endif>
                         <span class="am-icon-download sidebar-nav-link-logo"></span> 收消息
                     </a>
                 </li>

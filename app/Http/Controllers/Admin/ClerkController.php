@@ -15,7 +15,6 @@ use App\Model\Order;
 use App\Model\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class ClerkController extends Controller
@@ -59,16 +58,7 @@ class ClerkController extends Controller
      */
     public function create()
     {
-        $sTitle = '日程管理';
-        $sidebar = $this->sidebar;
-        $content = 'admin.clerk.calendar';
-        if (count($this->iDesignerId)) {
-            //获取日程
-            $oSchedule = json_encode(Schedule::getScheduleById($this->iDesignerId), true);
-            return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oSchedule'));
-        } else {
-            return redirect('/admin/clerk/' . $this->oUser->id);
-        }
+        //
     }
 
     /**
@@ -79,20 +69,7 @@ class ClerkController extends Controller
      */
     public function store(Request $request)
     {
-        $aInput = $request->all();
-        $aData = [
-            'setter_id' => $this->iDesignerId[0],
-            'setter_type' => 1,
-            'designer_id' => $this->iDesignerId[0],
-            'title' => $aInput['title'],
-            'start' => date('Y-m-d H:i:s', strtotime($aInput['start']) - 60 * 60 * 8),
-            'end' => date('Y-m-d H:i:s', strtotime($aInput['end']) - 60 * 60 * 8),
-            'text_color' => 'green',
-            'background_color' => 'lightblue',
-        ];
-        //保存
-        $sCode = Schedule::saveSchedule($aData);
-        return json_encode(['code' => $sCode]);
+        //
     }
 
     /**
@@ -167,17 +144,6 @@ class ClerkController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    //日程列表
-    public function calendarList()
-    {
-        $sTitle = '日程列表';
-        $sidebar = $this->sidebar;
-        $content = 'admin.clerk.calendar-list';
-        //获取日程
-        $oSchedule = Schedule::getScheduleListById($this->iDesignerId);
-        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oSchedule'));
     }
 
 }

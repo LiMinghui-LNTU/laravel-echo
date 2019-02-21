@@ -58,10 +58,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 //后台用户路由
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('/', 'UserController');
-    Route::resource('/shopowner', 'ShopownerController');
-    Route::get('message-list', 'ShopownerController@messageList');//消息列表
-    Route::get('case-show', 'ShopownerController@caseShow');//发型列表
-    Route::resource('/clerk', 'ClerkController');
-    Route::get('calendar-list', 'ClerkController@calendarList');
+    Route::resource('shopowner', 'ShopownerController');
+    Route::resource('message', 'MessageController');//消息列表
+    Route::resource('case', 'CaseController');//发型展示
+    Route::resource('clerk', 'ClerkController');
+    Route::resource('calendar', 'CalendarController');//日程安排
     Route::post('upload-photo', 'UploadController@uploadFile');
 });

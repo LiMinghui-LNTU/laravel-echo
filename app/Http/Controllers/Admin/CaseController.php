@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class ShopownerController extends Controller
+class CaseController extends Controller
 {
     private $sViewPath = 'admin.';
     private $sidebar = 'admin.layout.sidebar2';
@@ -26,14 +24,17 @@ class ShopownerController extends Controller
         });
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $sTitle = '员工列表';
+        $sTitle = '发型展示列表';
         $sidebar = $this->sidebar;
-        $content = 'admin.shopowner.clerk-list';
-        //取出店员
-        $oUser = User::getAllClerks();
-        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oUser'));
+        $content = 'admin.case.index';
+        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
     }
 
     /**
@@ -43,37 +44,24 @@ class ShopownerController extends Controller
      */
     public function create()
     {
-        $sTitle = '新增店员';
-        $sidebar = $this->sidebar;
-        $content = 'admin.shopowner.clerk-create';
-        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $aData = $request->all();
-        //保存数据
-        $sRes = User::saveClerk($aData);
-        if ($sRes == '1005'){
-            Session::flash('error', '该账号已存在');
-            return redirect()->back()->withInput();
-        }elseif($sRes == '1004'){
-            Session::flash('error', '入库失败');
-            return redirect()->back()->withInput();
-        }
-        return redirect('/admin/shopowner');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -84,7 +72,7 @@ class ShopownerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -95,8 +83,8 @@ class ShopownerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -107,12 +95,11 @@ class ShopownerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
     }
-
 }

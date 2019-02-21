@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="/admin/clerk/create" @if(Request::getPathInfo() =='/admin/clerk/create')class="active"@endif>
+                <a href="/admin/calendar" @if(Request::getPathInfo() =='/admin/calendar')class="active"@endif>
                     <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日程管理
                 </a>
             </li>
