@@ -13,7 +13,8 @@
                             <div class="am-form-group">
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success" onclick="window.location.href='';">
+                                        <button type="button" class="am-btn am-btn-default am-btn-success"
+                                                onclick="window.location.href='case/create';">
                                             <span class="am-icon-plus"></span> 新增
                                         </button>
                                         <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
@@ -65,41 +66,46 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="gradeX">
-                                    <td>
-                                        <span class="am-badge am-badge-primary am-round">4</span>
-                                        包子入侵
-                                    </td>
-                                    <td>顾客</td>
-                                    <td>店长你好，我想办理会员，请问如何操作？</td>
-                                    <td>2819-01-20 19:36:45</td>
-                                    <td>2819-01-20 19:36:45</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @foreach($oCases as $case)
+                                    <tr class="gradeX">
+                                        <td>{{$case->id}}</td>
+                                        <td>
+                                            @if($case->tag == 1)
+                                                最新流行
+                                            @elseif($case->tag == 2)
+                                                男士风尚
+                                            @elseif($case->tag == 3)
+                                                女性潮流
+                                            @else
+                                                优秀作品
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <img src="{{$case->thumb}}" width="100">
+                                        </td>
+                                        <td>{{$case->title}}</td>
+                                        <td>{{$case->created_at}}</td>
+                                        <td>
+                                            <div class="tpl-table-black-operation">
+                                                <a href="javascript:;">
+                                                    <i class="am-icon-pencil"></i> 编辑
+                                                </a>
+                                                <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                    <i class="am-icon-trash"></i> 删除
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 <!-- more data -->
                                 </tbody>
                             </table>
                         </div>
                         <div class="am-u-lg-12 am-cf" id="paginate-nav">
                             <div class="am-fr">
-                                <ul class="am-pagination tpl-pagination">
-                                    <li class="am-disabled"><a href="#">«</a></li>
-                                    <li class="am-active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">»</a></li>
-                                </ul>
+                                @if($oCases)
+                                    {!! $oCases->render('vendor.pagination/default'); !!}
+                                @endif
                             </div>
                         </div>
                     </div>

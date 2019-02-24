@@ -13,7 +13,8 @@
                             <div class="am-form-group">
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success" onclick="window.location.href='/admin/shopowner/create';"><span
+                                        <button type="button" class="am-btn am-btn-default am-btn-success"
+                                                onclick="window.location.href='/admin/shopowner/create';"><span
                                                     class="am-icon-plus"></span> 新增
                                         </button>
                                         <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
@@ -88,18 +89,12 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="am-u-lg-12 am-cf">
 
+                        <div class="am-u-lg-12 am-cf">
                             <div class="am-fr">
-                                <ul class="am-pagination tpl-pagination">
-                                    <li class="am-disabled"><a href="#">«</a></li>
-                                    <li class="am-active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">»</a></li>
-                                </ul>
+                                @if($oUser)
+                                    {!! $oUser->render('vendor.pagination.default'); !!}
+                                @endif
                             </div>
                         </div>
                     </div>
