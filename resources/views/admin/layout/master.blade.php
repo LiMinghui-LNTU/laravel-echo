@@ -29,6 +29,13 @@
     <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/ajaxfileupload.js')}}"></script>
     <script src="{{asset('assets/js/admin.js')}}"></script>
+    {{--百度编辑器--}}
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="{{ asset('assets/ueditor/ueditor.config.js') }}"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="{{ asset('assets/ueditor/ueditor.all.js') }}"></script>
+    <!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
+    <script type="text/javascript" src="{{ asset('assets/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 
 </head>
 

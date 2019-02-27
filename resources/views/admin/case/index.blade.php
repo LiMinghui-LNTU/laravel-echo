@@ -47,13 +47,13 @@
                             <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                 <input type="text" class="am-form-field ">
                                 <span class="am-input-group-btn">
-            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
-                    type="button"></button>
-          </span>
+                                    <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                </span>
                             </div>
                         </div>
 
                         <div class="am-u-sm-12" id="people-list">
+                            @csrf
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black ">
                                 <thead>
                                 <tr>
@@ -61,6 +61,7 @@
                                     <th>标签</th>
                                     <th>示例图</th>
                                     <th>发型名称</th>
+                                    <th>是否显示</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -81,16 +82,25 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <img src="{{$case->thumb}}" width="100">
+                                            <img src="{{$case->thumb}}" width="30">
                                         </td>
                                         <td>{{$case->title}}</td>
+                                        <td>
+                                            <span class="tpl-switch">
+                                                <input type="checkbox" onclick="doSwitch('{{$case->id}}', this)" class="ios-switch bigswitch tpl-switch-btn" @if($case->is_show) checked @endif>
+                                                <div class="tpl-switch-btn-view">
+                                                    <div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </td>
                                         <td>{{$case->created_at}}</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="javascript:;">
+                                                <a href="/admin/case/{{$case->id}}/edit">
                                                     <i class="am-icon-pencil"></i> 编辑
                                                 </a>
-                                                <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                <a href="javascript:doDestroy('{{$case->id}}', 'case');" class="tpl-table-black-operation-del">
                                                     <i class="am-icon-trash"></i> 删除
                                                 </a>
                                             </div>

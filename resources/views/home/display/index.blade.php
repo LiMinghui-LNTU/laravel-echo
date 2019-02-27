@@ -31,132 +31,82 @@
         <div class="am-tabs-bd solutions-tabs-content ">
             <div data-tab-panel-0 class="am-tab-panel am-active">
                 <ul class=" solutions-content-ul">
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="solutions-inform.html">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app1.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app2.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
+                    @foreach($oCases as $case)
+                        @if($case->tag == 1)
+                            <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
+                                <a href="javascript:;">
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
+                                        <img src="{{$case->thumb}}"/>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
+                                        <h5>{{$case->title}}</h5>
+                                        <p>{!! $case->content !!}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
                     <div class="clear"></div>
                 </ul>
             </div>
 
             <div data-tab-panel-1 class="am-tab-panel ">
                 <ul class="am-container-1 solutions-content-ul">
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app1.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app2.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12  am-u-end">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app2.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
-
+                    @foreach($oCases as $case)
+                        @if($case->tag == 2)
+                            <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
+                                <a href="javascript:;">
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
+                                        <img src="{{$case->thumb}}"/>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
+                                        <h5>{{$case->title}}</h5>
+                                        <p>{!! $case->content !!}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
 
             <div data-tab-panel-2 class="am-tab-panel ">
                 <ul class="am-container-1 solutions-content-ul">
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app1.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app2.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
+                    @foreach($oCases as $case)
+                        @if($case->tag == 3)
+                            <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
+                                <a href="javascript:;">
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
+                                        <img src="{{$case->thumb}}"/>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
+                                        <h5>{{$case->title}}</h5>
+                                        <p>{!! $case->content !!}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
 
             <div data-tab-panel-3 class="am-tab-panel ">
                 <ul class="am-container-1 solutions-content-ul">
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app1.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
-                        <a href="#">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
-                                <img src="{{'assets/img/app2.png'}}"/>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
-                                <h5>优悦解决方案</h5>
-                                <p>
-                                    华天公路货运管理系统是华天软件为物流货运企业全力打造的一套物流网络信息化的实在营运解决方案，通过６年的不断积累，汲取数十家物流企业的实战经验，以客户为中心，以业务为纽带，为车辆调度，仓库管理，装车发货，分拣中心，卸货提货，运单跟踪，</p>
-                            </div>
-                        </a>
-                    </li>
+                    @foreach($oCases as $case)
+                        @if($case->tag == 4)
+                            <li class="am-u-sm-12 am-u-md-6 am-u-lg-12">
+                                <a href="javascript:;">
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 solution-tabs-img">
+                                        <img width="150" height="150" src="{{$case->thumb}}"/>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9 solution-tabs-words">
+                                        <h5>{{$case->title}}</h5>
+                                        <p>{!! $case->content !!}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
 

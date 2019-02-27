@@ -10,17 +10,17 @@
                 </div>
                 @include('admin.common.error')
                 <div class="widget-body am-fr">
-
-                    <form action="/admin/case" class="am-form tpl-form-border-form" method="post">
+                    <form action="/admin/case/{{$oCase->id}}" class="am-form tpl-form-border-form" method="post">
                         @csrf
+                        <input name="_method" type="hidden" value="PUT">
                         <div class="am-form-group">
                             <label for="tag" class="am-u-sm-12 am-form-label am-text-left">选择标签<span class="tpl-form-line-small-title">Tag</span></label>
                             <div class="am-u-sm-12  am-margin-top-xs">
                                 <select name="tag" data-am-selected="" required>
-                                    <option value="1">最新流行</option>
-                                    <option value="2">男士风尚</option>
-                                    <option value="3">女性潮流</option>
-                                    <option value="4">优秀作品</option>
+                                    <option value="1" @if($oCase->tag == 1) selected @endif>最新流行</option>
+                                    <option value="2" @if($oCase->tag == 2) selected @endif>男士风尚</option>
+                                    <option value="3" @if($oCase->tag == 3) selected @endif>女性潮流</option>
+                                    <option value="4" @if($oCase->tag == 4) selected @endif>优秀作品</option>
                                 </select>
                             </div>
                         </div>
@@ -33,8 +33,8 @@
                             <div class="am-u-sm-12 am-margin-top-xs">
                                 <div class="am-form-group am-form-file">
                                     <div class="tpl-form-file-img">
-                                        <img id="show_thumb" width="200" src="">
-                                        <input type="hidden" id="hide_thumb" name="thumb">
+                                        <img id="show_thumb" width="200" src="{{$oCase->thumb}}">
+                                        <input type="hidden" id="hide_thumb" name="thumb" value="{{$oCase->thumb}}">
                                     </div>
                                     <button type="button" class="am-btn am-btn-primary am-btn-sm ">
                                         <i class="am-icon-cloud-upload"></i> 上传缩略图</button>
@@ -49,7 +49,7 @@
                                 <span class="tpl-form-line-small-title">Title</span>
                             </label>
                             <div class="am-u-sm-12">
-                                <input type="text" name="title" value="{{old('title')}}" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请填写发型名称" required>
+                                <input type="text" name="title" value="{{$oCase->title}}" class="am-form-field tpl-form-no-bg am-margin-top-xs" placeholder="请填写发型名称" required>
                                 <small>用于显示该发型的名称。</small>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                 <span class="tpl-form-line-small-title">Content</span>
                             </label>
                             <div class="am-u-sm-12">
-                                <script id="brief" name="content" type="text/plain">{{ old('content') }}</script>
+                                <script id="brief" name="content" type="text/plain">{!! $oCase->content !!}</script>
                                 <script type="text/javascript">
                                     var editor = UE.getEditor('brief',{initialFrameHeight:200, autoHeightEnabled:true, zIndex:1300})
                                 </script>

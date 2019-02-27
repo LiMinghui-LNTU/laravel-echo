@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Home;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\Cases;
 use Illuminate\Http\Request;
 
 class DisplayController extends Controller
@@ -24,7 +25,9 @@ class DisplayController extends Controller
     public function index()
     {
         $sTitle = '发型展示';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        //获取所有发型案例
+        $oCases = Cases::getCases();
+        return view($this->sViewPath . 'index', compact('sTitle', 'oCases'));
     }
 
     /**
