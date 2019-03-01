@@ -65,4 +65,12 @@ class Order extends Model
             ->paginate(10);
         return $oOrders;
     }
+
+    /**
+     * 根据订单号查询订单
+     */
+    public static function getOrderByOrderNum($sNum = '')
+    {
+        return self::where('order_number', $sNum)->first();
+    }
 }

@@ -37,6 +37,15 @@
     <!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
     <script type="text/javascript" src="{{ asset('assets/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 
+    @if(strpos(Request::getPathInfo(),'clerk'))
+        <script>
+            window.localStorage.setItem('designer_id', "{{\App\Model\Designer::getDesignerIdByUserId(Auth::User()->id)[0]}}");
+        </script>
+        <script src="{{asset('js/socket.io.js')}}"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="/js/app.js"></script>
+    @endif
+
 </head>
 
 <body data-type="index">

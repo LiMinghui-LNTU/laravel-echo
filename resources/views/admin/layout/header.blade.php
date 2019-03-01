@@ -86,7 +86,7 @@
                 <li class="am-dropdown" data-am-dropdown>
                     <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
                         <i class="am-icon-bell"></i>
-                        <span class="am-badge am-badge-warning am-round item-feed-badge">5</span>
+                        <span class="am-badge am-badge-warning am-round item-feed-badge" id="tip_num"></span>
                     </a>
 
                     <!-- 弹出列表 -->

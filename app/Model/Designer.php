@@ -38,6 +38,14 @@ class Designer extends Model
     }
 
     /**
+     * 根据造型师id获取后台对应UserId
+     */
+    public static function getUserIdById($iId = 0)
+    {
+        return self::where('id', $iId)->pluck('user_id');
+    }
+
+    /**
      * 根据id获取造型师名称
      */
     public static function getDesignerNameById($iId = 0)

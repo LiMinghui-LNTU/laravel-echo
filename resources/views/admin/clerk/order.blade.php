@@ -69,7 +69,7 @@
                                 <tbody>
                                 @foreach($oOrders as $order)
                                     <tr>
-                                        <td>{{$order->order_number}}</td>
+                                        <td @if(!$order->is_read)style="color: #ff0;cursor: pointer;" onclick="iKnow(this, '{{$order->id}}')" @endif id="td-num{{$order->id}}">{{$order->order_number}}@if(!$order->is_read)<span class="am-badge am-badge-danger am-round" style="color: #ff0;">new</span>@endif</td>
                                         <td data-am-popover="{content: '{{$order->title}}<br>{{$order->account_number}}', trigger: 'hover focus'}"
                                             style="color: orange;">
                                             {{$order->nickname}}
@@ -123,15 +123,9 @@
                         <div class="am-u-lg-12 am-cf">
 
                             <div class="am-fr">
-                                <ul class="am-pagination tpl-pagination">
-                                    <li class="am-disabled"><a href="#">«</a></li>
-                                    <li class="am-active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">»</a></li>
-                                </ul>
+                                @if($oOrders)
+                                    {!! $oOrders->render('vendor.pagination.default'); !!}
+                                @endif
                             </div>
                         </div>
                     </div>

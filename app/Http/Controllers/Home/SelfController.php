@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Home;
 
 
+use App\Events\OrderCreateEvent;
 use App\Http\Controllers\Controller;
 use App\Model\Designer;
 use App\Model\Members;
@@ -88,6 +89,8 @@ class SelfController extends Controller
             'updated_at' => date('Y-m-d', (time() - 120))
         ];
         $sCode = Order::saveTheOrder($aData);
+        //给造型师发送提醒
+        broadcast(new OrderCreateEvent(Order::getOrderByOrderNum($sOrderNumber)));
         if ($sCode != '1001') {
             return json_encode(['success' => 0, 'code' => $sCode]);
         }
