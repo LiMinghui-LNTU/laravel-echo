@@ -12,11 +12,7 @@ Echo.channel('push')
         $("#content").append(e.message + "<br>");
         console.log(e);
     });
-Echo.private('privatePush.' + window.id)
-    .listen('PrivateMessageEvent', (e) => {
-        alert(e.message);
-        console.log(e);
-    });
+
 //监听订单创建
 Echo.private('order.' + window.localStorage.getItem('designer_id'))
     .listen('OrderCreateEvent', (e) => {
@@ -35,4 +31,27 @@ Echo.private('order.' + window.localStorage.getItem('designer_id'))
             showConfirmButton: false,
             timer: 1500
         });
+        //ajax回显数据
+        $.post(
+            '/admin/clerk',
+            {
+                _token: $("input[name='_token']").val()
+            },
+            function (data) {
+                if (data.code == '1001') {
+                    $("#order-content").html(data.msg);
+                } else {
+                    showMessage(data.msg);
+                    return false;
+                }
+            },
+            'json'
+        );
+    });
+
+//监听消息收发
+Echo.private('message.' + window.localStorage.getItem('to') + window.localStorage.getItem('type'))
+    .listen('MessageEvent', (e) => {
+        console.log(window.localStorage.getItem('to') + "#" + window.localStorage.getItem('type'));
+        console.log(e.message);
     });

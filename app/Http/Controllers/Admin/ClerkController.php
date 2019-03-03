@@ -68,7 +68,14 @@ class ClerkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $content = 'clerk.order-content';
+        //提醒成功后通过ajax将数据回显页面
+        $oOrders = Order::getAllOrdersByDesignerId($this->iDesignerId);
+        if ($oOrders) {
+            return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . $content, compact('oOrders'))]);
+        } else {
+            return json_encode(['code' => 1010, 'msg' => '空数据']);
+        }
     }
 
     /**
@@ -95,9 +102,22 @@ class ClerkController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $iId = (int)$request->input('order_id');
+        //点击单号修改订单已读状态
+        $oOrder = Order::getOrderById($id);
+        if (is_null($oOrder) || $id != $iId) {
+            return json_encode(['code' => 1011, 'msg' => '订单不存在']);
+        } else {
+            //修改订单已读状态
+            $iRes = Order::changeReadById($oOrder->id);
+            if ($iRes) {
+                return json_encode(['code' => 1001, 'msg' => $oOrder->order_number]);
+            } else {
+                return json_encode(['code' => 1012, 'msg' => '数据更新失败']);
+            }
+        }
     }
 
     /**

@@ -10,8 +10,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/home_logo.ico')}}" />
-	<link rel="bookmark" href="{{asset('assets/img/home_logo.ico')}}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/home_logo.ico')}}"/>
+    <link rel="bookmark" href="{{asset('assets/img/home_logo.ico')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.css')}}"/>
@@ -26,8 +26,19 @@
         </style>
     @endif
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
- 	{{--<script src="{{asset('assets/js/public.js')}}"></script>--}}
- 	<script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
+    {{--<script src="{{asset('assets/js/public.js')}}"></script>--}}
+    <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
+
+    @if(strpos(Request::getPathInfo(),'self'))
+        <script>
+            window.localStorage.setItem('to', '{{\App\Model\Members::getIdByAccount(session()->get('member')[0])[0]}}');
+            window.localStorage.setItem('type', '4');
+        </script>
+        <script src="{{asset('js/socket.io.js')}}"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="{{asset('js/app.js')}}"></script>
+    @endif
+
 </head>
 <body>
 <header class="am-topbar header">

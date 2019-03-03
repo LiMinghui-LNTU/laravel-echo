@@ -267,14 +267,32 @@ function doLogin() {
 //-------------end-------------------
 
 //-----------留言-------------
-function leaveWords() {
+function leaveWords(id) {
     $("#area").slideDown();
     $(".am-comments-list").slideUp();
     if ($("#comment-area").val() == '') {
         $("#comment-area").val("请留下您的宝贵意见...");
         return false;
     } else {
-        alert("留言成功");
+        $.get(
+            'self/' + id,
+            {
+                message_from: id,
+                message_to: '2',
+                message_content: $("#comment-area").val(),
+                type: '2'
+            },
+            function (data) {
+                if (data.code == '1001') {
+                    $("#comment-area").val("");
+                    $("#message-content").append(data.msg);
+                } else {
+                    tip(data.msg);
+                    return false;
+                }
+            },
+            'json'
+        );
     }
 }
 

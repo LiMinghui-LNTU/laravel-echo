@@ -27,35 +27,17 @@
                 </a>
             </li>
         @endif
-            <li class="sidebar-nav-link">
-                <a href="/admin/clerk/{{\Illuminate\Support\Facades\Auth::user()->id}}" @if(Request::getPathInfo() =='/admin/clerk/'.\Illuminate\Support\Facades\Auth::user()->id)class="active"@endif>
-                    <i class="am-icon-child sidebar-nav-link-logo"></i> 个人信息
-                </a>
-            </li>
         <li class="sidebar-nav-link">
-            <a href="javascript:;" class="sidebar-nav-sub-title">
-                <i class="am-icon-comments sidebar-nav-link-logo"></i> 消息收发
-                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            <a href="/admin/clerk/{{\Illuminate\Support\Facades\Auth::user()->id}}"
+               @if(Request::getPathInfo() =='/admin/clerk/'.\Illuminate\Support\Facades\Auth::user()->id)class="active"@endif>
+                <i class="am-icon-child sidebar-nav-link-logo"></i> 个人信息
             </a>
-            <ul class="sidebar-nav sidebar-nav-sub">
-                <li class="sidebar-nav-link">
-                    <a href="table-list.html">
-                        <span class="am-icon-download sidebar-nav-link-logo"></span> 收消息
-                    </a>
-                </li>
+        </li>
 
-                <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-upload sidebar-nav-link-logo"></span> 发消息
-                    </a>
-                </li>
-
-                <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-bookmark sidebar-nav-link-logo"></span> 待办事项
-                    </a>
-                </li>
-            </ul>
+        <li class="sidebar-nav-link">
+            <a href="table-list-img.html">
+                <span class="am-icon-bookmark sidebar-nav-link-logo"></span> 待办事项
+            </a>
         </li>
         <li class="sidebar-nav-link">
             <a href="tables.html">

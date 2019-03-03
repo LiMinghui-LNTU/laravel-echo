@@ -43,7 +43,17 @@
         </script>
         <script src="{{asset('js/socket.io.js')}}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script src="/js/app.js"></script>
+        <script src="{{asset('js/app.js')}}"></script>
+    @endif
+
+    @if(strpos(Request::getPathInfo(),'message'))
+        <script>
+            window.localStorage.setItem('to', '{{Auth::User()->id}}');
+            window.localStorage.setItem('type', '{{(\App\User::getRoleById(Auth::User()->id)[0])}}');
+        </script>
+        <script src="{{asset('js/socket.io.js')}}"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="{{asset('js/app.js')}}"></script>
     @endif
 
 </head>

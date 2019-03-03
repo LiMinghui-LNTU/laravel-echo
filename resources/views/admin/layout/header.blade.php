@@ -86,7 +86,12 @@
                 <li class="am-dropdown" data-am-dropdown>
                     <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
                         <i class="am-icon-bell"></i>
-                        <span class="am-badge am-badge-warning am-round item-feed-badge" id="tip_num"></span>
+                        @if(Auth::User()->role_id == 3)
+                            <?php $iNewOrder = \App\Model\Order::searchNewOrderNum(\App\Model\Designer::getDesignerIdByUserId(Auth::User()->id)[0]); ?>
+                            <span class="am-badge am-badge-warning am-round item-feed-badge" id="tip_num">@if($iNewOrder != 0){{$iNewOrder}}@endif</span>
+                        @else
+                            <span class="am-badge am-badge-warning am-round item-feed-badge">5</span>
+                        @endif
                     </a>
 
                     <!-- 弹出列表 -->

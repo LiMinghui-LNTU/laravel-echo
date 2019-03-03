@@ -51,7 +51,7 @@
           </span>
                             </div>
                         </div>
-
+                        @csrf
                         <div class="am-u-sm-12">
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black ">
                                 <thead>
@@ -66,10 +66,10 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="order-content">
                                 @foreach($oOrders as $order)
                                     <tr>
-                                        <td @if(!$order->is_read)style="color: #ff0;cursor: pointer;" onclick="iKnow(this, '{{$order->id}}')" @endif id="td-num{{$order->id}}">{{$order->order_number}}@if(!$order->is_read)<span class="am-badge am-badge-danger am-round" style="color: #ff0;">new</span>@endif</td>
+                                        <td @if($order->is_read == 0)style="color: #ff0;cursor: pointer;" onclick="iKnow(this, '{{$order->id}}')" @endif>{{$order->order_number}}@if($order->is_read == 0)<span class="am-badge am-badge-danger am-round" style="color: #ff0;">new</span>@endif</td>
                                         <td data-am-popover="{content: '{{$order->title}}<br>{{$order->account_number}}', trigger: 'hover focus'}"
                                             style="color: orange;">
                                             {{$order->nickname}}

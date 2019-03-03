@@ -9,10 +9,12 @@
 namespace App\Http\Controllers\Home;
 
 
+use App\Events\MessageEvent;
 use App\Events\OrderCreateEvent;
 use App\Http\Controllers\Controller;
 use App\Model\Designer;
 use App\Model\Members;
+use App\Model\Message;
 use App\Model\Order;
 use App\Model\Schedule;
 use App\Model\Service;
@@ -38,7 +40,9 @@ class SelfController extends Controller
         $oInfo = Members::getInfoByAccount($sAccount);
         //查询全部订单
         $oOrders = Order::getOrdersByMemberId($oInfo->id);
-        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo', 'oOrders'));
+        //获取关于登录顾客的消息
+        $oMessages = Message::getMessages(Members::getIdByAccount(session()->get('member')[0])[0], Members::getIdByAccount(session()->get('member')[0])[0], 4, 4);
+        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo', 'oOrders', 'oMessages'));
     }
 
     /**
@@ -103,9 +107,30 @@ class SelfController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+        //该方法改做向店长发送消息
+        $iId = (int)$request->input('message_from');
+        $oMember = Members::getMemberById($id);
+        if (is_null($oMember) || $iId != $id) {
+            return json_encode(['code' => 1010, 'msg' => '该用户不存在']);
+        } else {
+            //保存消息
+            $aMessage = array(
+                'from' => $iId,
+                'to' => (int)$request->input('message_to'),
+                'content' => trim($request->input('message_content')),
+                'pre_type' => 4,
+                'type' => (int)$request->input('type'),
+                'created_at' => date('Y-m-d H:i:s')
+            );
+            $iMessageId = Message::saveMessage($aMessage);
+            //获取消息对象
+            $oMessage = Message::getMessageById($iMessageId);
+            //发送消息给店长
+            broadcast(new MessageEvent($oMessage));
+            return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message-content', compact('oMessage'))]);
+        }
     }
 
     /**
@@ -201,7 +226,7 @@ class SelfController extends Controller
     {
         $sServiceNum = Input::get('service_num');
         $oService = Service::getServiceByNum($sServiceNum);
-        return json_encode(['price' => $oService->price, 'time' => $oService->continue_to, 'reputation'=>$oService->reputation_val]);
+        return json_encode(['price' => $oService->price, 'time' => $oService->continue_to, 'reputation' => $oService->reputation_val]);
     }
 
     //前台获取某造型师日程

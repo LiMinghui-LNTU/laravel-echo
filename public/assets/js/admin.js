@@ -101,3 +101,31 @@ function uploadThumb(url, file_id, show_id, hide_id) {
         }
     })
 }
+
+//点击单号表示已读
+function iKnow(obj, orderId) {
+    $.get(
+        '/admin/clerk/' + orderId + '/edit',
+        {
+            order_id: orderId
+        },
+        function (data) {
+            if (data.code == '1001') {
+                var old_num = $("#tip_num").html();
+                var now_num = parseInt(old_num) - 1;
+                if (parseInt(now_num) > 0) {
+                    $("#tip_num").html(now_num);
+                } else {
+                    $("#tip_num").html("");
+                }
+                $(obj).attr("style", "");
+                $(obj).attr("onclick", "");
+                $(obj).html(data.msg);
+            } else {
+                showMessage(data.msg);
+                return false;
+            }
+        },
+        'json'
+    );
+}

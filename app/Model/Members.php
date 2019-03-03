@@ -84,7 +84,7 @@ class Members extends Model
      */
     public static function getInfoByAccount($sAccount = '')
     {
-        return self::leftJoin('vip as v', 'vip_id', '=', 'v.id')->select('members.id', 'account_number', 'nickname', 'title', 'ticket', 'members.coins', 'members.reputation_value')->where('account_number', $sAccount)->first();
+        return self::leftJoin('vip as v', 'vip_id', '=', 'v.id')->select('members.id', 'account_number', 'nickname', 'photo', 'title', 'ticket', 'members.coins', 'members.reputation_value')->where('account_number', $sAccount)->first();
     }
 
     /**
@@ -93,5 +93,13 @@ class Members extends Model
     public static function getMemberById($iId = 0)
     {
         return self::where('id', $iId)->first();
+    }
+
+    /**
+     * 根据账户获取id
+     */
+    public static function getIdByAccount($sAccount = '')
+    {
+        return self::where('account_number', $sAccount)->pluck('id');
     }
 }

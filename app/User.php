@@ -91,4 +91,12 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * 根据id查询身份
+     */
+    public static function getRoleById($iId = 0)
+    {
+        return self::where('id', $iId)->pluck('role_id');
+    }
+
 }

@@ -22,9 +22,7 @@
                 <div class="am-panel-bd">
                     <div class="am-g">
                         <div class="am-u-md-1">
-                            <img class="am-img-circle am-img-thumbnail"
-                                 src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/200/h/200/q/80"
-                                 alt=""/>
+                            <img class="am-img-circle am-img-thumbnail" src="{{$oInfo->photo}}" alt=""/>
                         </div>
                         <div class="am-u-md-4">
                             <label class="am-u-sm-4 am-form-label">账号：</label>
@@ -267,118 +265,54 @@
                         <textarea style="width: 100%;overflow: auto;word-break: break-all;resize: none;" rows="8"
                                   id="comment-area"></textarea>
                     </div>
-                    <ul class="am-comments-list am-comments-list-flip am-scrollable-vertical" style="display: none;">
-                        <li class="am-comment am-comment-primary">
-                            <a href="#link-to-user-home">
-                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
-                                     alt="" class="am-comment-avatar" width="48" height="48">
-                            </a>
-                            <div class="am-comment-main">
-                                <header class="am-comment-hd">
-                                    <div class="am-comment-meta">
-                                        <a href="#link-to-user" class="am-comment-author">路人乙</a> 评论于
-                                        <time datetime="2013-07-27T04:54:29-07:00"
-                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:30
-                                        </time>
+                    <ul class="am-comments-list am-comments-list-flip am-scrollable-vertical" id="message-content" style="display: none;">
+                        @forelse($oMessages as $message)
+                            @if($message->from == $oInfo->id && $message->pre_type == 4)
+                            <li class="am-comment am-comment-flip am-comment-danger">
+                                <a href="javascript:;">
+                                    <img src="{{$oInfo->photo}}" alt="" class="am-comment-avatar" width="48" height="48">
+                                </a>
+                                <div class="am-comment-main">
+                                    <header class="am-comment-hd">
+                                        <div class="am-comment-meta">
+                                            <a href="javascript:;" class="am-comment-author">{{$oInfo->nickname}}</a> 回复于
+                                            <time title="{{date('Y年m月d日H:i:s', strtotime($message->created_at))}}">{{$message->created_at}}</time>
+                                        </div>
+                                    </header>
+                                    <div class="am-comment-bd">
+                                        <p>{{$message->content}}</p>
                                     </div>
-                                </header>
-                                <div class="am-comment-bd">
-                                    <p><a href="#lin-to-user">@某人</a> 撸主保重！</p>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="am-comment am-comment-flip am-comment-secondary">
-                            <a href="#link-to-user-home">
-                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
-                                     alt="" class="am-comment-avatar" width="48" height="48">
-                            </a>
-                            <div class="am-comment-main">
-                                <header class="am-comment-hd">
-                                    <div class="am-comment-meta">
-                                        <a href="#link-to-user" class="am-comment-author">某人</a> 评论于
-                                        <time datetime="2013-07-27T04:54:29-07:00"
-                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
-                                        </time>
+                            </li>
+                            @else
+                                <?php $oUser = \App\User::findUser($message->from); ?>
+                                <li class="am-comment am-comment-primary">
+                                    <a href="javascript:;">
+                                        <img src="{{$oUser->head_url}}" alt="" class="am-comment-avatar" width="48" height="48">
+                                    </a>
+                                    <div class="am-comment-main">
+                                        <header class="am-comment-hd">
+                                            <div class="am-comment-meta">
+                                                <a href="javascript:;" class="am-comment-author">{{$oUser->username}}</a> 回复于
+                                                <time title="{{date('Y年m月d日H:i:s', strtotime($message->created_at))}}">{{$message->created_at}}</time>
+                                            </div>
+                                        </header>
+                                        <div class="am-comment-bd">
+                                            <p>{{$message->content}}</p>
+                                        </div>
                                     </div>
-                                </header>
-                                <div class="am-comment-bd">
-                                    <p><a href="#lurenyi">@路人乙</a> 朕知道了！</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="am-comment am-comment-highlight">
-                            <a href="#link-to-user-home">
-                                <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
-                                     alt="" class="am-comment-avatar" width="48" height="48">
-                            </a>
-                            <div class="am-comment-main">
-                                <header class="am-comment-hd">
-                                    <div class="am-comment-meta">
-                                        <a href="#link-to-user" class="am-comment-author">路人乙</a> 评论于
-                                        <time datetime="2013-07-27T04:54:29-07:00"
-                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:32
-                                        </time>
-                                    </div>
-                                </header>
-                                <div class="am-comment-bd">
-                                    <p><a href="#lin-to-user">@某人</a> 艹民告退！</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="am-comment am-comment-flip am-comment-danger">
-                            <a href="#link-to-user-home">
-                                <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
-                                     alt="" class="am-comment-avatar" width="48" height="48">
-                            </a>
-                            <div class="am-comment-main">
-                                <header class="am-comment-hd">
-                                    <div class="am-comment-meta">
-                                        <a href="#link-to-user" class="am-comment-author">某人</a> 评论于
-                                        <time datetime="2013-07-27T04:54:29-07:00"
-                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
-                                        </time>
-                                    </div>
-                                </header>
-                                <div class="am-comment-bd"><p><a href="#lurenyi">@路人乙</a> 滚！</p></div>
-                            </div>
-                        </li>
-                        <li class="am-comment am-comment-warning"><a href="#link-to-user-home"><img
-                                        src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
-                                        alt="" class="am-comment-avatar" width="48" height="48"></a>
-                            <div class="am-comment-main">
-                                <header class="am-comment-hd">
-                                    <div class="am-comment-meta"><a href="#link-to-user"
-                                                                    class="am-comment-author">路人乙</a> 评论于
-                                        <time datetime="2013-07-27T04:54:29-07:00"
-                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:32
-                                        </time>
-                                    </div>
-                                </header>
-                                <div class="am-comment-bd"><p><a href="#lin-to-user">@某人</a> 你妹！</p></div>
-                            </div>
-                        </li>
-                        <li class="am-comment am-comment-flip am-comment-success"><a href="#link-to-user-home"><img
-                                        src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
-                                        alt="" class="am-comment-avatar" width="48" height="48"></a>
-                            <div class="am-comment-main">
-                                <header class="am-comment-hd">
-                                    <div class="am-comment-meta"><a href="#link-to-user"
-                                                                    class="am-comment-author">某人</a> 评论于
-                                        <time datetime="2013-07-27T04:54:29-07:00"
-                                              title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
-                                        </time>
-                                    </div>
-                                </header>
-                                <div class="am-comment-bd"><p><a href="#lurenyi">@路人乙</a> 你妹你妹！</p></div>
-                            </div>
-                        </li>
+                                </li>
+                            @endif
+                        @empty
+                            暂无消息
+                        @endforelse
                     </ul>
                     <div class="am-btn-group">
                         <button type="button" class="am-btn-primary am-round" onclick="messages()">
                             <i class="am-icon-envelope"></i>
                             <span class="am-badge am-badge-danger am-round">4</span>
                         </button>
-                        <button type="button" class="am-btn-warning am-round" onclick="leaveWords()">
+                        <button type="button" class="am-btn-warning am-round" onclick="leaveWords('{{$oInfo->id}}')">
                             留言
                             <i class="am-icon-send"></i>
                         </button>
