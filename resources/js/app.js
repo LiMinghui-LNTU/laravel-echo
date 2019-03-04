@@ -54,4 +54,10 @@ Echo.private('message.' + window.localStorage.getItem('to') + window.localStorag
     .listen('MessageEvent', (e) => {
         console.log(window.localStorage.getItem('to') + "#" + window.localStorage.getItem('type'));
         console.log(e.message);
+        var type = window.localStorage.getItem('type');
+        if(type == 2){ //发给店长
+
+        }else if(type == 4){ //发给顾客
+
+        }
     });

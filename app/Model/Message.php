@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Message extends Model
 {
@@ -43,5 +44,15 @@ class Message extends Model
     public static function saveMessage($aData = null)
     {
         return self::insertGetId($aData);
+    }
+
+    /**
+     * 查询发送给某人的所有消息，合并相同的发送者
+     */
+    public static function getMessagesSentToMe($to = 0, $type = 0)
+    {
+        return self::where('to', $to)->where('type', $type)->groupBy('from')
+            ->select('from', 'pre_type', 'content', 'created_at', DB::raw('COUNT(*) - SUM(is_read) as need_read'))
+            ->orderByDesc('created_at')->get();
     }
 }
