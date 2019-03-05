@@ -51,7 +51,7 @@
           </span>
                             </div>
                         </div>
-
+                        @csrf
                         <div class="am-u-sm-12" id="people-list">
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black ">
                                 <thead>
@@ -63,150 +63,44 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr class="gradeX">
-                                    <td>
-                                        <span class="am-badge am-badge-primary am-round">4</span>
-                                        包子入侵
-                                    </td>
-                                    <td>顾客</td>
-                                    <td>店长你好，我想办理会员，请问如何操作？</td>
-                                    <td>2819-01-20 19:36:45</td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:getMessage({{'1'}});">
-                                                <i class="am-icon-pencil"></i> 回复
-                                            </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                <i class="am-icon-trash"></i> 禁言
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <tbody id="message-list">
+                                @if($oMyMessages)
+                                    @foreach($oMyMessages as $message)
+                                        <tr class="gradeX">
+                                            <td>
+                                                <span id="{{$message->from}}-num-{{$message->pre_type}}" class="am-badge am-badge-primary am-round">@if($message->need_read > 0) {{$message->need_read}} @endif</span>
+                                                @if($message->pre_type == 4) {{\App\Model\Members::getNameById($message->from)[0]}} @else {{\App\User::getUsernameById($message->from)[0]}} @endif
+                                            </td>
+                                            <td>@if($message->pre_type == 4) 顾客 @elseif($message->pre_type == 3) 店员 @elseif($message->pre_type == 2) 店长 @else 管理员 @endif</td>
+                                            <td id="{{$message->from}}-content-{{$message->pre_type}}" style="color: #0f0;">
+                                                @if((strlen($message->content) + mb_strlen($message->content,'utf-8')) / 2 >= 50)
+                                                    {{mb_strimwidth($message->content, 0, 50,'...', 'utf-8' )}}
+                                                @else
+                                                    {{$message->content}}
+                                                @endif
+                                            </td>
+                                            <td id="{{$message->from}}-time-{{$message->pre_type}}">{{$message->created_at}}</td>
+                                            <td>
+                                                <div class="tpl-table-black-operation">
+                                                    <a href="javascript:getMessage('{{$message->from}}', '{{$message->pre_type}}');">
+                                                        <i class="am-icon-eye"></i> 查看
+                                                    </a>
+                                                    <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 <!-- more data -->
                                 </tbody>
                             </table>
                         </div>
-                        <div class="am-u-lg-12 am-cf" id="paginate-nav">
-                            <div class="am-fr">
-                                <ul class="am-pagination tpl-pagination">
-                                    <li class="am-disabled"><a href="#">«</a></li>
-                                    <li class="am-active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">»</a></li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="am-panel-bd am-u-md-12" id="reply-panel" style="display: none;">
-                            <ul class="am-comments-list am-comments-list-flip am-scrollable-vertical">
-                                <li class="am-comment am-comment-primary">
-                                    <a href="#link-to-user-home">
-                                        <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
-                                             alt="" class="am-comment-avatar" width="48" height="48">
-                                    </a>
-                                    <div class="am-comment-main">
-                                        <header class="am-comment-hd">
-                                            <div class="am-comment-meta">
-                                                <a href="#link-to-user" class="am-comment-author">路人乙</a> 评论于
-                                                <time datetime="2013-07-27T04:54:29-07:00"
-                                                      title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:30
-                                                </time>
-                                            </div>
-                                        </header>
-                                        <div class="am-comment-bd">
-                                            <p><a href="#lin-to-user">@某人</a> 撸主保重！</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="am-comment am-comment-flip am-comment-secondary">
-                                    <a href="#link-to-user-home">
-                                        <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
-                                             alt="" class="am-comment-avatar" width="48" height="48">
-                                    </a>
-                                    <div class="am-comment-main">
-                                        <header class="am-comment-hd">
-                                            <div class="am-comment-meta">
-                                                <a href="#link-to-user" class="am-comment-author">某人</a> 评论于
-                                                <time datetime="2013-07-27T04:54:29-07:00"
-                                                      title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
-                                                </time>
-                                            </div>
-                                        </header>
-                                        <div class="am-comment-bd">
-                                            <p><a href="#lurenyi">@路人乙</a> 朕知道了！</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="am-comment am-comment-highlight">
-                                    <a href="#link-to-user-home">
-                                        <img src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
-                                             alt="" class="am-comment-avatar" width="48" height="48">
-                                    </a>
-                                    <div class="am-comment-main">
-                                        <header class="am-comment-hd">
-                                            <div class="am-comment-meta">
-                                                <a href="#link-to-user" class="am-comment-author">路人乙</a> 评论于
-                                                <time datetime="2013-07-27T04:54:29-07:00"
-                                                      title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:32
-                                                </time>
-                                            </div>
-                                        </header>
-                                        <div class="am-comment-bd">
-                                            <p><a href="#lin-to-user">@某人</a> 艹民告退！</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="am-comment am-comment-flip am-comment-danger">
-                                    <a href="#link-to-user-home">
-                                        <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
-                                             alt="" class="am-comment-avatar" width="48" height="48">
-                                    </a>
-                                    <div class="am-comment-main">
-                                        <header class="am-comment-hd">
-                                            <div class="am-comment-meta">
-                                                <a href="#link-to-user" class="am-comment-author">某人</a> 评论于
-                                                <time datetime="2013-07-27T04:54:29-07:00"
-                                                      title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
-                                                </time>
-                                            </div>
-                                        </header>
-                                        <div class="am-comment-bd"><p><a href="#lurenyi">@路人乙</a> 滚！</p></div>
-                                    </div>
-                                </li>
-                                <li class="am-comment am-comment-warning"><a href="#link-to-user-home"><img
-                                                src="http://www.gravatar.com/avatar/1ecedeede84abbf371b9d8d656bb4265?d=mm&amp;s=96"
-                                                alt="" class="am-comment-avatar" width="48" height="48"></a>
-                                    <div class="am-comment-main">
-                                        <header class="am-comment-hd">
-                                            <div class="am-comment-meta"><a href="#link-to-user"
-                                                                            class="am-comment-author">路人乙</a> 评论于
-                                                <time datetime="2013-07-27T04:54:29-07:00"
-                                                      title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:32
-                                                </time>
-                                            </div>
-                                        </header>
-                                        <div class="am-comment-bd"><p><a href="#lin-to-user">@某人</a> 你妹！</p></div>
-                                    </div>
-                                </li>
-                                <li class="am-comment am-comment-flip am-comment-success"><a
-                                            href="#link-to-user-home"><img
-                                                src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96"
-                                                alt="" class="am-comment-avatar" width="48" height="48"></a>
-                                    <div class="am-comment-main">
-                                        <header class="am-comment-hd">
-                                            <div class="am-comment-meta"><a href="#link-to-user"
-                                                                            class="am-comment-author">某人</a> 评论于
-                                                <time datetime="2013-07-27T04:54:29-07:00"
-                                                      title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-14 23:301
-                                                </time>
-                                            </div>
-                                        </header>
-                                        <div class="am-comment-bd"><p><a href="#lurenyi">@路人乙</a> 你妹你妹！</p></div>
-                                    </div>
-                                </li>
+                            <input type="hidden" id="hide-from" value="0">
+                            <input type="hidden" id="hide-pre_type" value="0">
+                            <ul class="am-comments-list am-comments-list-flip am-scrollable-vertical" id="ul-message">
                             </ul>
                             <hr>
                             <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">

@@ -99,4 +99,12 @@ class User extends Authenticatable
         return self::where('id', $iId)->pluck('role_id');
     }
 
+    /**
+     * 根据id查用户名
+     */
+    public static function getUsernameById($iId = 0)
+    {
+        return self::where('id', $iId)->pluck('username');
+    }
+
 }

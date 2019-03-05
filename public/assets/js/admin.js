@@ -1,8 +1,27 @@
 //---------获取消息------------
-function getMessage(id) {
-    $("#people-list").slideUp();
-    $("#paginate-nav").slideUp();
-    $("#reply-panel").slideDown();
+function getMessage(from, pre_type) {
+    $.post(
+        '/admin/get-message',
+        {
+            _token : $("input[name='_token']").val(),
+            from : from,
+            pre_type : pre_type
+        },
+        function (data) {
+            if(data.code == '1001'){
+                $("#hide-from").val(from);
+                $("#hide-pre_type").val(pre_type);
+                $("#ul-message").html(data.msg);
+                $("#people-list").slideUp();
+                $("#paginate-nav").slideUp();
+                $("#reply-panel").slideDown();
+            }else{
+                showMessage(data.msg);
+                return false;
+            }
+        },
+        'json'
+    );
 }
 
 function goBack() {

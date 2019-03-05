@@ -21,6 +21,7 @@ use App\Model\Service;
 use ArrayObject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 
 class SelfController extends Controller
 {
@@ -235,5 +236,28 @@ class SelfController extends Controller
         $iDesignerId = Input::get('designer_id');
         $aSchedule = Schedule::getScheduleById($iDesignerId);
         return json_encode($aSchedule);
+    }
+
+    //ajax顾客将消息发给店长
+    public function sendMsg2Shopowner(Request $request)
+    {
+        $iId = $request->input('id');
+        $iFrom = $request->input('from');
+        $iPreType = $request->input('pre_type');
+        $iTo = $request->input('to');
+        $iType = $request->input('type');
+        if (is_null($iFrom) || is_null($iPreType) || is_null($iTo) || is_null($iType)) {
+            return json_encode(['code' => 1013, 'msg' => '非法参数']);
+        } else {
+            //查询此消息是否存在于列表中
+            $oSeriesMessages = Message::getSeriesMessages($iFrom, $iTo, $iPreType, $iType);
+            $oMessages = Message::getMessageById($iId);
+            Log::info("是不是空：".is_null($oMessages));
+            if (count($oSeriesMessages) > 1) {
+                return json_encode(['code' => 1001, 'exist' => 1, 'msg_content'=>(string)view('admin.message.message-content', compact('oMessages'))]);
+            } else {
+                return json_encode(['code' => 1001, 'exist' => 0, 'msg_content'=>(string)view('admin.message.message-content', compact('oMessages')), 'msg_list'=>(string)view('admin.message.message-list', compact('oMessages'))]);
+            }
+        }
     }
 }

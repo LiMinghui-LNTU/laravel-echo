@@ -46,6 +46,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::post('check-reg', 'SelfController@checkReg');
     Route::post('get-service', 'SelfController@postTimeAndPrice');
     Route::post('get-schedule', 'SelfController@postThisDesignerSchedule');
+    Route::post('to-shopowner', 'SelfController@sendMsg2Shopowner');
 });
 
 //后台登录路由
@@ -60,6 +61,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::resource('/', 'UserController');
     Route::resource('shopowner', 'ShopownerController');
     Route::resource('message', 'MessageController');//消息列表
+    Route::post('get-message', 'MessageController@getMessageToMe');//ajax获取自己的消息
     Route::resource('case', 'CaseController');//发型展示
     Route::resource('clerk', 'ClerkController');
     Route::resource('calendar', 'CalendarController');//日程安排

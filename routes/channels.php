@@ -25,12 +25,11 @@ Broadcast::channel('order.{designerId}', function ($user, $designerId) {
 
 //消息接收频道授权：验证任意试图监听message.to频道的人员确实是消息的接收者
 Broadcast::channel('message.{to}', function ($user, $to) {
-    \Illuminate\Support\Facades\Log::info('发送给：' . $to);
-    \Illuminate\Support\Facades\Log::info('登录顾客：' . session()->get('member')[0]);
+    \Illuminate\Support\Facades\Log::info('接收者：' . $to);
     //截取最后一位，获取用户类型
     $iType = substr($to, -1);
     $number = substr($to,0,strlen($to)-1);
-    \Illuminate\Support\Facades\Log::info('用户类型：' . $iType);
+    \Illuminate\Support\Facades\Log::info('接收者类型：' . $iType);
     if($iType == 4){ //顾客身份
         return (int)(\App\Model\Members::getIdByAccount(session()->get('member')[0])[0]) === (int)$number;
     }else{

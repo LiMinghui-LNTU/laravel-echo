@@ -51,8 +51,17 @@ class Message extends Model
      */
     public static function getMessagesSentToMe($to = 0, $type = 0)
     {
-        return self::where('to', $to)->where('type', $type)->groupBy('from')
-            ->select('from', 'pre_type', 'content', 'created_at', DB::raw('COUNT(*) - SUM(is_read) as need_read'))
-            ->orderByDesc('created_at')->get();
+        return DB::table(DB::raw('(select *  from message order by created_at desc) as query'))
+            ->where('query.to', $to)
+            ->where('query.type', $type)
+            ->select('query.*', DB::raw('COUNT(*) - SUM(is_read) as need_read'))->groupBy('query.from')->get();
+    }
+
+    /**
+     * 查询一类消息
+     */
+    public static function getSeriesMessages($from = 0, $to = 0, $pre_type = 0, $type = 0)
+    {
+        return self::where('from', $from)->where('to', $to)->where('pre_type', $pre_type)->where('type', $type)->get();
     }
 }

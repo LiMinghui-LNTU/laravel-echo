@@ -259,6 +259,7 @@
 
                 </div>
 
+                @csrf
                 <div class="am-panel-bd am-u-md-6">
                     <div class="am-form-group" id="area">
                         <label for="doc-ta-1">留言区域</label><br>

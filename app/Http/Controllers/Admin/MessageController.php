@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,9 @@ class MessageController extends Controller
         $sTitle = '消息列表';
         $sidebar = $this->sidebar;
         $content = 'admin.message.index';
-        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
+        //查询消息接受者为店长且发送给id为2（店长）的消息
+        $oMyMessages = Message::getMessagesSentToMe(2, 2);
+        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oMyMessages'));
     }
 
     /**
@@ -50,7 +53,7 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,7 +64,7 @@ class MessageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -72,7 +75,7 @@ class MessageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -83,8 +86,8 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -95,11 +98,29 @@ class MessageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    //ajax获取某人发送给我的消息
+    public function getMessageToMe(Request $request)
+    {
+        $iFrom = $request->input('from');
+        $iPreType = $request->input('pre_type');
+        if (is_null($iFrom) || is_null($iPreType)) {
+            return json_encode(['code' => 1010, 'msg' => '错误的消息来源']);
+        } else {
+            //获取消息
+            $oMessages = Message::getMessages($iFrom, $iFrom, $iPreType, $iPreType);
+            if (is_null($oMessages)) {
+                return json_encode(['code' => 1010, 'msg' => '消息数据丢失啦']);
+            } else {
+                return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message.message-content', compact('oMessages'))]);
+            }
+        }
     }
 }
