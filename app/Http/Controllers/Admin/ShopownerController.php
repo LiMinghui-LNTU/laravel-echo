@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
+use App\Model\Message;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,10 +62,10 @@ class ShopownerController extends Controller
         $aData = $request->all();
         //保存数据
         $sRes = User::saveClerk($aData);
-        if ($sRes == '1005'){
+        if ($sRes == '1005') {
             Session::flash('error', '该账号已存在');
             return redirect()->back()->withInput();
-        }elseif($sRes == '1004'){
+        } elseif ($sRes == '1004') {
             Session::flash('error', '入库失败');
             return redirect()->back()->withInput();
         }
@@ -115,4 +117,30 @@ class ShopownerController extends Controller
         //
     }
 
+    //店长回复消息
+    public function replyMessage(Request $request)
+    {
+        //获取消息接收方
+        $iTo = (int)$request->input('to');
+        $iType = (int)$request->input('type');
+        $sContent = trim($request->input('content'));
+        if (is_null($iTo) || is_null($iType) || is_null($sContent)) {
+            return json_encode(['code' => 1013, 'msg' => '非法参数']);
+        } else {
+            //构建消息并保存
+            $aMessage = array(
+                'from' => 2,
+                'to' => $iTo,
+                'content' => $sContent,
+                'pre_type' => 2,
+                'type' => $iType,
+                'created_at' => date('Y-m-d H:i:s')
+            );
+            $iId = Message::saveMessage($aMessage);
+            $oMessages = Message::getMessageById($iId);
+            //广播消息
+            broadcast(new MessageEvent($oMessages));
+            return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message.message-content', compact('oMessages'))]);
+        }
+    }
 }

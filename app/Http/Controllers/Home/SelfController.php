@@ -252,12 +252,24 @@ class SelfController extends Controller
             //查询此消息是否存在于列表中
             $oSeriesMessages = Message::getSeriesMessages($iFrom, $iTo, $iPreType, $iType);
             $oMessages = Message::getMessageById($iId);
-            Log::info("是不是空：".is_null($oMessages));
             if (count($oSeriesMessages) > 1) {
-                return json_encode(['code' => 1001, 'exist' => 1, 'msg_content'=>(string)view('admin.message.message-content', compact('oMessages'))]);
+                $oMyMessages = Message::getMessagesSentToMe($iTo, $iType);
+                return json_encode(['code' => 1001, 'exist' => 1, 'msg_content' => (string)view('admin.message.message-content', compact('oMessages')), 'msg_list' => (string)view('admin.message.message-list', compact('oMyMessages'))]);
             } else {
-                return json_encode(['code' => 1001, 'exist' => 0, 'msg_content'=>(string)view('admin.message.message-content', compact('oMessages')), 'msg_list'=>(string)view('admin.message.message-list', compact('oMessages'))]);
+                return json_encode(['code' => 1001, 'exist' => 0, 'msg_content' => (string)view('admin.message.message-content', compact('oMessages')), 'msg_tr' => (string)view('admin.message.message-tr', compact('oMessages'))]);
             }
+        }
+    }
+
+    //ajax查询店长发出的消息进行回显
+    public function getMsgFromShopowner(Request $request)
+    {
+        $iId = (int)$request->input('id');
+        $oMessage = Message::getMessageById($iId);
+        if (is_null($oMessage)) {
+            return json_encode(['code' => 1010, 'msg' => '未找到消息数据']);
+        } else {
+            return json_encode(['code' => '1001', 'msg' => (string)view($this->sViewPath . 'message-content', compact('oMessage'))]);
         }
     }
 }

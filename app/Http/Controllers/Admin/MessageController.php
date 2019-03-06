@@ -119,7 +119,7 @@ class MessageController extends Controller
             if (is_null($oMessages)) {
                 return json_encode(['code' => 1010, 'msg' => '消息数据丢失啦']);
             } else {
-                return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message.message-content', compact('oMessages'))]);
+                return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message.message-content-all', compact('oMessages'))]);
             }
         }
     }

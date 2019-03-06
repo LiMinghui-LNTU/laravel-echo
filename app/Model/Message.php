@@ -54,7 +54,9 @@ class Message extends Model
         return DB::table(DB::raw('(select *  from message order by created_at desc) as query'))
             ->where('query.to', $to)
             ->where('query.type', $type)
-            ->select('query.*', DB::raw('COUNT(*) - SUM(is_read) as need_read'))->groupBy('query.from')->get();
+            ->select('query.*', DB::raw('COUNT(*) - SUM(is_read) as need_read'))
+            ->groupBy('query.from', 'query.pre_type')
+            ->orderBy('query.created_at', 'desc')->get();
     }
 
     /**

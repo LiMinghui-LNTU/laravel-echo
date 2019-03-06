@@ -3,19 +3,19 @@ function getMessage(from, pre_type) {
     $.post(
         '/admin/get-message',
         {
-            _token : $("input[name='_token']").val(),
-            from : from,
-            pre_type : pre_type
+            _token: $("input[name='_token']").val(),
+            from: from,
+            pre_type: pre_type
         },
         function (data) {
-            if(data.code == '1001'){
+            if (data.code == '1001') {
                 $("#hide-from").val(from);
                 $("#hide-pre_type").val(pre_type);
                 $("#ul-message").html(data.msg);
                 $("#people-list").slideUp();
                 $("#paginate-nav").slideUp();
                 $("#reply-panel").slideDown();
-            }else{
+            } else {
                 showMessage(data.msg);
                 return false;
             }
@@ -25,9 +25,42 @@ function getMessage(from, pre_type) {
 }
 
 function goBack() {
+    $("#reply-content").val("");
     $("#reply-panel").slideUp();
     $("#paginate-nav").slideDown();
     $("#people-list").slideDown();
+}
+
+//店长回复消息
+function reply() {
+    //回复消息时，发送方变为接收方
+    var to = $("#hide-from").val();
+    var type = $("#hide-pre_type").val();
+    var content = $("#reply-content").val();
+    if (content.trim() == '') {
+        $("#reply-content").focus();
+        return false;
+    } else {
+        $.post(
+            '/admin/reply-message',
+            {
+                _token: $("input[name='_token']").val(),
+                to: to,
+                type: type,
+                content: content
+            },
+            function (data) {
+                if (data.code == '1001') {
+                    $("#reply-content").val("");
+                    $("#ul-message").append(data.msg);
+                } else {
+                    showMessage(data.msg);
+                    return false;
+                }
+            },
+            'json'
+        );
+    }
 }
 
 //发型展示---切换显示状态

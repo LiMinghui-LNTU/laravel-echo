@@ -311,7 +311,7 @@
                     <div class="am-btn-group">
                         <button type="button" class="am-btn-primary am-round" onclick="messages()">
                             <i class="am-icon-envelope"></i>
-                            <span class="am-badge am-badge-danger am-round">4</span>
+                            <span class="am-badge am-badge-danger am-round" id="msg-num">4</span>
                         </button>
                         <button type="button" class="am-btn-warning am-round" onclick="leaveWords('{{$oInfo->id}}')">
                             留言

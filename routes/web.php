@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::post('get-service', 'SelfController@postTimeAndPrice');
     Route::post('get-schedule', 'SelfController@postThisDesignerSchedule');
     Route::post('to-shopowner', 'SelfController@sendMsg2Shopowner');
+    Route::post('from-shopowner', 'SelfController@getMsgFromShopowner');
 });
 
 //后台登录路由
@@ -59,11 +60,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 //后台用户路由
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('/', 'UserController');
-    Route::resource('shopowner', 'ShopownerController');
+    Route::resource('shopowner', 'ShopownerController'); //店长
+    Route::post('reply-message', 'ShopownerController@replyMessage'); //店长回复消息
     Route::resource('message', 'MessageController');//消息列表
     Route::post('get-message', 'MessageController@getMessageToMe');//ajax获取自己的消息
     Route::resource('case', 'CaseController');//发型展示
-    Route::resource('clerk', 'ClerkController');
+    Route::resource('clerk', 'ClerkController'); //店员
     Route::resource('calendar', 'CalendarController');//日程安排
     Route::post('upload-photo', 'UploadController@uploadFile');
 });
