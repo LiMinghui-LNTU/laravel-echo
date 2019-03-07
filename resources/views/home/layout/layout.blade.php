@@ -31,8 +31,7 @@
 
     @if(strpos(Request::getPathInfo(),'self'))
         <script>
-            window.localStorage.setItem('to', '{{\App\Model\Members::getIdByAccount(session()->get('member')[0])[0]}}');
-            window.localStorage.setItem('type', '4');
+            window.localStorage.setItem('member_id', '{{\App\Model\Members::getIdByAccount(session()->get('member')[0])[0]}}');
         </script>
         <script src="{{asset('js/socket.io.js')}}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}">

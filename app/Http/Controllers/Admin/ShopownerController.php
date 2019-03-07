@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\MessageEvent;
+use App\Events\PublicMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Model\Message;
 use App\User;
@@ -138,8 +139,12 @@ class ShopownerController extends Controller
             );
             $iId = Message::saveMessage($aMessage);
             $oMessages = Message::getMessageById($iId);
-            //广播消息
-            broadcast(new MessageEvent($oMessages));
+            //广播消息：回复顾客在公共频道，其他人在私有频道
+            if($oMessages->type == 4){
+                broadcast(new PublicMessageEvent($oMessages));
+            }else{
+                broadcast(new MessageEvent($oMessages));
+            }
             return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message.message-content', compact('oMessages'))]);
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Model\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -27,7 +28,7 @@ class PublicMessageEvent implements ShouldBroadcast
      * @param User $user
      * @param string $message
      */
-    public function __construct(string $message)
+    public function __construct(Message $message)
     {
         $this->message = $message;
     }
@@ -39,18 +40,18 @@ class PublicMessageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('push'); //频道名称
+        return new Channel('public.' . $this->message->to); //频道名称
     }
 
-    //Laravel 默认会使用事件的类名作为广播名称来广播事件，自定义：
-    public function broadcastAs()
-    {
-        return 'push.message'; //广播名称
-    }
-
-    //想更细粒度地控制广播数据:
-    public function broadcastWith()
-    {
-        return ['message' => $this->message,'status' => 'okok'];
-    }
+//    //Laravel 默认会使用事件的类名作为广播名称来广播事件，自定义：
+//    public function broadcastAs()
+//    {
+//        return 'push.message'; //广播名称
+//    }
+//
+//    //想更细粒度地控制广播数据:
+//    public function broadcastWith()
+//    {
+//        return ['message' => $this->message,'status' => 'okok'];
+//    }
 }

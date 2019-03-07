@@ -7,10 +7,28 @@
 require('./bootstrap');
 
 
-Echo.channel('push')
-    .listen('.push.message', (e) => {
-        $("#content").append(e.message + "<br>");
-        console.log(e);
+Echo.channel('public.' + window.localStorage.getItem('member_id'))
+    .listen('PublicMessageEvent', (e) => {
+        var num = $("#msg-num").html();
+        var new_num = num == '' ? 1 : parseInt(num) + 1;
+        $("#msg-num").html(new_num);
+        $.post(
+            '/from-shopowner',
+            {
+                _token: $("input[name='_token']").val(),
+                id: e.message.id
+            },
+            function (data) {
+                if (data.code == '1001') {
+                    $("#message-content").append(data.msg);
+                    messageTip(e.message.pre_type);
+                } else {
+                    tip(data.msg);
+                    return false;
+                }
+            },
+            'json'
+        );
     });
 
 //监听订单创建
@@ -22,15 +40,7 @@ Echo.private('order.' + window.localStorage.getItem('designer_id'))
         } else {
             $("#tip_num").html(parseInt(num) + 1);
         }
-        Swal.fire({
-            position: 'top-end',
-            html: '<span style="color: #ff0;font-size: 20px;">您有一条新订单：' + e.order.order_number + '</span>',
-            width: 500,
-            height: 300,
-            background: '#a00',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        orderTip(e.order.order_number);
         //ajax回显数据
         $.post(
             '/admin/clerk',
@@ -52,31 +62,11 @@ Echo.private('order.' + window.localStorage.getItem('designer_id'))
 //监听消息收发
 Echo.private('message.' + window.localStorage.getItem('to') + window.localStorage.getItem('type'))
     .listen('MessageEvent', (e) => {
-        console.log(window.localStorage.getItem('to') + "#" + window.localStorage.getItem('type'));
-        console.log(e.message);
-        if (e.message.pre_type == 2) { //发送者为店长，店长可将消息发送给店员、顾客和管理员
+        // console.log(window.localStorage.getItem('to') + "#" + window.localStorage.getItem('type'));
+        // console.log(e.message);
+        if (e.message.pre_type == 2) { //发送者为店长，店长可将消息发送给店员、顾客和管理员(发给顾客走公有频道，再次不做处理)
             if (e.message.type == 3) { //发给店员
 
-            } else if (e.message.type == 4) { //发给顾客
-                var num = $("#msg-num").html();
-                var new_num = num == '' ? 1 : parseInt(num) + 1;
-                $("#msg-num").html(new_num);
-                $.post(
-                    '/from-shopowner',
-                    {
-                        _token: $("input[name='_token']").val(),
-                        id: e.message.id
-                    },
-                    function (data) {
-                        if (data.code == '1001') {
-                            $("#message-content").append(data.msg);
-                        } else {
-                            tip(data.msg);
-                            return false;
-                        }
-                    },
-                    'json'
-                );
             } else { //发给管理员
 
             }
@@ -101,6 +91,7 @@ Echo.private('message.' + window.localStorage.getItem('to') + window.localStorag
                         } else {
                             $("#message-list").prepend(data.msg_tr);
                         }
+                        messageTip(e.message.pre_type);
                     } else {
                         showMessage(data.msg);
                         return false;

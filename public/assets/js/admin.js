@@ -93,6 +93,47 @@ function showMessage(message) {
     });
 }
 
+//新订单提示
+function orderTip(order_number) {
+    Swal.fire({
+        position: 'top-end',
+        html: '<span style="color: #ff0;font-size: 20px;">您有一条新订单：' + order_number + '</span>',
+        width: 500,
+        height: 300,
+        background: '#a00',
+        showConfirmButton: false,
+        timer: 1500
+    });
+}
+
+//新消息提示
+function messageTip(pre_type) {
+    var from = '未知';
+    switch (pre_type) {
+        case 1 :
+            from = '管理员';
+            break;
+        case 2 :
+            from = '店长';
+            break;
+        case 3 :
+            from = '店员';
+            break;
+        case 4 :
+            from = '顾客';
+            break;
+    }
+    Swal.fire({
+        position: 'top-end',
+        html: '<span style="color: #fff;font-size: 20px;">您有一条' + '<span style="color: red;font-weight: bold;">' + from + '</span>' + '消息！</span>',
+        width: 400,
+        height: 250,
+        background: '#00f',
+        showConfirmButton: false,
+        timer: 2000
+    });
+}
+
 //后台做删除
 function doDestroy(id, module) {
     Swal.fire({

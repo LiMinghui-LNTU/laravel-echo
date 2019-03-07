@@ -17,13 +17,6 @@ use App\Events\PrivateMessageEvent;
 Route::get('/', function () {
     return redirect('home');
 });
-Route::get('chat', 'ChatController@getIndex');
-Route::get('chatting', 'ChatController@connect');
-Route::group(['prefix' => 'test'], function () {
-    Route::get('index', 'TestController@getIndex');
-    Route::get('push', 'TestController@getPush');
-    Route::get('privatePush', 'TestController@privatePush');
-});
 Auth::routes();
 
 //前台登录路由
