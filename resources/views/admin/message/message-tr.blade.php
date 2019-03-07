@@ -1,7 +1,7 @@
 @if($oMessages)
     <tr class="gradeX">
         <td>
-            <span class="am-badge am-badge-primary am-round">1</span>
+            <span class="am-badge am-badge-primary am-round" id="{{$message->from}}-msg-{{$message->pre_type}}">1</span>
             @if($oMessages->pre_type == 4) {{\App\Model\Members::getNameById($oMessages->from)[0]}} @else {{\App\User::getUsernameById($oMessages->from)[0]}} @endif
         </td>
         <td>@if($oMessages->pre_type == 4) 顾客 @elseif($oMessages->pre_type == 3) 店员 @elseif($oMessages->pre_type == 2) 店长 @else 管理员 @endif</td>

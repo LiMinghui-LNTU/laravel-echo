@@ -29,6 +29,34 @@ function tip(message) {
     });
 }
 
+//新消息提示
+function messageTip(pre_type) {
+    var from = '未知';
+    switch (pre_type) {
+        case 1 :
+            from = '管理员';
+            break;
+        case 2 :
+            from = '店长';
+            break;
+        case 3 :
+            from = '店员';
+            break;
+        case 4 :
+            from = '顾客';
+            break;
+    }
+    Swal.fire({
+        position: 'top-end',
+        html: '<span style="color: #fff;font-size: 20px;">您有一条' + '<span style="color: red;font-weight: bold;">' + from + '</span>' + '消息！</span>',
+        width: 400,
+        height: 250,
+        background: '#00f',
+        showConfirmButton: false,
+        timer: 2000
+    });
+}
+
 //支付弹框
 function pay(message, number, title, designer, money, ticket) {
 
@@ -263,15 +291,24 @@ function doLogin() {
         'json'
     );
 }
+//-------------end-------------
+
+//前台顾客登出要清除本地localStorage设置！！！
+function memberLogout() {
+    window.localStorage.setItem("member_id", 0);
+    window.location.href='logout';
+}
 
 //-------------end-------------------
 
 //-----------留言-------------
 function leaveWords(id) {
+    $("#msg-btn").show();
     $("#area").slideDown();
     $(".am-comments-list").slideUp();
-    if ($("#comment-area").val() == '') {
-        $("#comment-area").val("请留下您的宝贵意见...");
+    if ($("#comment-area").val().trim() == '') {
+        $("#comment-area").val("");
+        $("#comment-area").focus();
         return false;
     } else {
         $.get(
@@ -296,7 +333,9 @@ function leaveWords(id) {
     }
 }
 
-function messages() {
+function messages(obj) {
+    $(obj).hide();
+    $("#new-msg").html("");
     $("#comment-area").val("");
     $("#area").slideUp();
     $(".am-comments-list").slideDown();

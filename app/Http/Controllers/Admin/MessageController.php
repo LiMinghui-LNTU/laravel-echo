@@ -58,7 +58,9 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //此方法改做获取店长未读消息总条数
+        $iUnread = Message::getUnreadMsgNum(2, 2);
+        return json_encode(['code' => 1001, 'msg' => $iUnread]);
     }
 
     /**
@@ -116,6 +118,7 @@ class MessageController extends Controller
         } else {
             //获取消息
             $oMessages = Message::getMessages($iFrom, $iFrom, $iPreType, $iPreType);
+            Message::where('from', $iFrom)->where('pre_type', $iPreType)->update(['is_read' => 1]);
             if (is_null($oMessages)) {
                 return json_encode(['code' => 1010, 'msg' => '消息数据丢失啦']);
             } else {

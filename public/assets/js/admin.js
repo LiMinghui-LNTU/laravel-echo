@@ -15,6 +15,13 @@ function getMessage(from, pre_type) {
                 $("#people-list").slideUp();
                 $("#paginate-nav").slideUp();
                 $("#reply-panel").slideDown();
+                var num = $("#" + from + "-msg-" + pre_type).html();
+                if (num != '') {
+                    var total = parseInt($("#msg-num").html());
+                    num = parseInt(num);
+                    $("#msg-num").html(total - num);
+                    $("#" + from + "-msg-" + pre_type).html("");
+                }
             } else {
                 showMessage(data.msg);
                 return false;
@@ -29,6 +36,20 @@ function goBack() {
     $("#reply-panel").slideUp();
     $("#paginate-nav").slideDown();
     $("#people-list").slideDown();
+    $.post(
+        '/admin/message',
+        {
+            _token: $("input[name='_token']").val()
+        },
+        function (data) {
+            if (data.msg == 0) {
+                $("#msg-num").html("");
+            } else {
+                $("#msg-num").html(data.msg);
+            }
+        },
+        'json'
+    );
 }
 
 //店长回复消息

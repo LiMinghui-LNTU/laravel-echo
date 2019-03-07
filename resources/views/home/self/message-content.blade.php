@@ -1,5 +1,5 @@
-@if($oMessage->from == \App\Model\Members::getIdByAccount(session()->get('member')[0])[0] && $oMessage->pre_type == 4)
-    <?php $oInfo = \App\Model\Members::getInfoByAccount(session()->get('member')[0]); ?>
+@if($oMessage->pre_type == 4)
+    <?php $oInfo = \App\Model\Members::getMemberById($oMessage->from); ?>
     <li class="am-comment am-comment-flip am-comment-danger">
         <a href="javascript:;">
             <img src="{{$oInfo->photo}}" alt="" class="am-comment-avatar" width="48" height="48">

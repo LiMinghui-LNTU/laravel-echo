@@ -66,4 +66,12 @@ class Message extends Model
     {
         return self::where('from', $from)->where('to', $to)->where('pre_type', $pre_type)->where('type', $type)->get();
     }
+
+    /**
+     * 查询某人的未读消息条数
+     */
+    public static function getUnreadMsgNum($to = 0, $type = 0)
+    {
+        return self::where('to', $to)->where('type', $type)->where('is_read', 0)->get()->count();
+    }
 }

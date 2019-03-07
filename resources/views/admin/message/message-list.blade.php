@@ -2,7 +2,7 @@
     @foreach($oMyMessages as $message)
         <tr class="gradeX">
             <td>
-                <span class="am-badge am-badge-primary am-round">@if($message->need_read > 0) {{$message->need_read}} @endif</span>
+                <span class="am-badge am-badge-primary am-round" id="{{$message->from}}-msg-{{$message->pre_type}}">@if($message->need_read > 0) {{$message->need_read}} @endif</span>
                 @if($message->pre_type == 4) {{\App\Model\Members::getNameById($message->from)[0]}} @else {{\App\User::getUsernameById($message->from)[0]}} @endif
             </td>
             <td>@if($message->pre_type == 4) 顾客 @elseif($message->pre_type == 3) 店员 @elseif($message->pre_type == 2) 店长 @else 管理员 @endif</td>

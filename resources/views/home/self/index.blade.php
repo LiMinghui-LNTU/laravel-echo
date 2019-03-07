@@ -264,7 +264,7 @@
                     <div class="am-form-group" id="area">
                         <label for="doc-ta-1">留言区域</label><br>
                         <textarea style="width: 100%;overflow: auto;word-break: break-all;resize: none;" rows="8"
-                                  id="comment-area"></textarea>
+                                  id="comment-area" placeholder="请描述您遇到的问题或留下您的宝贵意见..."></textarea>
                     </div>
                     <ul class="am-comments-list am-comments-list-flip am-scrollable-vertical" id="message-content" style="display: none;">
                         @forelse($oMessages as $message)
@@ -309,9 +309,9 @@
                         @endforelse
                     </ul>
                     <div class="am-btn-group">
-                        <button type="button" class="am-btn-primary am-round" onclick="messages()">
+                        <button type="button" id="msg-btn" class="am-btn-primary am-round" onclick="messages(this)">
                             <i class="am-icon-envelope"></i>
-                            <span class="am-badge am-badge-danger am-round" id="msg-num">4</span>
+                            <span class="am-badge am-badge-danger am-round" id="new-msg">@if($iNewMsg != 0){{$iNewMsg}}@endif</span>
                         </button>
                         <button type="button" class="am-btn-warning am-round" onclick="leaveWords('{{$oInfo->id}}')">
                             留言
@@ -322,7 +322,7 @@
                             预定
                             <i class="am-icon-hand-pointer-o"></i>
                         </button>
-                        <button type="button" class="am-btn-default am-round" onclick="window.location.href='logout';">
+                        <button type="button" class="am-btn-default am-round" onclick="memberLogout()">
                             登出
                             <i class="am-icon-sign-out"></i>
                         </button>

@@ -9,9 +9,9 @@ require('./bootstrap');
 
 Echo.channel('public.' + window.localStorage.getItem('member_id'))
     .listen('PublicMessageEvent', (e) => {
-        var num = $("#msg-num").html();
+        var num = $("#new-msg").html();
         var new_num = num == '' ? 1 : parseInt(num) + 1;
-        $("#msg-num").html(new_num);
+        $("#new-msg").html(new_num);
         $.post(
             '/from-shopowner',
             {
@@ -90,6 +90,12 @@ Echo.private('message.' + window.localStorage.getItem('to') + window.localStorag
                             $("#message-list").html(data.msg_list);
                         } else {
                             $("#message-list").prepend(data.msg_tr);
+                        }
+                        var num = $("#msg-num").html();
+                        if(num == ''){
+                            $("#msg-num").html("1");
+                        }else {
+                            $("#msg-num").html(parseInt(num) + 1);
                         }
                         messageTip(e.message.pre_type);
                     } else {

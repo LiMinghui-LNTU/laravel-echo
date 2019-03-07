@@ -41,9 +41,11 @@ class SelfController extends Controller
         $oInfo = Members::getInfoByAccount($sAccount);
         //查询全部订单
         $oOrders = Order::getOrdersByMemberId($oInfo->id);
+        //获取未读消息条数
+        $iNewMsg = Message::getUnreadMsgNum(1, 4);
         //获取关于登录顾客的消息
         $oMessages = Message::getMessages(Members::getIdByAccount(session()->get('member')[0])[0], Members::getIdByAccount(session()->get('member')[0])[0], 4, 4);
-        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo', 'oOrders', 'oMessages'));
+        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo', 'oOrders', 'oMessages', 'iNewMsg'));
     }
 
     /**
@@ -269,7 +271,7 @@ class SelfController extends Controller
         if (is_null($oMessage)) {
             return json_encode(['code' => 1010, 'msg' => '未找到消息数据']);
         } else {
-            return json_encode(['code' => '1001', 'msg' => (string)view($this->sViewPath . 'message-content', compact('oMessage'))]);
+            return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message-content', compact('oMessage'))]);
         }
     }
 }
