@@ -291,12 +291,13 @@ function doLogin() {
         'json'
     );
 }
+
 //-------------end-------------
 
 //前台顾客登出要清除本地localStorage设置！！！
 function memberLogout() {
     window.localStorage.setItem("member_id", 0);
-    window.location.href='logout';
+    window.location.href = 'logout';
 }
 
 //-------------end-------------------
@@ -333,12 +334,24 @@ function leaveWords(id) {
     }
 }
 
-function messages(obj) {
+function messages(obj, id) {
     $(obj).hide();
     $("#new-msg").html("");
     $("#comment-area").val("");
     $("#area").slideUp();
     $(".am-comments-list").slideDown();
+    $.get(
+        '/self/' + id + '/edit',
+        {
+            id: id
+        },
+        function (data) {
+            if (data.code != '1001') {
+                return false;
+            }
+        },
+        'json'
+    );
 }
 
 //----------end--------------------

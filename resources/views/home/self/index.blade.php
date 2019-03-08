@@ -309,7 +309,7 @@
                         @endforelse
                     </ul>
                     <div class="am-btn-group">
-                        <button type="button" id="msg-btn" class="am-btn-primary am-round" onclick="messages(this)">
+                        <button type="button" id="msg-btn" class="am-btn-primary am-round" onclick="messages(this, '{{$oInfo->id}}')">
                             <i class="am-icon-envelope"></i>
                             <span class="am-badge am-badge-danger am-round" id="new-msg">@if($iNewMsg != 0){{$iNewMsg}}@endif</span>
                         </button>

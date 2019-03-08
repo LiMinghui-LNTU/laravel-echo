@@ -144,7 +144,9 @@ class SelfController extends Controller
      */
     public function edit($id)
     {
-        //
+        //该方法改做顾客阅读消息更新阅读状态
+        Message::where('from', 2)->where('to', $id)->where('pre_type', 2)->where('type', 4)->update(['is_read' => 1]);
+        return json_encode(['code' => 1001]);
     }
 
     /**
