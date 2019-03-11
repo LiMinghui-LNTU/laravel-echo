@@ -53,6 +53,12 @@
                 </li>
 
                 <li class="sidebar-nav-link">
+                    <a href="/admin/article" @if(Request::getPathInfo() =='/admin/article')class="active"@endif>
+                        <span class="am-icon-pencil sidebar-nav-link-logo"></span> 养护文章
+                    </a>
+                </li>
+
+                <li class="sidebar-nav-link">
                     <a href="table-list.html">
                         <span class="am-icon-ticket sidebar-nav-link-logo"></span> 优惠活动
                     </a>
