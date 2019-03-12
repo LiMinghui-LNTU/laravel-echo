@@ -102,4 +102,17 @@ class Members extends Model
     {
         return self::where('account_number', $sAccount)->pluck('id');
     }
+
+    /**
+     * 增加发币
+     * iType:0扣除 1增加
+     */
+    public static function sendCoins($iId = 0, $iCoins = 0, $iType = 0)
+    {
+        if ($iType){
+            return self::where('id', $iId)->increment('coins', $iCoins);
+        }else{
+            return self::where('id', $iId)->decrement('coins', $iCoins);
+        }
+    }
 }

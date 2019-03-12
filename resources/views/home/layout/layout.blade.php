@@ -56,7 +56,7 @@
             <div class=" am-topbar-left am-form-inline am-topbar-right" role="search">
                 <ul class="am-nav am-nav-pills am-topbar-nav hw-menu">
                     @foreach($oNavigation as $navigation)
-                        <li @if(Request::getPathInfo() == $navigation->url)class="hw-menu-active"@endif>
+                        <li @if(strpos(Request::getPathInfo(), $navigation->url) !== false)class="hw-menu-active"@endif>
                             <a href="{{$navigation->url}}">{{$navigation->name}}</a>
                         </li>
                     @endforeach

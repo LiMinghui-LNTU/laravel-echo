@@ -69,4 +69,20 @@ class Knowledge extends Model
         $aData['updated_at'] = date('Y-m-d H:i:s');
         return self::where('id', $iId)->update($aData);
     }
+
+    /**
+     * 前台展示文章
+     */
+    public static function getSomeArticle($iPage = 1, $iSize = 8)
+    {
+        return self::orderBy('created_at', 'desc')->skip(($iPage - 1) * $iSize)->take($iSize)->get();
+    }
+
+    /**
+     * 增加文章阅读量
+     */
+    public static function incrementViewCount($iId = 0)
+    {
+        return self::where('id', $iId)->increment('view_count');
+    }
 }
