@@ -84,7 +84,7 @@ class Members extends Model
      */
     public static function getInfoByAccount($sAccount = '')
     {
-        return self::leftJoin('vip as v', 'vip_id', '=', 'v.id')->select('members.id', 'account_number', 'nickname', 'photo', 'title', 'ticket', 'members.coins', 'members.reputation_value')->where('account_number', $sAccount)->first();
+        return self::leftJoin('vip as v', 'vip_id', '=', 'v.id')->select('members.id', 'account_number', 'nickname', 'photo', 'title', 'ticket', 'members.coins', 'members.reputation_value', 'balance')->where('account_number', $sAccount)->first();
     }
 
     /**

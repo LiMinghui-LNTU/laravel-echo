@@ -25,21 +25,21 @@
                             <img class="am-img-circle am-img-thumbnail" src="{{$oInfo->photo}}" alt=""/>
                         </div>
                         <div class="am-u-md-4">
-                            <label class="am-u-sm-4 am-form-label">账号：</label>
-                            <div class="am-u-sm-8">
-                                <small>{{$oInfo->account_number}}</small>
-                            </div>
                             <label class="am-u-sm-4 am-form-label">昵称：</label>
                             <div class="am-u-sm-8">
                                 <small>{{$oInfo->nickname}}</small>
                             </div>
                             <label class="am-u-sm-4 am-form-label">优惠券：</label>
                             <div class="am-u-sm-8">
-                                <small>{{$oInfo->ticket}}张</small>
+                                <small>@if(is_null($oInfo->ticket)) 0 @else {{count(json_decode($oInfo->ticket, true))}} @endif张</small>
                             </div>
                             <label class="am-u-sm-4 am-form-label">头衔：</label>
                             <div class="am-u-sm-8">
                                 <small>{{$oInfo->title}}</small>
+                            </div>
+                            <label class="am-u-sm-4 am-form-label">账户余额：</label>
+                            <div class="am-u-sm-8">
+                                <small>{{$oInfo->balance}} 元</small>
                             </div>
                             <button class="am-btn am-btn-primary am-btn-xs">
                                 <i class="am-icon-edit"></i>

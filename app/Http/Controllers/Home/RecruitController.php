@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Home;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\Recruit;
 use Illuminate\Http\Request;
 
 class RecruitController extends Controller
@@ -24,7 +25,8 @@ class RecruitController extends Controller
     public function index()
     {
         $sTitle = '招贤纳士';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        $oInfo = Recruit::getSentInfo();
+        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo'));
     }
 
     /**

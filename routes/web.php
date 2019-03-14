@@ -29,6 +29,7 @@ Route::group(['namespace' => 'Home'], function () {
 
 Route::group(['namespace' => 'Home'], function () {
     Route::resource('home', 'HomeController');
+    Route::post('upload-file', 'HomeController@uploadFile');
     Route::resource('designer', 'DesignerController');
     Route::resource('display', 'DisplayController');
     Route::resource('knowledge', 'KnowledgeController');
@@ -59,6 +60,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::post('get-message', 'MessageController@getMessageToMe');//ajax获取自己的消息
     Route::resource('case', 'CaseController');//发型展示
     Route::resource('article', 'ArticleController');//养护文章
+    Route::resource('recruit', 'RecruitController');//招聘启事
+    Route::resource('resume', 'ResumeController');//应聘简历
     Route::resource('clerk', 'ClerkController'); //店员
     Route::resource('calendar', 'CalendarController');//日程安排
     Route::post('upload-photo', 'UploadController@uploadFile');

@@ -14,17 +14,8 @@
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
                                         <button type="button" class="am-btn am-btn-default am-btn-success"
-                                                onclick="window.location.href='case/create';">
+                                                onclick="window.location.href='recruit/create';">
                                             <span class="am-icon-plus"></span> 新增
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
-                                                    class="am-icon-save"></span> 保存
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-warning"><span
-                                                    class="am-icon-archive"></span> 审核
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span
-                                                    class="am-icon-trash-o"></span> 删除
                                         </button>
                                     </div>
                                 </div>
@@ -58,50 +49,43 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>标签</th>
-                                    <th>示例图</th>
-                                    <th>发型名称</th>
-                                    <th>是否显示</th>
+                                    <th>招聘职位</th>
+                                    <th>职位缩略图</th>
+                                    <th>应聘人数</th>
                                     <th>创建时间</th>
+                                    <th>是否发布</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($oCases as $case)
+                                @foreach($oInfo as $info)
                                     <tr class="gradeX">
-                                        <td>{{$case->id}}</td>
+                                        <td>{{$info->id}}</td>
+                                        <td>{{$info->position}}</td>
                                         <td>
-                                            @if($case->tag == 1)
-                                                最新流行
-                                            @elseif($case->tag == 2)
-                                                男士风尚
-                                            @elseif($case->tag == 3)
-                                                女性潮流
+                                            <img src="{{$info->thumb}}" width="30">
+                                        </td>
+                                        <td>
+                                            @if($info->count > 0)
+                                                <a href="/admin/resume/{{$info->id}}">{{$info->count}}</a>
                                             @else
-                                                优秀作品
+                                                {{$info->count}}
                                             @endif
                                         </td>
-                                        <td>
-                                            <img src="{{$case->thumb}}" width="30">
-                                        </td>
-                                        <td>{{$case->title}}</td>
+                                        <td>{{$info->created_at}}</td>
                                         <td>
                                             <span class="tpl-switch">
-                                                <input type="checkbox" onclick="doSwitch('{{$case->id}}', 'case', this)" class="ios-switch bigswitch tpl-switch-btn" @if($case->is_show) checked @endif>
+                                                <input type="checkbox" onclick="doSwitch('{{$info->id}}', 'recruit', this)" class="ios-switch bigswitch tpl-switch-btn" @if($info->is_send) checked @endif>
                                                 <div class="tpl-switch-btn-view">
                                                     <div>
                                                     </div>
                                                 </div>
                                             </span>
                                         </td>
-                                        <td>{{$case->created_at}}</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="/admin/case/{{$case->id}}/edit">
+                                                <a href="/admin/recruit/{{$info->id}}/edit">
                                                     <i class="am-icon-pencil"></i> 编辑
-                                                </a>
-                                                <a href="javascript:doDestroy('{{$case->id}}', 'case');" class="tpl-table-black-operation-del">
-                                                    <i class="am-icon-trash"></i> 删除
                                                 </a>
                                             </div>
                                         </td>
@@ -113,8 +97,8 @@
                         </div>
                         <div class="am-u-lg-12 am-cf" id="paginate-nav">
                             <div class="am-fr">
-                                @if($oCases)
-                                    {!! $oCases->render('vendor.pagination/default'); !!}
+                                @if($oInfo)
+                                    {!! $oInfo->render('vendor.pagination/default'); !!}
                                 @endif
                             </div>
                         </div>

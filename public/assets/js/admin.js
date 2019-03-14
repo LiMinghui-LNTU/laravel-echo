@@ -84,11 +84,11 @@ function reply() {
     }
 }
 
-//发型展示---切换显示状态
-function doSwitch(id, obj) {
+//切换显示状态
+function doSwitch(id, module, obj) {
     var state = $(obj).is(':checked') ? 1 : 0;
     $.get(
-        '/admin/case/' + id,
+        '/admin/' + module + '/' + id,
         {
             state: state
         },
@@ -177,7 +177,11 @@ function doDestroy(id, module) {
                 },
                 function (data) {
                     if (data.code == '1001') {
-                        window.location.href = '/admin/' + module
+                        if(module == 'resume'){
+                            window.location.reload();
+                        }else {
+                            window.location.href = '/admin/' + module;
+                        }
                     } else {
                         showMessage(data.code + data.msg);
                         return false;

@@ -66,7 +66,7 @@ function pay(message, number, title, designer, money, ticket) {
 function wait(message) {
     swal({
         html: '<i class="am-icon-spinner am-icon-pulse am-icon-md"></i>&nbsp;<span style="color: #fff;font-size: 18px;">' + message + '</span>',
-        width: 150,
+        width: 200,
         height: 60,
         background: '#000',
         showConfirmButton: false,
@@ -74,6 +74,46 @@ function wait(message) {
 }
 
 //--------------end----------------------------
+
+//--------------文件上传------------------
+function uploadFile(url, file_id, show_id, hide_id, module) {
+    $("#" + hide_id).attr("disabled", true);
+    wait("简历上传中...");
+    $.ajaxFileUpload({
+        url: url,//用于文件上传的服务器端请求地址
+        secureuri: false,//是否需要安全协议，一般设置为false
+        fileElementId: file_id,//文件上传域的id  <input type="file" id="file" name="file" />
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'file_id': file_id,
+            'module': module
+        },
+        dataType: 'json',//返回数据类型:text，xml，json，html,scritp,jsonp五种
+        type: 'post',
+        success: function (result)  //服务器成功响应处理函数
+        {
+            if (result.code == '1001') {
+                if (module == 'self') {
+                    if (show_id) {
+                        $("#" + show_id).show();
+                        $("#" + show_id).attr('src', result.msg);
+                    }
+                    $("#" + hide_id).val(result.msg);
+                }
+                if (module == 'recruit') {
+                    $("#" + show_id).show();
+                    $("#" + hide_id).hide();
+                    tip("上传成功");
+                }
+            } else {
+                swal(result.msg);
+            }
+            $("#" + hide_id).attr("disabled", false);
+        }
+    })
+}
+
+//-------------------end----------------------
 
 //------------前台注册方法区--------------------------
 //请求手机短信验证码

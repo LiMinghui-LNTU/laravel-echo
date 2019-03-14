@@ -28,6 +28,7 @@
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
     {{--<script src="{{asset('assets/js/public.js')}}"></script>--}}
     <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/js/ajaxfileupload.js')}}"></script>
 
     @if(strpos(Request::getPathInfo(),'self'))
         <script>
