@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Home;
 
 
+use App\Model\SiteInfo;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -24,7 +25,9 @@ class AboutController extends Controller
     public function index()
     {
         $sTitle = '关于我们';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        //获取位置等信息
+        $oInfo = SiteInfo::getSiteInfo();
+        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo'));
     }
 
     /**

@@ -40,7 +40,7 @@
             </a>
             <ul class="sidebar-nav sidebar-nav-sub">
                 <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
+                    <a href="/admin/sowmap">
                         <span class="am-icon-image sidebar-nav-link-logo"></span> 首页轮播
                     </a>
                 </li>

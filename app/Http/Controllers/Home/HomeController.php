@@ -10,8 +10,10 @@ namespace App\Http\Controllers\Home;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\Knowledge;
 use App\Model\Recruit;
 use App\Model\Resume;
+use App\Model\Sowmap;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,7 +28,11 @@ class HomeController extends Controller
     public function index()
     {
         $sTitle = '金鹰首页';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        //获取轮播图
+        $oSowmaps = Sowmap::getSowmap();
+        //获取养护文章
+        $oArticles = Knowledge::getSomeArticle(1, 8);
+        return view($this->sViewPath . 'index', compact('sTitle', 'oSowmaps', 'oArticles'));
     }
 
     /**

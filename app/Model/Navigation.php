@@ -24,4 +24,12 @@ class Navigation extends Model
     {
         return self::where('is_show', 1)->orderBy('rank', 'asc')->get();
     }
+    
+    /**
+     * 根据连接获取导航
+     */
+    public static function getNavByUrl($sUrl = '')
+    {
+        return self::where('url', $sUrl)->first();
+    }
 }

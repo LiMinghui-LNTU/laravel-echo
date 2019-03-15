@@ -14,25 +14,10 @@
     </div>
 
     <!-- 菜单 -->
-    <ul class="sidebar-nav">
         <li class="sidebar-nav-link">
-            <a href="javascript:;" class="sidebar-nav-sub-title">
-                <i class="am-icon-folder-open sidebar-nav-link-logo"></i> 人员管理
-                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            <a href="/admin" @if(Request::getPathInfo() =='/admin')class="active"@endif>
+                <span class="am-icon-male sidebar-nav-link-logo"></span> 人员管理
             </a>
-            <ul class="sidebar-nav sidebar-nav-sub">
-                <li class="sidebar-nav-link">
-                    <a href="/admin" @if(Request::getPathInfo() =='/admin')class="active"@endif>
-                        <span class="am-icon-male sidebar-nav-link-logo"></span> 人员列表
-                    </a>
-                </li>
-
-                <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-user-secret sidebar-nav-link-logo"></span> 角色列表
-                    </a>
-                </li>
-            </ul>
         </li>
         <li class="sidebar-nav-link">
             <a href="javascript:;" class="sidebar-nav-sub-title">
@@ -43,12 +28,6 @@
                 <li class="sidebar-nav-link">
                     <a href="table-list.html">
                         <span class="am-icon-list-ul sidebar-nav-link-logo"></span> 导航栏
-                    </a>
-                </li>
-
-                <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-retweet sidebar-nav-link-logo"></span> 首页轮播
                     </a>
                 </li>
 

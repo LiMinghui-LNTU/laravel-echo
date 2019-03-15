@@ -64,5 +64,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::resource('resume', 'ResumeController');//应聘简历
     Route::resource('clerk', 'ClerkController'); //店员
     Route::resource('calendar', 'CalendarController');//日程安排
+    Route::resource('sowmap', 'SowmapController');//轮播图
     Route::post('upload-photo', 'UploadController@uploadFile');
 });

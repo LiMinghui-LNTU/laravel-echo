@@ -39,6 +39,11 @@
         <script src="{{asset('js/app.js')}}"></script>
     @endif
 
+    @if(strpos(Request::getPathInfo(),'about'))
+        {{--引入百度地图--}}
+        <script src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+    @endif
+
 </head>
 <body>
 <header class="am-topbar header">

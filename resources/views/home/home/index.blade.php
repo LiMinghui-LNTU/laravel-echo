@@ -4,9 +4,9 @@
     <div class="rollpic">
         <div data-am-widget="slider" class="am-slider am-slider-default" data-am-slider='{}'>
             <ul class="am-slides">
-                <li><a href="www.baidu.com"><img src="{{'assets/img/hw_bg1.png'}}"/></a></li>
-                <li><img src="{{'assets/img/hw_bg.png'}}"/></li>
-                <li><img src="{{'assets/img/hw_bg3.png'}}"/></li>
+                @foreach($oSowmaps as $sowmap)
+                    <li><a href="{{$sowmap->redirect}}"><img src="{{$sowmap->thumb}}"/></a></li>
+                @endforeach
             </ul>
         </div>
     </div>
@@ -21,24 +21,24 @@
             </div>
             <ul class="am-g part-content solutions-content">
                 <li class="am-u-sm-6 am-u-md-3 am-u-lg-3">
-                    <i class="am-icon-safari solution-circle"></i>
-                    <span class="solutions-title">网站、移动网站</span>
-                    <p class="solutions-way">微信公众号开发移动网站微信公众号开发</p>
+                    <img class="solution-circle" src="{{'assets/img/zxlx.jpg'}}" style="width: 70%; height: auto;" />
+                    <span class="solutions-title">最新流行</span>
+                    <p class="solutions-way">推荐现阶段时尚、潮流的造型，提供独特、新颖的设计方案</p>
                 </li>
                 <li class="am-u-sm-6 am-u-md-3 am-u-lg-3">
-                    <i class="am-icon-magic solution-circle"></i>
-                    <span class="solutions-title">网站、移动网站</span>
-                    <p class="solutions-way">移动网站微信公众号开发移动网站微信公众号开发,解决方案</p>
+                    <img class="solution-circle" src="{{'assets/img/nsfs.jpg'}}" style="width: 70%; height: auto;" />
+                    <span class="solutions-title">男士风尚</span>
+                    <p class="solutions-way">专门为男性顾客提供适合其脸型、身材的造型设计，有专业的设计师指导</p>
                 </li>
                 <li class="am-u-sm-6 am-u-md-3 am-u-lg-3">
-                    <i class="am-icon-phone solution-circle"></i>
-                    <span class="solutions-title">网站、移动网站</span>
-                    <p class="solutions-way">移动网站微信公众号开发移动网站微信公众号开发</p>
+                    <img class="solution-circle" src="{{'assets/img/nxcl.png'}}" style="width: 70%; height: auto;" />
+                    <span class="solutions-title">女性潮流</span>
+                    <p class="solutions-way">提供丰富的女性美发案例，上百套造型、染烫方案可供选择</p>
                 </li>
                 <li class="am-u-sm-6 am-u-md-3 am-u-lg-3">
-                    <i class="am-icon-hacker-news solution-circle"></i>
-                    <span class="solutions-title">网站、移动网站</span>
-                    <p class="solutions-way">网站、移动网站微信公众号开发移动网站微信公众号开发,解决方案</p>
+                    <img class="solution-circle" src="{{'assets/img/yxzp.jpg'}}" style="width: 70%; height: auto;" />
+                    <span class="solutions-title">优秀作品</span>
+                    <p class="solutions-way">有成体系的优秀作品可供学员参考，提供良好的学习交流机会</p>
                 </li>
 
             </ul>
@@ -48,7 +48,7 @@
     <div class="gray-li">
         <div class="customer-case part-all ">
             <div class="part-title">
-                <a href="customer-case.html">
+                <a href="/knowledge">
                     <i class=" am-icon-book part-title-i"></i>
                     <span class="part-title-span">养护知识</span>
                     <p>Maintenance Knowledge</p>
@@ -56,121 +56,24 @@
             </div>
 
 
-            <ul data-am-widget="gallery" class=" am-avg-sm-1
-  am-avg-md-4 am-avg-lg-4 am-gallery-bordered customer-case-content">
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app1.png'}}"/>
-
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">响应式商城</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
+            <ul data-am-widget="gallery" class=" am-avg-sm-1 am-avg-md-4 am-avg-lg-4 am-gallery-bordered customer-case-content">
+                @foreach($oArticles as $article)
+                    <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
+                        <div class="am-gallery-item case-img1">
+                            <a href="/knowledge/{{$article->id}}">
+                                <img src="{{$article->thumb}}"/>
+                            </a>
                         </div>
-                    </div>
-                </li>
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app2.png'}}"/>
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">物流红娘</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
+                        <div class="case-li-mengban">
+                            <div class=" case-word">
+                                <h3 class="am-gallery-title">{{$article->title}}</h3>
+                                <p>{{date('Y-m-d', strtotime($article->created_at))}}</p>
+                                <p>浏览量：{{$article->view_count}}</p>
+                                <a href="/knowledge/{{$article->id}}"><span><i class="am-icon-eye"></i>查看详情</span></a>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app3.png'}}"/>
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">车型湖北</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
-                        </div>
-                    </div>
-                </li>
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app4.png'}}"/>
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">管理系统</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
-                        </div>
-                    </div>
-                </li>
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app5.png'}}"/>
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">智众商城</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
-                        </div>
-                    </div>
-                </li>
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app6.png'}}"/>
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">汇众商城</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
-                        </div>
-                    </div>
-                </li>
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app7.png'}}"/>
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">无鞋网</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
-                        </div>
-                    </div>
-                </li>
-                <li class="case-li am-u-sm-6 am-u-md-6 am-u-lg-3">
-                    <div class="am-gallery-item case-img1">
-                        <a href="#">
-                            <img src="{{'assets/img/app8.png'}}"/>
-                        </a>
-                    </div>
-                    <div class="case-li-mengban">
-                        <div class=" case-word">
-                            <h3 class="am-gallery-title">响应式商城</h3>
-                            <p>2015-06-11</p>
-                            <a><span><i class="am-icon-eye"></i>查看更多</span></a>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                @endforeach
 
             </ul>
             <div class="lan-bott">
@@ -178,7 +81,7 @@
                     <p>A full range of solutions for you to solve different problems</p>
                 </div>
                 <div class="right">
-                    <a href="customer-case.html">
+                    <a href="/knowledge">
                         <span class="see-more">查看更多<i class="am-icon-angle-double-right"></i></span>
                     </a>
                 </div>
@@ -189,11 +92,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 
     <div class=" news-all">
         <div class="am-container-1">
@@ -246,27 +144,6 @@
             </div>
         </div>
     </div>
-    <!--<div class="three-reason">
-                <div class="part-title three-reason-title">
-                <span class="part-title-span w-white">选择恒望的三大理由</span>
-                <p class="w-white">Why Choose Hengwang</p>
-
-            </div>
-                <ul class="am-g part-content three-reason-content">
-                  <li class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                      <div class="three-reason-img1 "></div>
-                      <p class="reason-title w-white">规模优势<br/>Scale advantage</p>
-                  </li>
-                  <li class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                      <div class="three-reason-img2 "></div>
-                      <p class="reason-title w-white ">领先技术<br/>Leading technology</p>
-                  </li>
-                  <li class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                      <div class="three-reason-img3 "></div>
-                      <p class="reason-title w-white">整合能力<br/>Integration capability</p>
-                  </li>
-            </ul>
-            </div>-->
     <div class="part-all gray-li">
         <div class="customer  am-container-1">
             <div class="part-title">
