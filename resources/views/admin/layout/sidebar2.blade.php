@@ -22,12 +22,6 @@
         </li>
 
         <li class="sidebar-nav-link">
-            <a href="table-list.html">
-                <span class="am-icon-child sidebar-nav-link-logo"></span> 我的顾客
-            </a>
-        </li>
-
-        <li class="sidebar-nav-link">
             <a href="/admin/message" @if(Request::getPathInfo() =='/admin/message')class="active"@endif>
                 <span class="am-icon-comments sidebar-nav-link-logo"></span> 我的消息
             </a>
@@ -83,6 +77,12 @@
                 <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
             </a>
             <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/customer">
+                        <span class="am-icon-child sidebar-nav-link-logo"></span> 我的顾客
+                    </a>
+                </li>
+
                 <li class="sidebar-nav-link">
                     <a href="table-list-img.html">
                         <span class="am-icon-file-text sidebar-nav-link-logo"></span> 注册日志

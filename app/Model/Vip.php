@@ -27,4 +27,12 @@ class Vip extends Model
     {
         return self::where('id', $iId)->pluck('title');
     }
+
+    /**
+     * 获取所有VIP信息
+     */
+    public static function getVipInfo()
+    {
+        return self::orderBy('created_at', 'desc')->get();
+    }
 }
