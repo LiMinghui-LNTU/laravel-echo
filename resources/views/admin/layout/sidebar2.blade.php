@@ -34,7 +34,13 @@
             </a>
             <ul class="sidebar-nav sidebar-nav-sub">
                 <li class="sidebar-nav-link">
-                    <a href="/admin/sowmap">
+                    <a href="/admin/service" @if(Request::getPathInfo() =='/admin/service')class="active"@endif>
+                        <span class="am-icon-server sidebar-nav-link-logo"></span> 店铺服务
+                    </a>
+                </li>
+
+                <li class="sidebar-nav-link">
+                    <a href="/admin/sowmap" @if(Request::getPathInfo() =='/admin/sowmap')class="active"@endif>
                         <span class="am-icon-image sidebar-nav-link-logo"></span> 首页轮播
                     </a>
                 </li>
@@ -64,7 +70,7 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="/admin/recruit">
+                    <a href="/admin/recruit" @if(Request::getPathInfo() =='/admin/recruit')class="active"@endif>
                         <span class="am-icon-newspaper-o sidebar-nav-link-logo"></span> 招聘广告
                     </a>
                 </li>
@@ -78,7 +84,7 @@
             </a>
             <ul class="sidebar-nav sidebar-nav-sub">
                 <li class="sidebar-nav-link">
-                    <a href="/admin/customer">
+                    <a href="/admin/customer" @if(Request::getPathInfo() =='/admin/customer')class="active"@endif>
                         <span class="am-icon-child sidebar-nav-link-logo"></span> 我的顾客
                     </a>
                 </li>
@@ -107,11 +113,6 @@
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="sidebar-nav-link">
-            <a href="chart.html">
-                <i class="am-icon-phone sidebar-nav-link-logo"></i> 联系管理员
-            </a>
         </li>
 
     </ul>

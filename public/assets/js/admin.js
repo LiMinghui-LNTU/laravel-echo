@@ -195,6 +195,9 @@ function doDestroy(id, module) {
 
 //上传URL,文件域的id，显示图片的id,隐藏的id
 function uploadThumb(url, file_id, show_id, hide_id) {
+    if(show_id == ''){
+        showMessage("文件上传中...");
+    }
     $.ajaxFileUpload({
         url: url,//用于文件上传的服务器端请求地址
         secureuri: false,//是否需要安全协议，一般设置为false
@@ -211,6 +214,8 @@ function uploadThumb(url, file_id, show_id, hide_id) {
                 if (show_id) {
                     $("#" + show_id).show();
                     $("#" + show_id).attr('src', result.msg);
+                }else {
+                    $("#" + hide_id).html(result.msg+"上传成功");
                 }
                 $("#" + hide_id).val(result.msg);
             } else {

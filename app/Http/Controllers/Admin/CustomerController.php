@@ -7,6 +7,7 @@ use App\Model\Vip;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -50,9 +51,20 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        //此方法用作顾客数据导出
+        $iVip = (int)$request->input('vip');
+        $sKey = trim($request->input('key'));
+        //查询数据构建数组
+        $oData = Members::getExportData($iVip, $sKey);
+        Excel::create('顾客注册数据' . date('YmdHis'), function ($excel) use ($oData) {
+            $excel->sheet('数据明细', function ($sheet) use ($oData) {
+                $sheet->rows($oData);
+                //设置标题
+                $sheet->prependRow(1, array('Id', '账号', '昵称', '头衔', '发币', '信誉值', '账户余额', '注册时间'));
+            });
+        })->export('xlsx');
     }
 
     /**

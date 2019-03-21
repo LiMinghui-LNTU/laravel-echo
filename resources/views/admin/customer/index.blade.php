@@ -14,7 +14,7 @@
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
                                         <button type="button" class="am-btn am-btn-default am-btn-primary"
-                                                onclick="window.location.href='';">
+                                                onclick="exportCustomer();">
                                             <span class="am-icon-dedent"></span> 数据导出
                                         </button>
                                     </div>
@@ -95,3 +95,10 @@
         </div>
     </div>
 </div>
+<script>
+    function exportCustomer() {
+        var vip_id = $("select[name='vip']").val();
+        var key = $("input[name='key']").val().trim();
+        window.location.href = '/admin/customer/create?vip=' + vip_id + '&key=' + key;
+    }
+</script>

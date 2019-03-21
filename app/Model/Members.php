@@ -133,4 +133,23 @@ class Members extends Model
             return $res->where('vip_id', $iVip)->paginate(10);
         }
     }
+
+    /**
+     * 为数据导出构建数组
+     */
+    public static function getExportData($iVip = 0, $sKey = '')
+    {
+        $res = self::leftJoin('vip as v', 'vip_id', '=', 'v.id')
+            ->select('members.id', 'account_number', 'nickname', 'title', 'members.coins', 'members.reputation_value', 'balance', 'members.created_at')
+            ->where(function ($query) use ($sKey){
+                $query->where('nickname', 'like' , '%' . $sKey . '%')
+                    ->orWhere('account_number', 'like' , '%' . $sKey . '%');
+            });
+        if($iVip == 0){
+            return $res->get()->toArray();
+        }else{
+            return $res->where('vip_id', $iVip)->get()->toArray();
+        }
+    }
+
 }
