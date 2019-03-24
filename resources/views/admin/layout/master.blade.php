@@ -29,6 +29,7 @@
     <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/ajaxfileupload.js')}}"></script>
     <script src="{{asset('assets/js/admin.js')}}"></script>
+    <script src="{{asset('assets/js/DatePicker/WdatePicker.js')}}"></script>
     {{--百度编辑器--}}
     <!-- 配置文件 -->
     <script type="text/javascript" src="{{ asset('assets/ueditor/ueditor.config.js') }}"></script>

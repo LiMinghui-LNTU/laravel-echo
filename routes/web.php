@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::resource('display', 'DisplayController');
     Route::resource('knowledge', 'KnowledgeController');
     Route::resource('activity', 'ActivityController');
+    Route::resource('member', 'MemberController');
     Route::resource('recruit', 'RecruitController');
     Route::resource('about', 'AboutController');
     Route::resource('self', 'SelfController')->middleware('member');
@@ -67,6 +68,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::resource('sowmap', 'SowmapController');//轮播图
     Route::resource('customer', 'CustomerController');//我的顾客
     Route::resource('service', 'ServiceController');//店铺服务
+    Route::resource('ticket', 'TicketController');//票券管理
+    Route::get('search-ticket', 'TicketController@isExist');//查询该类型票券
     Route::post('insert-file', 'ServiceController@insertExcelData');//插入Excel数据到数据库
     Route::post('upload-photo', 'UploadController@uploadFile');
 });

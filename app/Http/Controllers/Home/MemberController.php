@@ -1,21 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 22971
- * Date: 2018/12/30
- * Time: 21:30
- */
 
 namespace App\Http\Controllers\Home;
 
-
-use App\Http\Controllers\Controller;
-use App\Model\Ticket;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ActivityController extends Controller
+class MemberController extends Controller
 {
-    private $sViewPath = 'home.activity.';
+    private $sViewPath = 'home.member.';
 
     /**
      * Display a listing of the resource.
@@ -24,10 +16,8 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $sTitle = '优惠活动';
-        //获取优惠券
-        $oTickets = Ticket::getTickets();
-        return view($this->sViewPath . 'index', compact('sTitle', 'oTickets'));
+        $sTitle = '会员办理';
+        return view($this->sViewPath . 'index', compact('sTitle'));
     }
 
     /**

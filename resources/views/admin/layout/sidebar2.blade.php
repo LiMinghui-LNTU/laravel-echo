@@ -58,7 +58,7 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="table-list.html">
+                    <a href="/admin/ticket" @if(Request::getPathInfo() =='/admin/ticket')class="active"@endif>
                         <span class="am-icon-ticket sidebar-nav-link-logo"></span> 优惠活动
                     </a>
                 </li>

@@ -44,6 +44,10 @@
         <script src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
     @endif
 
+    @if(strpos(Request::getPathInfo(),'activity'))
+        <script src="{{asset('assets/js/jquery.countdown.js')}}"></script>
+    @endif
+
 </head>
 <body>
 <header class="am-topbar header">
