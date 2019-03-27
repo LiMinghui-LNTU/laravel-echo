@@ -23,19 +23,45 @@
                     <div class="am-g">
                         <div class="am-u-md-1">
                             <img class="am-img-circle am-img-thumbnail" src="{{$oInfo->photo}}" alt=""/>
+                            <span id="go-back" style="display: none;cursor: pointer;border: 1px solid #444;border-radius: 5px;" onclick="$(this).hide();$('#ticket').hide();$('#info').show();"><i class="am-icon-reply">返回</i></span>
                         </div>
-                        <div class="am-u-md-4">
+                        <div class="am-u-md-4" id="ticket" style="display: none;">
+                            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-gallery-overlay" data-am-gallery="{ pureview: true }" >
+                                @foreach($oTickets as $ticket)
+                                    <li>
+                                        <div class="am-gallery-item">
+                                            <a class="">
+                                                <img src="{{asset('assets/img/type'.$ticket->type.'_'.$ticket->quota.'.jpg')}}"/>
+                                                <h3 class="am-gallery-title">
+                                                    @if($ticket->type == 1)
+                                                        5元新人优惠券 &times; {{$ticket->num}} 张
+                                                    @elseif($ticket->type == 2)
+                                                        10元代金券 &times; {{$ticket->num}} 张
+                                                    @elseif($ticket->type == 3)
+                                                        {{$ticket->quota}}元限时优惠券 &times; {{$ticket->num}} 张
+                                                    @else
+                                                        {{$ticket->quota}}元会员专享月券 &times; {{$ticket->num}} 张
+                                                    @endif
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="am-u-md-4" id="info">
                             <label class="am-u-sm-4 am-form-label">昵称：</label>
                             <div class="am-u-sm-8">
                                 <small>{{$oInfo->nickname}}</small>
+                                <i class="am-icon-edit"></i>
                             </div>
                             <label class="am-u-sm-4 am-form-label">优惠券：</label>
                             <div class="am-u-sm-8">
-                                <small>@if(is_null($oInfo->ticket)) 0 @else {{count(json_decode($oInfo->ticket, true))}} @endif张</small>
+                                <small style="color: blue;cursor: pointer;" onclick="$(this).parent().parent().hide();$('#ticket').show();$('#go-back').show();"><span class="am-badge am-badge-primary am-round">{{count(\App\Model\TicketLog::getUnUsedTicketById($oInfo->id))}}</span> 张</small>
                             </div>
                             <label class="am-u-sm-4 am-form-label">头衔：</label>
                             <div class="am-u-sm-8">
-                                <small>{{$oInfo->title}}</small>
+                                <a href="/member"><small style="color: blue;">{{$oInfo->title}}</small></a>
                             </div>
                             <label class="am-u-sm-4 am-form-label">账户余额：</label>
                             <div class="am-u-sm-8">
@@ -50,10 +76,10 @@
                             <div class="user-info">
                                 <p>金鹰发币</p>
                                 <div class="am-progress am-progress-sm">
-                                    <div class="am-progress-bar" style="width: {{$oInfo->coins}}%"></div>
+                                    <div class="am-progress-bar" style="width: {{$oInfo->coins / 10}}%"></div>
                                 </div>
                                 <p class="user-info-order">当前发币：<strong>{{$oInfo->coins}}枚</strong>
-                                    可抵现金：<strong>&yen;{{$oInfo->coins / 10}}元</strong>
+                                    每满1000枚可兑换<strong>&yen;10元</strong>代金券一张
                                 </p>
                             </div>
                             <div class="user-info">
@@ -62,7 +88,7 @@
                                     <div class="am-progress-bar am-progress-bar-success"
                                          style="width: {{$oInfo->reputation_value}}%"></div>
                                 </div>
-                                <p class="user-info-order">信用等级：极好 信用积分：<strong>{{$oInfo->reputation_value}}</strong>
+                                <p class="user-info-order">信用积分：<strong>{{$oInfo->reputation_value}}</strong> 信用等级：<strong>极好</strong>
                                 </p>
                             </div>
                         </div>

@@ -84,7 +84,7 @@ class Members extends Model
      */
     public static function getInfoByAccount($sAccount = '')
     {
-        return self::leftJoin('vip as v', 'vip_id', '=', 'v.id')->select('members.id', 'account_number', 'nickname', 'photo', 'title', 'ticket', 'members.coins', 'members.reputation_value', 'balance')->where('account_number', $sAccount)->first();
+        return self::leftJoin('vip as v', 'vip_id', '=', 'v.id')->select('members.id', 'account_number', 'nickname', 'photo', 'title', 'members.coins', 'members.reputation_value', 'balance')->where('account_number', $sAccount)->first();
     }
 
     /**
@@ -109,9 +109,9 @@ class Members extends Model
      */
     public static function sendCoins($iId = 0, $iCoins = 0, $iType = 0)
     {
-        if ($iType){
+        if ($iType) {
             return self::where('id', $iId)->increment('coins', $iCoins);
-        }else{
+        } else {
             return self::where('id', $iId)->decrement('coins', $iCoins);
         }
     }
@@ -123,13 +123,13 @@ class Members extends Model
     {
         $res = self::leftJoin('vip as v', 'vip_id', '=', 'v.id')
             ->select('members.id', 'account_number', 'nickname', 'title', 'members.coins', 'members.reputation_value', 'balance', 'members.created_at')
-            ->where(function ($query) use ($sKey){
-                $query->where('nickname', 'like' , '%' . $sKey . '%')
-                    ->orWhere('account_number', 'like' , '%' . $sKey . '%');
+            ->where(function ($query) use ($sKey) {
+                $query->where('nickname', 'like', '%' . $sKey . '%')
+                    ->orWhere('account_number', 'like', '%' . $sKey . '%');
             });
-        if($iVip == 0){
+        if ($iVip == 0) {
             return $res->paginate(10);
-        }else{
+        } else {
             return $res->where('vip_id', $iVip)->paginate(10);
         }
     }
@@ -141,15 +141,36 @@ class Members extends Model
     {
         $res = self::leftJoin('vip as v', 'vip_id', '=', 'v.id')
             ->select('members.id', 'account_number', 'nickname', 'title', 'members.coins', 'members.reputation_value', 'balance', 'members.created_at')
-            ->where(function ($query) use ($sKey){
-                $query->where('nickname', 'like' , '%' . $sKey . '%')
-                    ->orWhere('account_number', 'like' , '%' . $sKey . '%');
+            ->where(function ($query) use ($sKey) {
+                $query->where('nickname', 'like', '%' . $sKey . '%')
+                    ->orWhere('account_number', 'like', '%' . $sKey . '%');
             });
-        if($iVip == 0){
+        if ($iVip == 0) {
             return $res->get()->toArray();
-        }else{
+        } else {
             return $res->where('vip_id', $iVip)->get()->toArray();
         }
     }
 
+    /**
+     * 更新发币数量
+     */
+    public static function updateCoins($iId = 0, $iTicketType = 0, $iQuota = 0)
+    {
+        if ($iTicketType == 2) { //兑换代金券消耗1000个发币
+            return self::sendCoins($iId, 1000, 0);
+        } elseif ($iTicketType == 5) { //领取发币券增加iQuota个发币
+            return self::sendCoins($iId, $iQuota, 1);
+        } else {
+            return 1;
+        }
+    }
+
+    /**
+     * 获取发币
+     */
+    public static function getCoinsById($iId = 0)
+    {
+        return self::where('id', $iId)->pluck('coins')[0];
+    }
 }

@@ -57,6 +57,19 @@ function messageTip(pre_type) {
     });
 }
 
+//票券提醒
+function ticketTip(type, quota) {
+    var url = '/assets/img/type' + type + '_' + quota + '.jpg';
+    Swal.fire({
+        imageUrl: url,
+        imageWidth: 400,
+        imageHeight: 100,
+        background: 'lightblue',
+        confirmButtonText: '收入囊中',
+        confirmButtonColor: '#f00'
+    });
+}
+
 //支付弹框
 function pay(message, number, title, designer, money, ticket) {
 

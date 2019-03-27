@@ -18,6 +18,7 @@ use App\Model\Message;
 use App\Model\Order;
 use App\Model\Schedule;
 use App\Model\Service;
+use App\Model\TicketLog;
 use ArrayObject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -39,13 +40,15 @@ class SelfController extends Controller
         $sAccount = session()->get('member');
         //查询顾客个人信息
         $oInfo = Members::getInfoByAccount($sAccount);
+        //获取该顾客未使用的票券
+        $oTickets = TicketLog::getUnUsedTicketById($oInfo->id);
         //查询全部订单
         $oOrders = Order::getOrdersByMemberId($oInfo->id);
         //获取未读消息条数
         $iNewMsg = Message::getUnreadMsgNum(1, 4);
         //获取关于登录顾客的消息
         $oMessages = Message::getMessages(Members::getIdByAccount(session()->get('member')[0])[0], Members::getIdByAccount(session()->get('member')[0])[0], 4, 4);
-        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo', 'oOrders', 'oMessages', 'iNewMsg'));
+        return view($this->sViewPath . 'index', compact('sTitle', 'oInfo', 'oTickets', 'oOrders', 'oMessages', 'iNewMsg'));
     }
 
     /**

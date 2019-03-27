@@ -16,6 +16,7 @@
         </div>
     </div>
 
+    @csrf
     <div class="am-container-1 news-content-all">
         <div class="left am-u-sm-12 am-u-md-8 am-u-lg-9 ">
             <ul class="news-ul">
@@ -45,7 +46,8 @@
                                                 @break
                                         @endswitch
                                     </div>
-                                    <div class="inform-list-numb"><i class="am-icon-arrow-circle-right"></i>剩余量：{{\App\Model\Ticket::getCountByType($ticket->type)}}</div>
+                                    <input type="hidden" id="remain{{$ticket->id}}" value="{{\App\Model\Ticket::getTicketRemain($ticket->type, $ticket->created_at)}}">
+                                    <div id="remain-div{{$ticket->id}}" class="inform-list-numb"><i class="am-icon-arrow-circle-right"></i>剩余量：{{\App\Model\Ticket::getTicketRemain($ticket->type, $ticket->created_at)}}</div>
                                 </div>
                                 <span>
                                     @switch($ticket->type)
@@ -68,17 +70,46 @@
                                 </span>
                                 <p>{{$ticket->condition}}</p>
                                 @if($ticket->type == 2)
-                                    <span class="see-more3" style="cursor: pointer;"> 马上兑换 </span>
+                                    <span class="see-more3" style="cursor: pointer;" onclick="coupon(2, '{{$ticket->id}}', this)"> 马上兑换 </span>
                                 @elseif($ticket->type == 3)
-                                    <span class="timer see-more3" style="background-color: gray;color: #fff;cursor: text;"> </span>
-                                    <input type="hidden" name="timer" value="{{(strtotime($ticket->created_at)-time())*1000}}">
+                                    @if(session()->get('member') && \App\Model\TicketLog::hasLog(session()->get('member'), 3, $ticket->created_at))
+                                        <span class="see-more3" style="cursor: text;color:#fff;background-color: gray;"> <i class="am-icon-check-circle-o"></i>已抢</span>
+                                    @else
+                                        <span class="timer see-more3" style="background-color: gray;color: #fff;cursor: text;"> </span>
+                                        <span id="type3" class="see-more3" style="cursor: pointer;display: none;" onclick="coupon(3, '{{$ticket->id}}', this)"> 立即抢券 </span>
+                                        <input type="hidden" name="timer" value="{{(strtotime($ticket->created_at)-time())*1000}}">
+                                        <input type="hidden" name="hide-time" value="{{$ticket->created_at}}">
+                                    @endif
                                 @else
-                                    <span class="see-more3" style="cursor: pointer;"> 点击领取 </span>
+                                    @if(session()->get('member') && $ticket->type == 1 && \App\Model\TicketLog::hasLog(session()->get('member'), 1))
+                                        <span class="see-more3" style="cursor: text;color:#fff;background-color: gray;"> <i class="am-icon-check-circle-o"></i>已领 </span>
+                                    @elseif(session()->get('member') && $ticket->type == 4 && \App\Model\TicketLog::hasLog(session()->get('member'), 4))
+                                        <span class="see-more3" style="cursor: text;color:#fff;background-color: gray;"> <i class="am-icon-check-circle-o"></i>本月已领</span>
+                                    @elseif(session()->get('member') && $ticket->type == 5 && \App\Model\TicketLog::hasLog(session()->get('member'), 5))
+                                        <span class="see-more3" style="cursor: text;color:#fff;background-color: gray;"> <i class="am-icon-check-circle-o"></i>今天已领</span>
+                                    @else
+                                        <span class="see-more3" style="cursor: pointer;" onclick="coupon('{{$ticket->type}}', '{{$ticket->id}}', this)"> 点击领取 </span>
+                                    @endif
                                 @endif
                             </div>
                         </a>
                     </li>
                 @endforeach
+                <li class="am-u-sm-12 am-u-md-6 am-u-lg-4 ">
+                    <div class="news-ul-liall">
+                        <img class="news-ul-liimg" src="{{asset('assets/img/jqqd.jpg')}}">
+                        <div class="inform-list">
+                            <div class="inform-list-date"><i class="am-icon-clock-o"></i>发券时间：未知</div>
+                            <div class="inform-list-label"><i class="am-icon-ticket"></i>券名：
+                                敬请期待
+                            </div>
+                            <div class="inform-list-numb"><i class="am-icon-arrow-circle-right"></i>剩余量：1W+</div>
+                        </div>
+                        <span>更多活动，敬请期待</span>
+                        <p>本店将不定期推出各种优惠活动、发放各种票券供顾客参与抽取，欢迎各位新老顾客持续关注，感谢各位的大力支持！</p>
+                        <span class="see-more3" style="cursor: text;color:#fff;background-color: gray;"> 敬请期待 </span>
+                    </div>
+                </li>
                 <div class="clear"></div>
             </ul>
         </div>
@@ -163,11 +194,57 @@
                     message += seconds + "秒";
                     note.html(message);
                     if(days + minutes +seconds == 0){
-                        note.attr("style","cursor: pointer;");
-                        note.html("立即抢券");
+                        note.attr("style","display: none;");
+                        $("#type3").show();
                     }
                 }
             });
         });
+
+        //---领取优惠券---
+        function coupon(type, id, obj) {
+            if("{{is_null(session()->get('member'))}}"){
+                tip("请先登录！");
+                return false;
+            }else {
+                wait("正在领取...");
+                var time = type == 3 ? $("input[name='hide-time']").val() : "";
+                $.post(
+                    '/activity',
+                    {
+                        _token : $("input[name='_token']").val(),
+                        type : type,
+                        time : time
+                    },
+                    function (data) {
+                        if (data.code == '1001'){
+                            var remain = parseInt($("#remain"+id).val()) - 1;
+                            $("#remain-div"+id).html('<i class="am-icon-arrow-circle-right"></i>剩余量：' + remain);
+                            if (type != 2){ //发币兑换的代金券不用置灰
+                                $(obj).attr("onclick", "");
+                                $(obj).attr("style", "cursor: text;color:#fff;background-color: gray;");
+                            }
+                            ticketTip(type, data.quota);
+                            if(type == 1){
+                                $(obj).html('<i class="am-icon-check-circle-o"></i>已领');
+                            }
+                            if(type == 3){
+                                $(obj).html('<i class="am-icon-check-circle-o"></i>已抢');
+                            }
+                            if(type == 4){
+                                $(obj).html('<i class="am-icon-check-circle-o"></i>本月已领');
+                            }
+                            if(type == 5){
+                                $(obj).html('<i class="am-icon-check-circle-o"></i>今天已领');
+                            }
+                        }else {
+                            tip(data.msg);
+                            return false;
+                        }
+                    },
+                    'json'
+                );
+            }
+        }
     </script>
 @endsection

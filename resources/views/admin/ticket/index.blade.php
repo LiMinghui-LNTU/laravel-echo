@@ -31,7 +31,8 @@
                                     <th>票券图片</th>
                                     <th>类型</th>
                                     <th>面额</th>
-                                    <th>发放数量</th>
+                                    <th>发放量</th>
+                                    <th>剩余量</th>
                                     <th>发放时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -64,6 +65,7 @@
                                         </td>
                                         <td>{{$ticket->quota}}@if($ticket->type == 5) 个 @else 元 @endif</td>
                                         <td>{{$ticket->count}} 张</td>
+                                        <td>{{$ticket->remain}} 张</td>
                                         <td>{{$ticket->created_at}}</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
