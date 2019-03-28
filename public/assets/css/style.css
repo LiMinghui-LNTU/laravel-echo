@@ -2203,3 +2203,63 @@ figure.effect-lily:hover p {
 	border-radius: 5px;
 	padding-left: 5px;
 }
+
+/*设计师团*/
+
+@media (min-width:1200px){.container{width:1170px!important;margin:0 auto;}}
+
+.our-team .team-box {
+	position:relative;
+	border:1px solid #444;
+	background:#fff;
+	margin:15px 0 15px;
+	text-align:center;
+	border-radius:20px;
+	overflow:hidden
+}
+.our-team .team-box .our-team-img img {
+	width:100%;
+	vertical-align:top;
+	overflow:hidden
+}
+.our-team .team-box .team_member--body {
+	padding:25px
+}
+.our-team .team-box .team_member--body .team_member--name {
+	font-size:18px;
+	font-weight:600
+}
+.our-team .team-box .team_member--body .team_member--position {
+	display:block;
+	color:#969696;
+	font-size:16px;
+	line-height:23px;
+	margin:10px 0 0
+}
+.our-team .team-box .team_member--body .team_member--email {
+	display:block;
+	margin:8px 0 0
+}
+.our-team .team-box .team_member--body .team_member--email a {
+	color:#59bcdb
+}
+.our-team .team-box .team_member--body .team_member--links {
+	margin:22px 0 0;
+	padding-left:0
+}
+.our-team .team-box .team_member--body .team_member--links li {
+	display:inline-block
+}
+.our-team .team-box .team_member--body .team_member--links li a {
+	color:#bdbdbd;
+	display:block;
+	padding:5px
+}
+
+.our-team-img{
+	opacity:0.9;
+}
+
+.our-team-img:hover{
+	opacity:1;
+}
