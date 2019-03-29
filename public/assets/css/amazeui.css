@@ -3144,6 +3144,7 @@ fieldset[disabled] .am-checkbox-inline {
     clear: none;
   }
   .am-topbar-collapse.am-collapse {
+    background-color: #000;
     display: block !important;
     height: auto !important;
     padding: 0;

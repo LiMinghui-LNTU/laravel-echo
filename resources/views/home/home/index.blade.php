@@ -144,39 +144,4 @@
             </div>
         </div>
     </div>
-    <div class="part-all gray-li">
-        <div class="customer  am-container-1">
-            <div class="part-title">
-                <i class="am-icon-users part-title-i"></i>
-                <span class="part-title-span">服务客户</span>
-                <p>Serve Customers</p>
-            </div>
-
-            <div class="am-slider am-slider-default am-slider-carousel part-all"
-                 data-am-flexslider="{itemWidth:150, itemMargin: 5, slideshow: false}"
-                 style="  background-color: #f0eeed; box-shadow:none;">
-                <ul class="am-slides">
-                    <li><img src="{{'assets/img/ptn4.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn5.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn6.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn7.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn8.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn4.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn5.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn6.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn7.png'}}"/></li>
-                    <li><img src="{{'assets/img/ptn8.png'}}"/></li>
-                </ul>
-            </div>
-            <!--<ul class="customer-content">
-                <li class="am-u-sm-6 am-u-md-4 am-u-lg-2"><div><img src="img/ptn4.png"/></div></li>
-                <li class="am-u-sm-6 am-u-md-4 am-u-lg-2"><div><img src="img/ptn5.png"/></div></li>
-                <li class="am-u-sm-6 am-u-md-4 am-u-lg-2"><div><img src="img/ptn6.png"/></div></li>
-                <li class="am-u-sm-6 am-u-md-4 am-u-lg-2"><div><img src="img/ptn7.png"/></div></li>
-                <li class="am-u-sm-6 am-u-md-4 am-u-lg-2"><div><img src="img/ptn8.png"/></div></li>
-                <li class="am-u-sm-6 am-u-md-4 am-u-lg-2"><div><img src="img/ptn4.png"/></div></li>
-                <div class="clear"></div>
-            </ul>-->
-        </div>
-    </div>
 @endsection

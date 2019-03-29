@@ -54,7 +54,7 @@
     <div class="am-container-1">
         <div class="left hw-logo">
             <img class=" logo" src="{{asset('assets/img/home_logo.png')}}"/>
-            <img class="word" src="{{asset('assets/img/hw-word.png')}}"/>
+            <img class="word" src="{{asset('assets/img/hw-word.jpg')}}"/>
         </div>
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
                 data-am-collapse="{target: '#doc-topbar-collapse'}">
@@ -67,7 +67,7 @@
                 <ul class="am-nav am-nav-pills am-topbar-nav hw-menu">
                     @foreach($oNavigation as $navigation)
                         <li @if(strpos(Request::getPathInfo(), $navigation->url) !== false)class="hw-menu-active"@endif>
-                            <a href="{{$navigation->url}}">{{$navigation->name}}</a>
+                            <a style="color: yellow;" href="{{$navigation->url}}">{{$navigation->name}}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -106,12 +106,10 @@
             <div class="part-5-title">更多信息</div>
             <div class="part-5-words2">
                 <ul class="part-5-words2-ul">
-                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm1}}"
-                                                                   style="width:130px;height:130px;border:2px #0000ff solid;"/>
+                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm1}}" style="width:130px;height:130px;"/>
                     </li>
                     <li class="am-u-lg-2 am-u-md-6 am-u-sm-4"></li>
-                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm2}}"
-                                                                   style="width:130px;height:130px;border:2px #0000ff solid;"/>
+                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm2}}" style="width:130px;height:130px;"/>
                     </li>
                     <div class="clear"></div>
                 </ul>

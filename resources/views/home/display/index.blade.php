@@ -19,27 +19,27 @@
 
         <ul class="am-tabs-nav am-cf solutions-tabs-ul ">
             <li class="am-active solutions-tabs-ul-li1">
-                <a href="[data-tab-panel-0]" style="background: #00b2ee;">
-                    <i style="background:#00b2ee;color: red;font-weight: bold;font-style: normal;">金</i>
-                    <span style="background: #00b2ee;color: yellow;">最新流行</span>
+                <a href="[data-tab-panel-0]" style="background: #333;">
+                    <i style="background-color:#333;color: red;font-weight: bold;font-style: normal;font-family: 方正舒体;font-size: 30pt;">金</i>
+                    <span style="background-color: #333;color: yellow;">最新流行</span>
                 </a>
             </li>
             <li class="solutions-tabs-ul-li2">
-                <a href="[data-tab-panel-0]" style="background: #00b2ee;">
-                    <i style="background:#00b2ee;color: red;font-weight: bold;font-style: normal;">鷹</i>
-                    <span style="background: #00b2ee;color: yellow;">男士风尚</span>
+                <a href="[data-tab-panel-0]" style="background: #333;">
+                    <i style="background-color:#333;color: red;font-weight: bold;font-style: normal;font-family: 方正舒体;font-size: 30pt;">鷹</i>
+                    <span style="background-color: #333;color: yellow;">男士风尚</span>
                 </a>
             </li>
             <li class="solutions-tabs-ul-li3">
-                <a href="[data-tab-panel-0]" style="background: #00b2ee;">
-                    <i style="background:#00b2ee;color: red;font-weight: bold;font-style: normal;">髮</i>
-                    <span style="background: #00b2ee;color: yellow;">女性潮流</span>
+                <a href="[data-tab-panel-0]" style="background: #333;">
+                    <i style="background-color:#333;color: red;font-weight: bold;font-style: normal;font-family: 方正舒体;font-size: 30pt;">髮</i>
+                    <span style="background-color: #333;color: yellow;">女性潮流</span>
                 </a>
             </li>
             <li class="solutions-tabs-ul-li4">
-                <a href="[data-tab-panel-0]" style="background: #00b2ee;">
-                    <i style="background:#00b2ee;color: red;font-weight: bold;font-style: normal;">藝</i>
-                    <span style="background: #00b2ee;color: yellow;">优秀作品</span>
+                <a href="[data-tab-panel-0]" style="background-color: #333;">
+                    <i style="background-color:#333;color: red;font-weight: bold;font-style: normal;font-family: 方正舒体;font-size: 30pt;">藝</i>
+                    <span style="background-color: #333; #00b2ee;color: yellow;">优秀作品</span>
                 </a>
             </li>
         </ul>
