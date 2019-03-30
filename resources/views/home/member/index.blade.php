@@ -24,43 +24,59 @@
         <article>
             <section class="m-case-list">
                 <ul class="am-avg-sm-1 am-avg-md-2 am-avg-lg-3 am-thumbnails">
-                    <li>
-                        <figure class="effect-lily">
-                            <img src="{{asset('assets/img/zhz.jpg')}}" alt="广州立冠创新科技有限公司" class="am-img-responsive">
-                            <figcaption>
-                                <h3>广州立冠创新科技有限</h3>
-                                <p>一家专业从事机箱电源的企业</p>
-                                <p class="handle">立即办理</p>
-                                <a href="javascript:;">View more</a>
-                            </figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure class="effect-lily">
-                            <img src="{{asset('assets/img/zsh.jpg')}}" alt="南京启凡英语课程专题" class="am-img-responsive">
-                            <figcaption>
-                                <h3>南京启凡英语课程专题</h3>
-                                <p>南京唯一一家欧洲教育管理培训中心</p>
-                                <p class="handle">立即办理</p>
-                                <a href="javascript:;">View more</a>
-                            </figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure class="effect-lily">
-                            <img src="{{asset('assets/img/hj.jpg')}}" alt="广州唯一印象婚纱摄影" class="am-img-responsive">
-                            <figcaption>
-                                <h3>广州唯一印象婚纱摄影</h3>
-                                <p>专注高端定制婚纱摄影</p>
-                                <p class="handle">立即办理</p>
-                                <a href="javascript:;">View more</a>
-                            </figcaption>
-                        </figure>
-                    </li>
-
-
+                    @foreach($oVips as $vip)
+                        <li>
+                            <figure class="effect-lily">
+                                <img style="cursor: text;"  data-am-popover="{content: '<h3>会员特权</h2>{{$vip->privilege}}<h3>奖励</h2>信誉值：{{$vip->reputation_value}}个，发币：{{$vip->coins}}枚', trigger: 'hover'}" src="@if(!is_null($oMember))@if($oMember->vip_id == 2) {{asset('assets/img/zhz_ty.jpg')}} @elseif($oMember->vip_id == 3) {{asset('assets/img/zsh_ty.jpg')}} @elseif($oMember->vip_id == 4) {{asset('assets/img/hj_ty.jpg')}} @elseif($oMember->vip_id == 5) {{asset('assets/img/by_ty.jpg')}} @elseif($oMember->vip_id == 6) {{asset('assets/img/qt_ty.jpg')}} @else {{$vip->picture}} @endif @else {{$vip->picture}} @endif" alt="" class="am-img-responsive">
+                                <figcaption>
+                                    <h3>
+                                        {{$vip->title}}
+                                        @if($vip->id == 2)
+                                            原:<span style="text-decoration: line-through;font-weight: normal;color: red;">&yen;1100</span> 现:<span style="color: yellow;font-weight: normal;">&yen;{{$vip->charge}}</span>
+                                        @elseif($vip->id == 3)
+                                            原:<span style="text-decoration: line-through;font-weight: normal;color: red;">&yen;800</span> 现:<span style="color: yellow;font-weight: normal;">&yen;{{$vip->charge}}</span>
+                                        @elseif($vip->id == 4)
+                                            原:<span style="text-decoration: line-through;font-weight: normal;color: red;">&yen;600</span> 现:<span style="color: yellow;font-weight: normal;">&yen;{{$vip->charge}}</span>
+                                        @elseif($vip->id == 5)
+                                            原:<span style="text-decoration: line-through;font-weight: normal;color: red;">&yen;400</span> 现:<span style="color: yellow;font-weight: normal;">&yen;{{$vip->charge}}</span>
+                                        @else
+                                            原:<span style="text-decoration: line-through;font-weight: normal;color: red;">&yen;200</span> 现:<span style="color: yellow;font-weight: normal;">&yen;{{$vip->charge}}</span>
+                                        @endif
+                                    </h3>
+                                    <p class="handle">立即办理</p>
+                                    <a href="javascript:handleVip();">View more</a>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    @endforeach
                 </ul>
             </section>
         </article>
     </div>
+    <script>
+        function toastTip(message) {
+            swal({
+                toast: true,
+                type: 'warning',
+                html: '<span style="color: #fff;font-size: 20px;">'+message+'</span>',
+                width: 200,
+                height: 100,
+                background: '#000',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return false;
+        }
+        function handleVip() {
+            @if(is_null($oMember))
+                toastTip("请先登录！");
+            @else
+                @if($oMember->vip_id != 1 && $oMember->balance > 0)
+                    toastTip("您账户仍有余额");
+                @else
+                    alert('haha');
+                @endif
+            @endif
+        }
+    </script>
 @endsection

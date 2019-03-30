@@ -2095,6 +2095,7 @@ i.am-icon-tasks{ display: none;}
 	text-align: center;
 	cursor: pointer;
 	border-radius: 20px;
+	box-shadow: 10px 10px 30px 1px;
 }
 .m-case-list li figure img {
 	position: relative;

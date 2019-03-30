@@ -9,6 +9,7 @@
 namespace App\Model;
 
 
+use Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,7 +19,51 @@ class Vip extends Model
 
     protected $table = 'vip';
 
-    protected $guarded = ['deleted_at'];
+    protected $guarded = ['id', 'deleted_at'];
+
+    /**
+     * 添加验证
+     */
+    public static function vipValidate($aData = null)
+    {
+        $rules = [
+            'title'=>'required',
+            'picture'=>'required',
+            'charge'=>'required',
+            'privilege'=>'required',
+            'discount'=>'required',
+            'reputation_value'=>'required',
+            'coins'=>'required'
+        ];
+        $messages = [
+            'title.required'=>'请填写卡片名称',
+            'picture.required'=>'请上传会员卡片',
+            'charge.required'=>'请设置办理金额',
+            'privilege.required'=>'请填写会员特权',
+            'discount.required'=>'请设置消费折扣',
+            'reputation_value.required'=>'请设置信誉值奖励',
+            'coins.required'=>'请设置发币奖励'
+        ];
+        return Validator::make($aData, $rules, $messages);
+    }
+
+    /**
+     * 数据入库
+     */
+    public static function saveVip($aData = null)
+    {
+        $aData['created_at'] = date('Y-m-d H:i:s');
+        return self::insert($aData);
+    }
+
+    /**
+     * 更新数据
+     */
+    public static function updateVip($iId = 0, $aData = null)
+    {
+        $aData['updated_at'] = date('Y-m-d H:i:s');
+        return self::where('id', $iId)->update($aData);
+    }
 
     /**
      * 根据会员id获取会员头衔
@@ -34,5 +79,21 @@ class Vip extends Model
     public static function getVipInfo()
     {
         return self::orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * 会员管理--获取VIP数据
+     */
+    public static function getVips()
+    {
+        return self::where('id', '<>', 1)->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * 根据id获取会员
+     */
+    public static function getVipById($iId = 0)
+    {
+        return self::where('id', $iId)->first();
     }
 }

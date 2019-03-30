@@ -64,7 +64,7 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="table-list.html">
+                    <a href="/admin/vip" @if(Request::getPathInfo() =='/admin/vip')class="active"@endif>
                         <span class="am-icon-cc-discover sidebar-nav-link-logo"></span> 会员机制
                     </a>
                 </li>

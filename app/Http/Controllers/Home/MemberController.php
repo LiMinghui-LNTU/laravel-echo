@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Model\Members;
+use App\Model\Vip;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +19,11 @@ class MemberController extends Controller
     public function index()
     {
         $sTitle = '会员办理';
-        return view($this->sViewPath . 'index', compact('sTitle'));
+        //获取当前登录会员
+        $oMember = is_null(session()->get('member')) ? null : Members::getMemberById(Members::getIdByAccount(session()->get('member')[0]));
+        //获取会员卡
+        $oVips = Vip::getVips();
+        return view($this->sViewPath . 'index', compact('sTitle', 'oMember', 'oVips'));
     }
 
     /**

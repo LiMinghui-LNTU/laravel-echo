@@ -47,12 +47,14 @@ function messageTip(pre_type) {
             break;
     }
     Swal.fire({
+        toast: true,
         position: 'top-end',
         html: '<span style="color: #fff;font-size: 20px;">您有一条' + '<span style="color: red;font-weight: bold;">' + from + '</span>' + '消息！</span>',
         width: 400,
         height: 250,
         background: '#00f',
         showConfirmButton: false,
+        type: 'info',
         timer: 2000
     });
 }
