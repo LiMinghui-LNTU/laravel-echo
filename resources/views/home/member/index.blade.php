@@ -44,7 +44,7 @@
                                         @endif
                                     </h3>
                                     <p class="handle">立即办理</p>
-                                    <a href="javascript:handleVip();">View more</a>
+                                    <a href="javascript:handleVip('{{$vip->id}}', '{{$vip->title}}', '{{$vip->charge}}', '{{$vip->discount}}', '{{$vip->handle_count}}', '{{$vip->reputation_value}}');">View more</a>
                                 </figcaption>
                             </figure>
                         </li>
@@ -52,6 +52,15 @@
                 </ul>
             </section>
         </article>
+        <form action="/handle-member" method="post" style="display: none;" id="payForm">
+            @csrf
+            <input type="hidden" name="id">
+            <input type="hidden" name="title">
+            <input type="hidden" name="charge">
+            <input type="hidden" name="discount">
+            <input type="hidden" name="handle_count">
+            <input type="hidden" name="reputation_value">
+        </form>
     </div>
     <script>
         function toastTip(message) {
@@ -67,14 +76,20 @@
             });
             return false;
         }
-        function handleVip() {
+        function handleVip(id, title, charge, discount, handle_count, reputation_value) {
             @if(is_null($oMember))
                 toastTip("请先登录！");
             @else
                 @if($oMember->vip_id != 1 && $oMember->balance > 0)
                     toastTip("您账户仍有余额");
                 @else
-                    alert('haha');
+                    $("input[name='id']").val(id);
+                    $("input[name='title']").val(title);
+                    $("input[name='charge']").val(charge);
+                    $("input[name='discount']").val(discount);
+                    $("input[name='handle_count']").val(handle_count);
+                    $("input[name='reputation_value']").val(reputation_value);
+                    $("#payForm").submit();
                 @endif
             @endif
         }

@@ -96,4 +96,12 @@ class Vip extends Model
     {
         return self::where('id', $iId)->first();
     }
+
+    /**
+     * 增加会员办理人数
+     */
+    public static function updateVipHandleCount($iId = 0)
+    {
+        return self::where('id', $iId)->increment('handle_count');
+    }
 }

@@ -173,4 +173,20 @@ class Members extends Model
     {
         return self::where('id', $iId)->pluck('coins')[0];
     }
+
+    /**
+     * 会员办理成功更新顾客身份
+     */
+    public static function updateMemberIdentify($iMemberId = 0, $iVipId = 0)
+    {
+        $oMember = self::getMemberById($iMemberId);
+        $oVip = Vip::getVipById($iVipId);
+        $data = [
+            'vip_id' => $iVipId,
+            'coins' => (int)$oMember->coins + (int)$oVip->coins,
+            'reputation_value' => (int)$oMember->reputation_value + (int)$oVip->reputation_value,
+            'balance' => (int)$oMember->balance + (int)$oVip->charge
+        ];
+        return self::where('id', $iMemberId)->update($data);
+    }
 }
