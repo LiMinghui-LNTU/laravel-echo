@@ -87,7 +87,8 @@ class Schedule extends Model
     public static function saveScheduleGetId($aInput = null)
     {
         $oMember = Members::getInfoByAccount(session()->get('member'));
-        $sTitle = count($aInput['service_number']) > 1 ? "综合服务" : Service::getServiceNameByNum($aInput['service_number'][0])[0];
+        $service_arr = explode(',', $aInput['service_number']);
+        $sTitle = count($service_arr) > 1 ? "综合服务" : Service::getServiceNameByNum($service_arr[0])[0];
         $aData = [
             'setter_id' => $oMember->id,
             'setter_type' => 2,

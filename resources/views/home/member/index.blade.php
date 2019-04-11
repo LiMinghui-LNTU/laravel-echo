@@ -27,7 +27,7 @@
                     @foreach($oVips as $vip)
                         <li>
                             <figure class="effect-lily">
-                                <img style="cursor: text;"  data-am-popover="{content: '<h3>会员特权</h2>{{$vip->privilege}}<h3>奖励</h2>信誉值：{{$vip->reputation_value}}个，发币：{{$vip->coins}}枚', trigger: 'hover'}" src="@if(!is_null($oMember))@if($oMember->vip_id == 2) {{asset('assets/img/zhz_ty.jpg')}} @elseif($oMember->vip_id == 3) {{asset('assets/img/zsh_ty.jpg')}} @elseif($oMember->vip_id == 4) {{asset('assets/img/hj_ty.jpg')}} @elseif($oMember->vip_id == 5) {{asset('assets/img/by_ty.jpg')}} @elseif($oMember->vip_id == 6) {{asset('assets/img/qt_ty.jpg')}} @else {{$vip->picture}} @endif @else {{$vip->picture}} @endif" alt="" class="am-img-responsive">
+                                <img style="cursor: text;"  data-am-popover="{content: '<h3>会员特权</h2>{{$vip->privilege}}<h3>奖励</h2>信誉值：{{$vip->reputation_value}}个，发币：{{$vip->coins}}枚', trigger: 'hover'}" src="{{$vip->picture}}" alt="" class="am-img-responsive">
                                 <figcaption>
                                     <h3>
                                         {{$vip->title}}

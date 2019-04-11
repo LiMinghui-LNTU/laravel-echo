@@ -89,22 +89,32 @@ class SelfController extends Controller
         $aData = [
             'order_number' => $sOrderNumber,
             'member_id' => $oMember->id,
-            'service_number' => json_encode(new arrayobject($aInput['service_number'])),
+            'service_number' => json_encode(new arrayobject(explode(',', $aInput['service_number']))),
             'designer_id' => $aInput['designer_id'],
             'schedule_id' => $iScheduleId,
             'total_money' => $aInput['total_money'],
             'status' => 2,
-            'pay' => 1,
+            'pay' => (int)$aInput['pay'],
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d', (time() - 120))
         ];
         $sCode = Order::saveTheOrder($aData);
-        //给造型师发送提醒
-        broadcast(new OrderCreateEvent(Order::getOrderByOrderNum($sOrderNumber)));
         if ($sCode != '1001') {
             return json_encode(['success' => 0, 'code' => $sCode]);
+        }else{
+            //给造型师发送提醒
+            broadcast(new OrderCreateEvent(Order::getOrderByOrderNum($sOrderNumber)));
+            //更新票券使用状态
+            if (isset($aInput['aId'])){
+                TicketLog::useTickets($aInput['aId']);
+            }
+            if ((int)$aInput['pay'] != 1){
+                //在线支付增加信誉值与发币奖励
+                $iReputationValue = Service::calculateReputationValue(explode(',', $aInput['service_number']));
+                Members::changeReputationValue($oMember->id, $iReputationValue, 1);
+            }
+            return json_encode(['success' => 1]);
         }
-        return json_encode(['success' => 1]);
     }
 
     /**
@@ -278,5 +288,43 @@ class SelfController extends Controller
         } else {
             return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message-content', compact('oMessage'))]);
         }
+    }
+
+    //订单支付页
+    public function orderPay(Request $request)
+    {
+        $sTitle = '订单确认';
+        $start_time = $request->input('start_time');
+        $end_time = $request->input('end_time');
+        $total_time = $request->input('total_time');
+        $designer_id = $request->input('designer_id');
+        $service_price = $request->input('service_price');
+        $service_arr = $request->input('service_arr');
+        //获取登录顾客账号
+        $sAccount = session()->get('member');
+        //查询顾客个人信息
+        $oInfo = Members::getInfoByAccount($sAccount);
+        //获取该顾客未使用的票券
+        $oTickets = TicketLog::getUnUsedTicketById($oInfo->id);
+        return view($this->sViewPath . 'order-pay', compact('sTitle', 'start_time', 'end_time', 'total_time', 'designer_id', 'service_price', 'service_arr', 'oTickets', 'oInfo'));
+    }
+
+    //获取正在是使用的卡券记录id
+    public function getIdArr(Request $request)
+    {
+        $iType = (int)$request->input('type');
+        $iQuota = (int)$request->input('quota');
+        $iSkip = (int)$request->input('skip');
+        $iTake = (int)$request->input('take');
+        $aId = is_null($request->input('aId')) ? [] : (array)$request->input('aId');
+        $iFlag = (int)$request->input('flag');
+        $aLogId = array_column(TicketLog::getTicketLogId($iType, $iQuota, $iSkip, $iTake),'id');
+        if ($iFlag == 1){
+            $aLogId = array_merge($aId, $aLogId);
+        }else{
+            $aLogId = array_values(array_diff($aId, $aLogId));
+        }
+        $aLogId = array_map(function ($i){return (int)$i;},$aLogId);
+        return json_encode(['arr'=>$aLogId]);
     }
 }

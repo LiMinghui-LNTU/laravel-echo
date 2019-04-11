@@ -34,13 +34,13 @@
                                                 <img src="{{asset('assets/img/type'.$ticket->type.'_'.$ticket->quota.'.jpg')}}"/>
                                                 <h3 class="am-gallery-title">
                                                     @if($ticket->type == 1)
-                                                        5元新人优惠券 &times; {{$ticket->num}} 张
+                                                        5元新人优惠券&times;{{$ticket->num}}张
                                                     @elseif($ticket->type == 2)
-                                                        10元代金券 &times; {{$ticket->num}} 张
+                                                        10元代金券&times;{{$ticket->num}}张
                                                     @elseif($ticket->type == 3)
-                                                        {{$ticket->quota}}元限时优惠券 &times; {{$ticket->num}} 张
+                                                        {{$ticket->quota}}元限时优惠券&times;{{$ticket->num}}张
                                                     @else
-                                                        {{$ticket->quota}}元会员专享月券 &times; {{$ticket->num}} 张
+                                                        {{$ticket->quota}}元会员专享月券&times;{{$ticket->num}}张
                                                     @endif
                                                 </h3>
                                             </a>
@@ -57,7 +57,7 @@
                             </div>
                             <label class="am-u-sm-4 am-form-label">优惠券：</label>
                             <div class="am-u-sm-8">
-                                <small style="color: blue;cursor: pointer;" onclick="$(this).parent().parent().hide();$('#ticket').show();$('#go-back').show();"><span class="am-badge am-badge-primary am-round">{{count(\App\Model\TicketLog::getUnUsedTicketById($oInfo->id))}}</span> 张</small>
+                                <small style="color: blue;cursor: pointer;" onclick="$(this).parent().parent().hide();$('#ticket').show();$('#go-back').show();"><span class="am-badge am-badge-primary am-round">{{\App\Model\TicketLog::calculateTicketsNum($oInfo->id)}}</span> 张</small>
                             </div>
                             <label class="am-u-sm-4 am-form-label">头衔：</label>
                             <div class="am-u-sm-8">

@@ -1978,9 +1978,9 @@ i.am-icon-tasks{ display: none;}
 }
 	/*关于我们*/
 	.part-title-mar{
-  padding-top: 10px;
-  padding-bottom: 5px;
-}
+	  padding-top: 10px;
+	  padding-bottom: 5px;
+	}
 	.paper-plane {
 		font-size: 30px !important;
 		margin-top: -8px !important;
@@ -2064,8 +2064,8 @@ i.am-icon-tasks{ display: none;}
 		font-size: 14px;
 	}
 	.service-ul li:first-child {
-  margin-top: 20px;
-}
+	  margin-top: 20px;
+	}
 	/*新闻动态*/
 	.news-content-all {
 		margin-top: 0;
@@ -2267,4 +2267,83 @@ figure.effect-lily:hover p {
 
 .our-team-img:hover{
 	opacity:1;
+}
+
+/*订单确认*/
+.m-contact-infobox:hover,
+li:hover {
+	-webkit-filter: none;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+.m-mn-box {
+	position: relative;
+	background-color: #fff;
+	margin-bottom: 60px;
+}
+
+.m-mn-box section h3 {
+	margin: 20px 0 10px 0;
+	padding: 0;
+}
+
+.m-contact-infobox {
+	border: 1px solid #D8D8D8;
+	background: #fff;
+	border-radius: 5px;
+	/*padding: 40px 0;*/
+	/*text-align: center;*/
+}
+.m-contact-infobox:hover {
+	border: 1px solid #0d121b;
+	background: #1a1f2a;
+	color: #fff;
+}
+
+.m-mn-box > div{
+	border: 1px solid #D8D8D8;
+	background: #fff;
+	border-radius: 5px;
+	padding: 10px 20px;
+}
+
+.m-mn-box > div:hover{
+	border: 1px solid #0d121b;
+	background: #1a1f2a;
+	color: #fff;
+	transition: all 0.5s ease;
+}
+
+.m-mn-box p span{
+	font-weight: bold;
+	font-style: italic;
+	font-size: 10pt;
+}
+
+.ticket-click{
+	border: 1px solid red;
+	border-radius: 5px;
+	box-shadow: 0 0 5px 3px goldenrod;
+	background: gold;
+	color: red;
+}
+
+.pay-method div div{
+	text-align: center;
+	width: 50%;
+	border: 1px solid #D8D8D8;
+	border-radius: 5px;
+	padding: 5px 5px;
+}
+
+.pay-method div div:hover{
+	cursor: pointer;
+	border: 1px solid #0d121b;
+	background: #1a1f2a;
+	color: #fff;
+	transition: all 0.5s ease;
 }

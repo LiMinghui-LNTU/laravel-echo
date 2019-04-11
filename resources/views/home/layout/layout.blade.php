@@ -13,7 +13,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/home_logo.ico')}}"/>
     <link rel="bookmark" href="{{asset('assets/img/home_logo.ico')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/amazeui.css')}}"/>
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/css/style.css?v=2')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.css')}}"/>
     @if(strpos(Request::getPathInfo(),'login'))
         <link rel="stylesheet" href="{{asset('assets/css/dlstyle.css')}}"/>
@@ -131,7 +131,7 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 
 <!--<![endif]-->
-<script src="{{asset('assets/js/public.js')}}"></script>
+<script src="{{asset('assets/js/public.js?v=4')}}"></script>
 <script src="{{asset('assets/js/moment.js')}}"></script>
 <script src="{{asset('assets/js/amazeui.min.js')}}"></script>
 <script src="{{asset('assets/js/fullcalendar.min.js')}}"></script>

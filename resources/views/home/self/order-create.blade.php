@@ -11,7 +11,7 @@
             <div class="right toppic-progress">
                 <span><a href="/home" class="w-white">首页</a></span>
                 <i class=" am-icon-arrow-circle-right w-white"></i>
-                <span><a href="/self" class="w-white">个人中心</a></span>
+                <span><a href="/self/create" class="w-white">服务选择</a></span>
             </div>
         </div>
     </div>
@@ -212,10 +212,15 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="_token" value="{{csrf_token()}}">
-    <input type="hidden" id="start-time">
-    <input type="hidden" id="end-time">
-    <input type="hidden" id="designer-id">
+    <form id="orderPayForm" action="/order-pay" method="post" style="display: none;">
+        <input type="hidden" id="_token" name="_token" value="{{csrf_token()}}">
+        <input type="hidden" id="start-time" name="start_time">
+        <input type="hidden" id="end-time" name="end_time">
+        <input type="hidden" id="total-time" name="total_time">
+        <input type="hidden" id="designer-id" name="designer_id">
+        <input type="hidden" id="price" name="service_price">
+        <input type="hidden" id="service-arr" name="service_arr">
+    </form>
 
     <script type="text/javascript">
         // $('#calendar').fullCalendar( 'incrementDate', {days:5, hour, minutes:0} ); //日期视图向前或向后移动固定的时间，duration可以为={ days:1, hours:23, minutes:59 }
@@ -276,6 +281,8 @@
                     if (eventData) {
                         if ((select_time - order_time) < 0 || (select_time - order_time) >= 30) {
                             $('#calendar').fullCalendar('unselect');
+                            $("#start-time").val("");
+                            $("#end-time").val("");
                             tip("请勾选适当时长");
                             return false;
                         }else {

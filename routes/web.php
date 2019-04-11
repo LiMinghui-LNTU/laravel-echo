@@ -43,7 +43,10 @@ Route::group(['namespace' => 'Home'], function () {
     Route::post('get-schedule', 'SelfController@postThisDesignerSchedule');
     Route::post('to-shopowner', 'SelfController@sendMsg2Shopowner');
     Route::post('from-shopowner', 'SelfController@getMsgFromShopowner');
+    Route::post('order-pay', 'SelfController@orderPay'); //订单支付
+    Route::post('ticket-id', 'SelfController@getIdArr'); //获取使用的卡券id
     Route::post('handle-member', 'PayController@handleMember'); //办理会员
+    Route::post('pay-order', 'PayController@payOrder'); //办理会员
     Route::get('check', 'PayController@checkData'); //回调验签
 });
 

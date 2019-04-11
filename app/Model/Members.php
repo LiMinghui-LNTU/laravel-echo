@@ -189,4 +189,16 @@ class Members extends Model
         ];
         return self::where('id', $iMemberId)->update($data);
     }
+
+    /**
+     * 改变信誉值
+     */
+    public static function changeReputationValue($iId = 0, $iValue = 0, $iType = 0)
+    {
+        if($iType){
+            return self::where('id', $iId)->increment('reputation_value', $iValue);
+        }else{
+            return self::where('id', $iId)->decremrnt('reputation_value', $iValue);
+        }
+    }
 }

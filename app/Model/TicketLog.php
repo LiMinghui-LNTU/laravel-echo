@@ -77,4 +77,35 @@ class TicketLog extends Model
             ->groupBy('t.type', 't.quota')
             ->get();
     }
+
+    /**
+     * 计算票券张数
+     */
+    public static function calculateTicketsNum($iMenberId = 0)
+    {
+        return self::where('member_id', $iMenberId)->where('is_use', 0)->get()->count();
+    }
+
+    /**
+     * 根据票券类型及面额获取票券领取id
+     */
+    public static function getTicketLogId($iType = 0, $iQuota = 0, $iSkpi = 0, $iTake = 0)
+    {
+        return self::leftJoin('tickets as t', 'ticket_id', '=', 't.id')
+            ->where('t.type', $iType)
+            ->where('t.quota', $iQuota)
+            ->where('is_use', 0)
+            ->select('ticket_log.id')
+            ->orderBy('ticket_log.created_at', 'asc')
+            ->skip($iSkpi)->take($iTake)
+            ->get()->toArray();
+    }
+
+    /**
+     * 更新票券使用状态
+     */
+    public static function useTickets($aTicketsId = null)
+    {
+        return self::whereIn('id', $aTicketsId)->update(['is_use'=>1]);
+    }
 }

@@ -72,11 +72,6 @@ function ticketTip(type, quota) {
     });
 }
 
-//支付弹框
-function pay(message, number, title, designer, money, ticket) {
-
-}
-
 //等待弹窗
 function wait(message) {
     swal({
@@ -423,9 +418,9 @@ function showOrder(index, number, time, reputation, intro) {
 
 //短发/长发价位切换
 function changePrice(type) {
-    $("input[type='checkbox']").attr("checked", false);
+    $("input[type='checkbox']").prop("checked", false);
     $("input[type='checkbox']").val("on");
-    $("input[name!='type']").attr("checked", false);
+    $("input[name!='type']").prop("checked", false);
     $("input[name!='type']").attr("disabled", false);
     $("tr").attr("style", "");
     $("#service-price").html(0);
@@ -496,8 +491,11 @@ function doReservation() {
     var start_time = $("#start-time").val();//日程开始时间
     var end_time = $("#end-time").val();//日程结束时间
     if (total_money == '0') {
+        $("#price").val(0);
         tip("请选择服务项目");
         return false;
+    }else {
+        $("#price").val(total_money);
     }
     if (designer_id == '') {
         tip("请翻牌造型师");
@@ -514,26 +512,114 @@ function doReservation() {
             service_arr.push($("input[name='order" + i + "']").val());
         }
     }
-    wait("预定中...");
-    $.post(
-        '/self',
-        {
-            '_token': $("#_token").val(),
-            'service_number': service_arr,
-            'designer_id': designer_id,
-            'total_money': total_money,
-            'start': $("#start-time").val(),
-            'end': $("#end-time").val()
-        },
-        function (data) {
-            if (data.success) {
-                tip("预订成功");
-                window.location.href = '/self';
-            } else {
-                tip(data.code + ":预定失败");
-                return false;
-            }
-        },
-        'json'
-    );
+    $("#total-time").val($("#service-time").text());
+    $("#service-arr").val(service_arr);
+    wait("正在跳转...");
+    $("#orderPayForm").submit();
+    return false;
+}
+
+//订单支付
+function doPay(type) {
+    var data = {
+        '_token': $("input[name='_token']").val(),
+        'pay': type == 1 ? 0 : 1,
+        'aId': aId,
+        'service_number': $("#service-arr").val(),
+        'designer_id': $("#designer-id").val(),
+        'total_money': $("#terminal_money").html(),
+        'start': $("#start-time").val(),
+        'end': $("#end-time").val()
+    };
+    if (type == 3){ //支付宝付款
+        $("#ticket-id").val(aId);//打包传到支付方法中，将数据存到session中然后在回调中保存数据
+        $("#terminal-money").val($("#terminal_money").html());
+        $("#orderForm").submit();
+        return false;
+    }else {
+        if (type == 1){ //到店支付
+            Swal.fire({
+                title: '到店付款：'+'<span style="color: red">'+$("#terminal_money").html()+' 元</span>',
+                text: "到店付款不能获得信誉值及发币奖励",
+                // type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#abc',
+                confirmButtonText: '确认付款',
+                cancelButtonText: '我再想想'
+            }).then((result) => {
+                if(result.value){
+                    wait("预定中...");
+                    $.post(
+                        '/self',
+                        data,
+                        function (data) {
+                            if (data.success) {
+                                tip("预订成功");
+                                window.location.href = '/self';
+                            } else {
+                                tip(data.code + ":预定失败");
+                                return false;
+                            }
+                        },
+                        'json'
+                    );
+                }else {
+                    return false;
+                }
+            });
+        }else { //余额付款
+            var balance = parseInt($("#my-balance").val());
+            Swal.fire({
+                title: '余额支付：'+'<span style="color: red">'+$("#terminal_money").html()+' 元</span>',
+                text: "您的当前余额为<span style='color: blue'>"+balance+"</span>元",
+                // type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#abc',
+                confirmButtonText: '确认支付',
+                cancelButtonText: '我再想想'
+            }).then((result) => {
+                if(result.value){
+                    wait("预定中...");
+                    if (balance < parseInt($("#terminal_money").html())) {
+                        Swal.fire({
+                            title: "您的余额不足！",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#abc',
+                            confirmButtonText: '前去充值',
+                            cancelButtonText: '放弃支付'
+                        }).then((result)=>{
+                            if (result.value){
+                                swal("充值功能待开发...");
+                                return false;
+                            }else {
+                                return false;
+                            }
+                        });
+                        return false;
+                    }else {
+                        $.post(
+                            '/self',
+                            data,
+                            function (data) {
+                                if (data.success) {
+                                    tip("预订成功");
+                                    window.location.href = '/self';
+                                } else {
+                                    tip(data.code + ":预定失败");
+                                    return false;
+                                }
+                            },
+                            'json'
+                        );
+                    }
+                }else {
+                    return false;
+                }
+            });
+        }
+    }
 }
