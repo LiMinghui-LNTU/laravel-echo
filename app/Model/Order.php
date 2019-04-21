@@ -11,6 +11,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -97,4 +98,52 @@ class Order extends Model
     {
         return self::where('id', $iId)->update(['is_read' => 1]);
     }
+
+    /**
+     * 根据造型师id按月查询本年所有已完成订单
+     */
+    public static function getOrdersOfMonthByDesignerId($iDesignerId = 0)
+    {
+        $data = self::where('designer_id', $iDesignerId)
+            ->where('status', 1)
+            ->whereYear('created_at', date('Y', time()))
+            ->selectRaw('MONTH(created_at) as date,COUNT(*) as value')
+            ->groupBy('date')
+            ->get();
+        $temp = [0,0,0,0,0,0,0,0,0,0,0,0];
+        foreach ($data as $d){
+            $temp[$d->date] = $d->value;
+        }
+        return $temp;
+    }
+    
+    /**
+     * 获取当前年份1月1日起到现在每天顾客的订单量数组
+     */
+    public static function getOrdersArr()
+    {
+        $start = strtotime(date('Y', time()).'-01-01');
+        $end = strtotime(date('Y-m-d', time()));
+        $oData = self::select(DB::raw('date_format(created_at,\'%Y-%m-%d\') as date'), DB::raw('COUNT(*) as num'))
+            ->where('status', 1)
+            ->whereYear('created_at', date('Y', time()))
+            ->groupBy('date')
+            ->get();
+        $aResult = [];
+        while ($end >= $start){
+            $temp[0] = date('Y-m-d', $start);
+            foreach ($oData as $data){
+                if($start == strtotime($data->date)){
+                    $temp[1] = $data->num;
+                    break;
+                }else{
+                    $temp[1] = 0;
+                }
+            }
+            $start += 3600 * 24;
+            array_push($aResult, $temp);
+        }
+        return $aResult;
+    }
+
 }

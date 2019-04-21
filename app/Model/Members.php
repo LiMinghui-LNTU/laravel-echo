@@ -198,7 +198,19 @@ class Members extends Model
         if($iType){
             return self::where('id', $iId)->increment('reputation_value', $iValue);
         }else{
-            return self::where('id', $iId)->decremrnt('reputation_value', $iValue);
+            return self::where('id', $iId)->decrement('reputation_value', $iValue);
+        }
+    }
+    
+    /**
+     * 改变余额
+     */
+    public static function changeBalanceByMemberId($iMemberId = 0, $iBlance = 0, $iType = 0)
+    {
+        if($iType){
+            return self::where('id', $iMemberId)->increment('balance', $iBlance);
+        }else{
+            return self::where('id', $iMemberId)->decrement('balance', $iBlance);
         }
     }
 }

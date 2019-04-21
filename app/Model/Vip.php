@@ -9,6 +9,7 @@
 namespace App\Model;
 
 
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -103,5 +104,33 @@ class Vip extends Model
     public static function updateVipHandleCount($iId = 0)
     {
         return self::where('id', $iId)->increment('handle_count');
+    }
+
+    /**
+     * 获取VIP名称数组
+     */
+    public static function getVipTitle()
+    {
+        return array_column(self::select('title')->orderBy('id', 'asc')->get()->toArray(), 'title');
+    }
+
+    /**
+     * 统计每种VIP下顾客办理人数
+     */
+    public static function statisticCount()
+    {
+        $oData = self::leftJoin('members as m', 'vip.id', '=', 'm.vip_id')
+            ->select('title', 'vip_id', DB::raw('COUNT(*) as num'))
+            ->where('is_active', 1)
+            ->groupBy('vip_id')
+            ->orderBy('vip.id', 'asc')
+            ->get();
+        $aData = [];
+        foreach ($oData as $data){
+            $temp['value'] = $data->num;
+            $temp['name'] = $data->title;
+            array_push($aData, json_encode($temp));
+        }
+        return $aData;
     }
 }

@@ -203,7 +203,7 @@ function uploadThumb(url, file_id, show_id, hide_id) {
         secureuri: false,//是否需要安全协议，一般设置为false
         fileElementId: file_id,//文件上传域的id  <input type="file" id="file" name="file" />
         data: {
-            '_token': $('input[name=_token]').val(),
+            '_token': $("input[name='_token']").val(),
             'file_id': file_id,
         },
         dataType: 'json',//返回数据类型:text，xml，json，html,scritp,jsonp五种

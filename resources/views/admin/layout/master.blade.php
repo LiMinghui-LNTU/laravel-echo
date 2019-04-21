@@ -38,7 +38,7 @@
     <!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
     <script type="text/javascript" src="{{ asset('assets/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 
-    @if(strpos(Request::getPathInfo(),'clerk') && !is_null(\App\Model\Designer::getDesignerByUserId(Auth::User()->id)))
+    @if(substr(Request::getPathInfo(), 7) == 'clerk' && !is_null(\App\Model\Designer::getDesignerByUserId(Auth::User()->id)))
         <script>
             window.localStorage.setItem('designer_id', "{{\App\Model\Designer::getDesignerIdByUserId(Auth::User()->id)[0]}}");
         </script>

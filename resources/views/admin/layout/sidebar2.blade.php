@@ -96,20 +96,14 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="table-list.html">
-                        <span class="am-icon-paypal sidebar-nav-link-logo"></span> 消费记录
-                    </a>
-                </li>
-
-                <li class="sidebar-nav-link">
-                    <a href="table-list.html">
+                    <a href="/admin/achievement-statistic">
                         <span class="am-icon-bar-chart sidebar-nav-link-logo"></span> 员工业绩
                     </a>
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-rmb sidebar-nav-link-logo"></span> 我的收入
+                    <a href="/admin/visitors-num">
+                        <span class="am-icon-rmb sidebar-nav-link-logo"></span> 月访客量
                     </a>
                 </li>
             </ul>

@@ -21,7 +21,7 @@
 
                                     <div class="am-btn-group am-btn-group-xs">
                                         <button type="button" class="am-btn am-btn-default am-btn-success"
-                                                onclick="window.location.href='';">
+                                                onclick="window.location.href='/admin/type-statistic';">
                                             <span class="am-icon-bar-chart"></span> 数据分析
                                         </button>
                                     </div>

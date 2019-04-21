@@ -94,7 +94,7 @@ class SelfController extends Controller
             'schedule_id' => $iScheduleId,
             'total_money' => $aInput['total_money'],
             'status' => 2,
-            'pay' => (int)$aInput['pay'],
+            'pay' => (int)$aInput['pay'] == 1 ? 0 : 1,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d', (time() - 120))
         ];
@@ -108,8 +108,12 @@ class SelfController extends Controller
             if (isset($aInput['aId'])){
                 TicketLog::useTickets($aInput['aId']);
             }
+            //余额支付扣除账户余额
+            if((int)$aInput['pay'] == 2){
+                Members::changeBalanceByMemberId($oMember->id, (int)$aInput['total_money'], 0);
+            }
             if ((int)$aInput['pay'] != 1){
-                //在线支付增加信誉值与发币奖励
+                //在线支付增加信誉值
                 $iReputationValue = Service::calculateReputationValue(explode(',', $aInput['service_number']));
                 Members::changeReputationValue($oMember->id, $iReputationValue, 1);
             }

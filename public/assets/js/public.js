@@ -523,7 +523,7 @@ function doReservation() {
 function doPay(type) {
     var data = {
         '_token': $("input[name='_token']").val(),
-        'pay': type == 1 ? 0 : 1,
+        'pay': type,
         'aId': aId,
         'service_number': $("#service-arr").val(),
         'designer_id': $("#designer-id").val(),
@@ -572,7 +572,7 @@ function doPay(type) {
             var balance = parseInt($("#my-balance").val());
             Swal.fire({
                 title: '余额支付：'+'<span style="color: red">'+$("#terminal_money").html()+' 元</span>',
-                text: "您的当前余额为<span style='color: blue'>"+balance+"</span>元",
+                text: "您的当前余额为"+balance+"元",
                 // type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

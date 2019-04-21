@@ -100,4 +100,28 @@ class Designer extends Model
             return self::where('user_id', $iUserId)->update($aData);
         }
     }
+
+    /**
+     * 获取全部店员，转为字符串
+     */
+    public static function getAllStringName()
+    {
+        return array_column(self::select('name')->orderBy('created_at', 'desc')->get()->toArray(), 'name');
+    }
+
+    /**
+     * 查询店员业绩
+     */
+    public static function getAchievementData()
+    {
+        $oDesigners = self::orderBy('created_at', 'desc')->get();
+        $data = [];
+        foreach ($oDesigners as $designer){
+            $temp['name'] = $designer->name;
+            $temp['type'] = 'bar';
+            $temp['data'] = Order::getOrdersOfMonthByDesignerId($designer->id);
+            array_push($data, json_encode($temp));
+        }
+        return $data;
+    }
 }
