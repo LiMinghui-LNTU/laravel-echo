@@ -58,6 +58,14 @@ class Members extends Model
     }
 
     /**
+     * 激活账户
+     */
+    public static function accountActivate($sEmail = '')
+    {
+        return self::where('account_number', $sEmail)->update(['is_active'=>1]);
+    }
+
+    /**
      * 登录验证
      */
     public static function checkAccount($account = '', $password = '')

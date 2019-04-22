@@ -13,6 +13,7 @@ use App\Events\MessageEvent;
 use App\Events\OrderCreateEvent;
 use App\Http\Controllers\Controller;
 use App\Model\Designer;
+use App\Model\MailActive;
 use App\Model\Members;
 use App\Model\Message;
 use App\Model\Order;
@@ -210,8 +211,19 @@ class SelfController extends Controller
             $account = Input::get('phone_number');
             $password = Input::get('password_phone');
         }
-        //入库
-        $res = Members::saveMember($account, $password, $reg_type);
+        //邮箱注册顾客发送激活邮件
+        if($reg_type == 1){
+            $is_exist = MailActive::sendEmail($account);
+            if($is_exist){
+                //入库
+                $res = Members::saveMember($account, $password, $reg_type);
+            }else{
+                $res = 0;
+            }
+        }elseif ($reg_type == 2){
+            //入库
+            $res = Members::saveMember($account, $password, $reg_type);
+        }
         return json_encode(['success' => $res]);
     }
 

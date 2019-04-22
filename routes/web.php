@@ -48,6 +48,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::post('handle-member', 'PayController@handleMember'); //办理会员
     Route::post('pay-order', 'PayController@payOrder'); //办理会员
     Route::get('check', 'PayController@checkData'); //回调验签
+    Route::get('register/activate', 'MailController@accountActivate'); //邮箱激活
 });
 
 //后台登录路由

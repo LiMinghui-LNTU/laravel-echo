@@ -25,7 +25,7 @@ function tip(message) {
         height: 100,
         background: '#000',
         showConfirmButton: false,
-        timer: 1000
+        timer: 2000
     });
 }
 
@@ -218,7 +218,7 @@ $("#reg-email-btn").click(function () {
                     },
                     function (data) {
                         if (data.success) {
-                            tip("注册成功");
+                            tip("注册成功,请前往邮箱激活账户");
                             window.location.reload();
                         } else {
                             tip("注册失败");
