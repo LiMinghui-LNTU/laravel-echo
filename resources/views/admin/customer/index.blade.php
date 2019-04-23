@@ -63,6 +63,7 @@
                                     <th>信誉值</th>
                                     <th>账户余额</th>
                                     <th>注册时间</th>
+                                    <th>是否激活</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -76,6 +77,7 @@
                                         <td>{{$customer->reputation_value}}</td>
                                         <td>{{$customer->balance}}</td>
                                         <td>{{$customer->created_at}}</td>
+                                        <td>@if($customer->is_active)是@else否@endif</td>
                                     </tr>
                                 @endforeach
                                 <!-- more data -->

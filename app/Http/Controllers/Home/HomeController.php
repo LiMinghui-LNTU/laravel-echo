@@ -14,6 +14,7 @@ use App\Model\Knowledge;
 use App\Model\Recruit;
 use App\Model\Resume;
 use App\Model\Sowmap;
+use App\Model\Ticket;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -32,7 +33,10 @@ class HomeController extends Controller
         $oSowmaps = Sowmap::getSowmap();
         //获取养护文章
         $oArticles = Knowledge::getSomeArticle(1, 8);
-        return view($this->sViewPath . 'index', compact('sTitle', 'oSowmaps', 'oArticles'));
+        //获取优惠活动
+        $oTicket1 = Ticket::getTicketById(1);
+        $oTicket2 = Ticket::getTicketById(2);
+        return view($this->sViewPath . 'index', compact('sTitle', 'oSowmaps', 'oArticles', 'oTicket1', 'oTicket2'));
     }
 
     /**

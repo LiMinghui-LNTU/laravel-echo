@@ -537,6 +537,11 @@ function doPay(type) {
         $("#orderForm").submit();
         return false;
     }else {
+        //到店支付不能使用优惠券
+        if(parseInt( $("#terminal_money").html()) != parseInt($("#temp-money").html())){
+            tip("不支持使用优惠券");
+            return false;
+        }
         if (type == 1){ //到店支付
             Swal.fire({
                 title: '到店付款：'+'<span style="color: red">'+$("#terminal_money").html()+' 元</span>',

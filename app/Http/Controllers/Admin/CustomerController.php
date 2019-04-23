@@ -62,7 +62,7 @@ class CustomerController extends Controller
             $excel->sheet('数据明细', function ($sheet) use ($oData) {
                 $sheet->rows($oData);
                 //设置标题
-                $sheet->prependRow(1, array('Id', '账号', '昵称', '头衔', '发币', '信誉值', '账户余额', '注册时间'));
+                $sheet->prependRow(1, array('Id', '账号', '昵称', '头衔', '发币', '信誉值', '账户余额', '注册时间', '是否激活'));
             });
         })->export('xlsx');
     }

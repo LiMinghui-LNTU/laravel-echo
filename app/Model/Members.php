@@ -130,7 +130,7 @@ class Members extends Model
     public static function getCustomers($iVip = 0, $sKey = '')
     {
         $res = self::leftJoin('vip as v', 'vip_id', '=', 'v.id')
-            ->select('members.id', 'account_number', 'nickname', 'title', 'members.coins', 'members.reputation_value', 'balance', 'members.created_at')
+            ->select('members.id', 'account_number', 'nickname', 'title', 'members.coins', 'members.reputation_value', 'balance', 'is_active', 'members.created_at')
             ->where(function ($query) use ($sKey) {
                 $query->where('nickname', 'like', '%' . $sKey . '%')
                     ->orWhere('account_number', 'like', '%' . $sKey . '%');
@@ -148,7 +148,7 @@ class Members extends Model
     public static function getExportData($iVip = 0, $sKey = '')
     {
         $res = self::leftJoin('vip as v', 'vip_id', '=', 'v.id')
-            ->select('members.id', 'account_number', 'nickname', 'title', 'members.coins', 'members.reputation_value', 'balance', 'members.created_at')
+            ->select('members.id', 'account_number', 'nickname', 'title', 'members.coins', 'members.reputation_value', 'balance', 'members.created_at', 'is_active')
             ->where(function ($query) use ($sKey) {
                 $query->where('nickname', 'like', '%' . $sKey . '%')
                     ->orWhere('account_number', 'like', '%' . $sKey . '%');

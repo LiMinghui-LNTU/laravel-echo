@@ -121,7 +121,6 @@ class Vip extends Model
     {
         $oData = self::leftJoin('members as m', 'vip.id', '=', 'm.vip_id')
             ->select('title', 'vip_id', DB::raw('COUNT(*) as num'))
-            ->where('is_active', 1)
             ->groupBy('vip_id')
             ->orderBy('vip.id', 'asc')
             ->get();

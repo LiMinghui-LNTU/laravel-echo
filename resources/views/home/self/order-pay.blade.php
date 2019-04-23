@@ -41,8 +41,8 @@
                 <p><i class="am-icon-hand-paper-o"></i> 服务项目：<span>@foreach($arr as $a){{\App\Model\Service::getServiceNameByNum($a)[0].' '}}@endforeach</span></p>
                 <p><i class="am-icon-user-secret"></i> 造型师：<span>{{\App\Model\Designer::getDesignerNameById($designer_id)[0]}}</span></p>
                 <p><i class="am-icon-calendar"></i> 赴约时间：<span>{{date('Y年m月d日 H:i:s', strtotime($start_time) - 60 * 60 * 8)}}</span></p>
-                <p><i class="am-icon-clock-o"></i> 服务时长：<span>{{$total_time}} 分钟</span></p>
-                <p><i class="am-icon-yen"></i> 订单总额：<span>{{$service_price}} 元</span></p>
+                <p><i class="am-icon-clock-o"></i> 服务时长：<span>{{$total_time}}</span> 分钟</p>
+                <p><i class="am-icon-yen"></i> 订单总额：<span id="temp-money">{{$service_price}}</span> 元</p>
             </div>
             <section>
                 <h3>您的可用优惠券如下，请按需选择使用：</h3>
