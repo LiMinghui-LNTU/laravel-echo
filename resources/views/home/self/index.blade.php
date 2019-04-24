@@ -22,7 +22,8 @@
                 <div class="am-panel-bd">
                     <div class="am-g">
                         <div class="am-u-md-1">
-                            <img class="am-img-circle am-img-thumbnail" src="{{$oInfo->photo}}" alt=""/>
+                            <img id="show-photo" class="am-img-circle am-img-thumbnail" style="cursor:pointer;" src="{{$oInfo->photo}}"/>
+                            <span id="do-upload" style="display:none;cursor: pointer;border: 1px solid #444;border-radius: 5px;"><i class="am-icon-check">上传</i></span>
                             <span id="go-back" style="display: none;cursor: pointer;border: 1px solid #444;border-radius: 5px;" onclick="$(this).hide();$('#ticket').hide();$('#info').show();"><i class="am-icon-reply">返回</i></span>
                         </div>
                         <div class="am-u-md-4" id="ticket" style="display: none;">
@@ -52,8 +53,8 @@
                         <div class="am-u-md-4" id="info">
                             <label class="am-u-sm-4 am-form-label">昵称：</label>
                             <div class="am-u-sm-8">
-                                <small>{{$oInfo->nickname}}</small>
-                                <i class="am-icon-edit"></i>
+                                <small id="nickname">{{$oInfo->nickname}}</small>
+                                <i class="am-icon-edit" style="cursor:pointer;" onclick="editNickname(this);"></i>
                             </div>
                             <label class="am-u-sm-4 am-form-label">优惠券：</label>
                             <div class="am-u-sm-8">
@@ -67,9 +68,9 @@
                             <div class="am-u-sm-8">
                                 <small>{{$oInfo->balance}} 元</small>
                             </div>
-                            <button class="am-btn am-btn-primary am-btn-xs">
+                            <button id="changePassword" class="am-btn am-btn-primary am-btn-xs">
                                 <i class="am-icon-edit"></i>
-                                编辑信息
+                                修改密码
                             </button>
                         </div>
                         <div class="am-u-md-7">
@@ -357,4 +358,182 @@
             </div>
         </div>
     </div>
+    <script>
+        //实例化一个plupload上传对象
+        var uploader = new plupload.Uploader({
+            browse_button : 'show-photo', //触发文件选择对话框的按钮，为那个元素id
+            url : '/upload-file', //服务器端的上传页面地址
+            filters : {
+                mime_types : [ //只允许上传图片和zip文件
+                    { title : "Image files", extensions : "jpg,gif,png" }
+                ],
+                    max_file_size : '400kb', //最大只能上传400kb的文件
+                    prevent_duplicates : true //不允许选取重复文件
+            },
+            multipart_params: {
+                _token:$("input[name='_token']").val(),
+                module:'self'
+            },
+            multi_selection : false,//设置是否可多选
+            file_data_name: 'photo',//	指定文件上传时文件域的名称
+
+        flash_swf_url : "{{asset('assets/js/plupload/Moxie.swf')}}", //swf文件，当需要使用swf方式进行上传时需要配置该参数
+            silverlight_xap_url : "{{asset('assets/js/plupload/Moxie.xap')}}" //silverlight文件，当需要使用silverlight方式进行上传时需要配置该参数
+        });
+
+        //在实例对象上调用init()方法进行初始化
+        uploader.init();
+
+        //绑定各种事件，并在事件监听函数中做你想做的事
+        uploader.bind('FilesAdded',function(uploader,files){
+            for(var i = 0, len = files.length; i<len; i++){
+                // var file_name = files[i].name; //文件名
+                // //构造html来更新UI
+                // var html = '<li id="file-' + files[i].id +'"><p class="file-name">' + file_name + '</p><p class="progress"></p></li>';
+                // $(html).appendTo('#file-list');
+                //预览图片
+                !function(i){
+                    previewImage(files[i],function(imgsrc){
+                        $('#show-photo').attr('src', imgsrc);
+                    })
+                }(i);
+            }
+            $("#do-upload").show();
+        });
+        $("#do-upload").click(function () {
+            uploader.start();
+            $("#do-upload").hide();
+        });
+        uploader.bind('UploadProgress',function(uploader,file){
+            //每个事件监听函数都会传入一些很有用的参数，
+            //我们可以利用这些参数提供的信息来做比如更新UI，提示上传进度等操作
+            wait("正在上传...");
+        });
+        uploader.bind('FileUploaded',function (uploader,file,responseObject) {
+            if(responseObject.status == 200){
+                tip("上传成功");
+            }
+        });
+        uploader.bind('Error',function (uploader, errObject) {
+            tip("上传出错了");
+            return false;
+        });
+
+        //预览图片
+        function previewImage(file,callback){//file为plupload事件监听函数参数中的file对象,callback为预览图片准备完成的回调函数
+            if(!file || !/image\//.test(file.type)) return; //确保文件是图片
+            if(file.type=='image/gif'){//gif使用FileReader进行预览,因为mOxie.Image只支持jpg和png
+                var fr = new mOxie.FileReader();
+                fr.onload = function(){
+                    callback(fr.result);
+                    fr.destroy();
+                    fr = null;
+                }
+                fr.readAsDataURL(file.getSource());
+            }else{
+                var preloader = new mOxie.Image();
+                preloader.onload = function() {
+                    preloader.downsize( 200, 200 );//先压缩一下要预览的图片,宽300，高300
+                    var imgsrc = preloader.type=='image/jpeg' ? preloader.getAsDataURL('image/jpeg',80) : preloader.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
+                    callback && callback(imgsrc); //callback传入的参数为预览图片的url
+                    preloader.destroy();
+                    preloader = null;
+                };
+                preloader.load( file.getSource() );
+            }
+        }
+
+        //修改密码
+        $("#changePassword").click(function () {
+            Swal.mixin({
+                allowOutsideClick :false,
+                input: 'password',
+                confirmButtonText: '下一步',
+                showCancelButton: true,
+                progressSteps: ['1', '2', '3']
+            }).queue([
+                {
+                    title: '原密码',
+                    text: '请输入原密码'
+                },
+                '新密码',
+                '确认密码'
+            ]).then((result) => {
+                if(result.value == null){return false;}
+                if(result.value[0].trim() == '' || result.value[1].trim() == ''){
+                    tip("密码不能为空");
+                    return false;
+                }else if(result.value[1].trim() != result.value[2].trim()){
+                    tip("两次密码不一致");
+                    return false;
+                }else {
+                    $.post(
+                        '/home',
+                        {
+                            _token: $("input[name='_token']").val(),
+                            newPassword: result.value[1],
+                            value: result.value
+                        },
+                        function (data) {
+                            if(data.code == '1001'){
+                                Swal.fire({
+                                    title: '修改成功',
+                                    html: '您的密码已修改，请重新登录平台',
+                                    confirmButtonText: '好的',
+                                    allowOutsideClick :false
+                                }).then((result)=>{
+                                    if(result.value){
+                                        memberLogout();
+                                    }
+                                });
+                            }else {
+                                tip(data.msg);
+                                return false;
+                            }
+                        },
+                        'json'
+                    );
+                }
+            });
+        });
+
+        //修改昵称
+        function editNickname(obj) {
+            if($(obj).hasClass("am-icon-edit")){
+                var nickname = $("#nickname").html();
+                $("#nickname").html("<input id='newNickname' type='text' placeholder='" + nickname + "'>");
+                $("#newNickname").focus();
+                $(obj).removeClass("am-icon-edit").addClass("am-icon-check");
+            }else {
+                //ajax请求更改昵称
+                var newNickname = $("#newNickname").val().trim();
+                if(newNickname.length == 0){
+                    tip("昵称不能为空");
+                    $("#newNickname").focus();
+                    return false;
+                }
+                if(newNickname.length > 6){
+                    tip("请限制于6字之内");
+                    $("#newNickname").focus();
+                    return false;
+                }
+                $.post(
+                    '/home',
+                    {
+                        _token: $("input[name='_token']").val(),
+                        newNickname: newNickname
+                    },
+                    function (data) {
+                        if(data.code == '1001'){
+                            $("#nickname").html(newNickname);
+                            $(obj).removeClass("am-icon-check").addClass("am-icon-edit");
+                            tip("修改成功");
+                            return false;
+                        }
+                    },
+                    'json'
+                );
+            }
+        }
+    </script>
 @endsection

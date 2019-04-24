@@ -87,8 +87,10 @@ function wait(message) {
 
 //--------------文件上传------------------
 function uploadFile(url, file_id, show_id, hide_id, module) {
-    $("#" + hide_id).attr("disabled", true);
-    wait("简历上传中...");
+    if(module == 'recruit'){
+        $("#" + hide_id).attr("disabled", true);
+        wait("简历上传中...");
+    }
     $.ajaxFileUpload({
         url: url,//用于文件上传的服务器端请求地址
         secureuri: false,//是否需要安全协议，一般设置为false
@@ -537,12 +539,12 @@ function doPay(type) {
         $("#orderForm").submit();
         return false;
     }else {
-        //到店支付不能使用优惠券
-        if(parseInt( $("#terminal_money").html()) != parseInt($("#temp-money").html())){
-            tip("不支持使用优惠券");
-            return false;
-        }
         if (type == 1){ //到店支付
+            //到店支付不能使用优惠券
+            if(parseInt( $("#terminal_money").html()) != parseInt($("#temp-money").html())){
+                tip("不支持使用优惠券");
+                return false;
+            }
             Swal.fire({
                 title: '到店付款：'+'<span style="color: red">'+$("#terminal_money").html()+' 元</span>',
                 text: "到店付款不能获得信誉值及发币奖励",

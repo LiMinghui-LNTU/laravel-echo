@@ -112,7 +112,7 @@ class Order extends Model
             ->get();
         $temp = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($data as $d){
-            $temp[$d->date] = $d->value;
+            $temp[$d->date-1] = $d->value;
         }
         return $temp;
     }

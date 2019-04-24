@@ -31,6 +31,7 @@
     <script src="{{asset('assets/js/ajaxfileupload.js')}}"></script>
 
     @if(strpos(Request::getPathInfo(),'self'))
+        <script src="{{asset('assets/js/plupload/plupload.full.min.js')}}"></script>
         <script>
             window.localStorage.setItem('member_id', '{{\App\Model\Members::getIdByAccount(session()->get('member')[0])[0]}}');
         </script>

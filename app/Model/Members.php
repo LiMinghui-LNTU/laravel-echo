@@ -221,4 +221,21 @@ class Members extends Model
             return self::where('id', $iMemberId)->decrement('balance', $iBlance);
         }
     }
+
+    /**
+     * 根据id查询密码
+     */
+    public static function getPasswordById($iMemberId = 0)
+    {
+        return self::where('id', $iMemberId)->pluck('password')[0];
+    }
+
+    /**
+     * 更改信息
+     */
+    public static function changeInfo($iId = 0, $sColumn = '', $value = '')
+    {
+        return self::where('id', $iId)->update([$sColumn=>$value, 'updated_at'=>date('Y-m-d H:i:s')]);
+    }
+
 }

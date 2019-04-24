@@ -11,11 +11,13 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Model\Knowledge;
+use App\Model\Members;
 use App\Model\Recruit;
 use App\Model\Resume;
 use App\Model\Sowmap;
 use App\Model\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -57,7 +59,35 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //此方法用于顾客修改昵称或密码
+        $nickname = trim($request->input('newNickname'));
+        $password = trim($request->input('newPassword'));
+        //修改昵称
+        $iMemberId = (int)Members::getIdByAccount(session()->get('member')[0])[0];
+        if($nickname == '' && $password == ''){
+            return json_encode(['code'=>'1010', 'msg'=>'空数据']);
+        }elseif ($password == ''){
+            $res = Members::changeInfo($iMemberId, 'nickname', $nickname);
+            if($res){
+                return json_encode(['code'=>'1001', 'msg'=>'修改成功']);
+            }
+        }else{
+            $aPassword = $request->input('value');
+            $oldPassword = trim($aPassword[0]);
+            $newPassword = trim($aPassword[1]);
+            $confirmPassword = trim($aPassword[2]);
+            if($oldPassword == '' || $newPassword == ''){
+                return json_encode(['code'=>'1010', 'msg'=>'密码不能为空']);
+            }elseif ($newPassword != $confirmPassword || $newPassword != $password){
+                return json_encode(['code'=>'1013', 'msg'=>'两次密码不一致']);
+            }elseif(!Hash::check($oldPassword, Members::getPasswordById($iMemberId))){
+                return json_encode(['code'=>'1013', 'msg'=>'原密码错误']);
+            }else{
+                Members::changeInfo($iMemberId, 'password', Hash::make($newPassword));
+                return json_encode(['code'=>'1001', 'msg'=>'密码修改成功']);
+            }
+        }
+        return json_encode(['code'=>'1004', 'msg'=>'数据入库失败']);
     }
 
     /**
@@ -110,7 +140,11 @@ class HomeController extends Controller
     {
         $sFileId = $request->input('file_id');
         $sModule = $request->input('module');
-        $oFile = $request->file($sFileId);
+        if($sModule == 'self'){
+            $oFile = $request->file('photo');
+        }else{
+            $oFile = $request->file($sFileId);
+        }
         $iMaxSize = $sModule == 'self' ? 6 : 1;
         if (is_null($oFile)) {
             die;
@@ -153,6 +187,10 @@ class HomeController extends Controller
                         'ip' => Recruit::getIp()
                     );
                     Resume::saveResume($data);
+                }else{
+                    //修改头像
+                    $iMemberId = (int)Members::getIdByAccount(session()->get('member')[0])[0];
+                    Members::changeInfo($iMemberId, 'photo', $sUploadPath . '/' . $sFileName);
                 }
                 return json_encode(['code' => '1001', 'msg' => $sUploadPath . '/' . $sFileName]);
             } else {
