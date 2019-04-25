@@ -1,3 +1,8 @@
+<audio id="order-tip" preload="auto">
+    <source src="{{asset('assets/audio/orderTip.mp3')}}" type="audio/mpeg" />
+    Your browser does not support the audio element.
+</audio>
+<button id="play-order-tip" style="display: none;" onclick="document.getElementById('order-tip').play()"></button>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
     <div class="row-content am-cf">
@@ -8,28 +13,7 @@
                         <div class="widget-title  am-cf">我的订单</div>
                     </div>
                     <div class="widget-body  am-fr">
-
                         <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <div class="am-form-group">
-                                <div class="am-btn-toolbar">
-                                    <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success"><span
-                                                    class="am-icon-plus"></span> 新增
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
-                                                    class="am-icon-save"></span> 保存
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-warning"><span
-                                                    class="am-icon-archive"></span> 审核
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span
-                                                    class="am-icon-trash-o"></span> 删除
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
                             <div class="am-form-group tpl-table-list-select">
                                 <select data-am-selected="{btnSize: 'sm'}">
                                     <option value="option1">所有类别</option>
@@ -42,7 +26,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
                             <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                 <input type="text" class="am-form-field ">
                                 <span class="am-input-group-btn">
@@ -97,20 +81,40 @@
                                         <td>{{$order->created_at}}</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
+                                                @if($order->status == 3)
+                                                    @if($order->pay == 1)
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-reply"></i> 退款
+                                                        </a>
+                                                    @else
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    @endif
+                                                @endif
                                                 @if($order->status == 2)
-                                                    <a href="javascript:;">
-                                                        <i class="am-icon-close"></i> 取消订单
-                                                    </a>
-                                                @endif
-                                                @if($order->status == 1 || ($order->status == 3 && $order->pay == 0) || ($order->status == 3 && $order->pay == 2))
-                                                    <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                        <i class="am-icon-trash"></i> 删除
-                                                    </a>
-                                                @endif
-                                                @if($order->pay == 1 && $order->status != 1)
-                                                    <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                        <i class="am-icon-undo"></i> 退款
-                                                    </a>
+                                                    @if($order->pay == 2)
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    @elseif($order->pay == 0)
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-check"></i> 已完成
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-close"></i> 失约
+                                                        </a>
+                                                    @else
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-check"></i> 已完成
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-reply"></i> 退款
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-close"></i> 失约
+                                                        </a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </td>

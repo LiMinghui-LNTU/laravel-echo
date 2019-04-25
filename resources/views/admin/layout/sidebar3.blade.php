@@ -35,16 +35,6 @@
         </li>
 
         <li class="sidebar-nav-link">
-            <a href="table-list-img.html">
-                <span class="am-icon-bookmark sidebar-nav-link-logo"></span> 待办事项
-            </a>
-        </li>
-        <li class="sidebar-nav-link">
-            <a href="tables.html">
-                <i class="am-icon-file-text sidebar-nav-link-logo"></i> 登录日志
-            </a>
-        </li>
-        <li class="sidebar-nav-link">
             <a href="calendar.html">
                 <i class="am-icon-phone sidebar-nav-link-logo"></i> 联系店长
             </a>

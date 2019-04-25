@@ -116,6 +116,8 @@ function showMessage(message) {
 
 //新订单提示
 function orderTip(order_number) {
+    //播放音效
+    $("#play-order-tip").click();
     Swal.fire({
         position: 'top-end',
         html: '<span style="color: #ff0;font-size: 20px;">您有一条新订单：' + order_number + '</span>',
@@ -129,6 +131,8 @@ function orderTip(order_number) {
 
 //新消息提示
 function messageTip(pre_type) {
+    //播放音效
+    $("#play-message-tip").click();
     var from = '未知';
     switch (pre_type) {
         case 1 :

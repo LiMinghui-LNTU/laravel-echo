@@ -31,6 +31,7 @@ function tip(message) {
 
 //新消息提示
 function messageTip(pre_type) {
+    $("#play-front-message-tip").click();
     var from = '未知';
     switch (pre_type) {
         case 1 :

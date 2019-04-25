@@ -16,6 +16,12 @@
         </div>
     </div>
 
+    <audio id="front-message-tip" preload="auto">
+        <source src="{{asset('assets/audio/message.mp3')}}" type="audio/mpeg" />
+        Your browser does not support the audio element.
+    </audio>
+    <button id="play-front-message-tip" style="display: none;" onclick="document.getElementById('front-message-tip').play()"></button>
+
     <div class="am-g">
         <div class="am-u-sm-12">
             <div class="am-panel am-panel-default">

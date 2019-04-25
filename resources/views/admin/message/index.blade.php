@@ -1,3 +1,8 @@
+<audio id="message-tip" preload="auto">
+    <source src="{{asset('assets/audio/message.mp3')}}" type="audio/mpeg" />
+    Your browser does not support the audio element.
+</audio>
+<button id="play-message-tip" style="display: none;" onclick="document.getElementById('message-tip').play()"></button>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
     <div class="row-content am-cf">
