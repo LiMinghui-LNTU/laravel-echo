@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
@@ -105,6 +106,50 @@ class User extends Authenticatable
     public static function getUsernameById($iId = 0)
     {
         return self::where('id', $iId)->pluck('username');
+    }
+
+    /**
+     * 新增验证
+     */
+    public static function addValidate($aData = null)
+    {
+        $rules = [
+            'username'=>'required',
+            'password'=>'required',
+            'role_id'=>'required',
+        ];
+        $messages = [
+            'username.required'=>'用户名必填',
+            'password.required'=>'密码必填',
+            'role_id.required'=>'角色必选',
+        ];
+        return Validator::make($aData, $rules, $messages);
+    }
+    
+    /**
+     * 获取所有管理员及店长
+     */
+    public static function getAllAdministrators()
+    {
+        return self::where('id', '<>', Auth::User()->id)->whereIn('role_id', [1, 2])->paginate(10);
+    }
+
+    /**
+     * 人员入库
+     */
+    public static function saveAdministrator($aData = null)
+    {
+        $aData['created_at'] = date('Y-m-d H:i:s');
+        $aData['password'] = Hash::make($aData['password']);
+        return self::insert($aData);
+    }
+
+    /**
+     * 根据id获取用户
+     */
+    public static function getUserById($iId = 0)
+    {
+        return self::where('id', $iId)->first();
     }
 
 }

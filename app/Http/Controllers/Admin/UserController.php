@@ -68,7 +68,9 @@ class UserController extends Controller
                 $sTitle = '管理员首页';
                 $sidebar = 'admin.layout.sidebar';
                 $content = 'admin.admin.content';
-                return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
+                //获取全部管理员和店长
+                $oPeople = User::getAllAdministrators();
+                return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oPeople'));
                 break;
             case 2: //店长
                 return redirect('/admin/shopowner');
@@ -83,12 +85,35 @@ class UserController extends Controller
 
     public function create()
     {
-
+        $sTitle = '添加管理者';
+        $sidebar = 'admin.layout.sidebar';
+        $content = 'admin.admin.create';
+        return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content'));
     }
 
     public function store(Request $request)
     {
-        //
+        $aData = array(
+            'username'=>trim($request->input('username')),
+            'password'=>trim($request->input('password')),
+            'role_id'=>$request->input('role_id'),
+            'email'=>trim($request->input('email')),
+            'phone'=>trim($request->input('phone'))
+        );
+        $validator = User::addValidate($aData);
+        if($validator->fails()){
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->back()->withInput();
+        }else{
+            //信息入库
+            $res = User::saveAdministrator($aData);
+            if($res){
+                return redirect('/admin');
+            }else{
+                Session::flash('error', '数据入库失败');
+                return redirect()->back()->withInput();
+            }
+        }
     }
 
     public function show($id)
@@ -98,7 +123,16 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        //
+        $sTitle = '编辑信息';
+        $sidebar = 'admin.layout.sidebar';
+        $content = 'admin.admin.edit';
+        $oUser = User::getUserById($id);
+        if (is_null($id) || is_null($oUser)) {
+            Session::flash('error', '该用户不存在或已删除');
+            return redirect()->back()->withInput();
+        } else {
+            return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oUser'));
+        }
     }
 
     public function update(Request $request, $id)
