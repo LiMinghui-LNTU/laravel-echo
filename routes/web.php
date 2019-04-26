@@ -78,7 +78,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::resource('vip', 'VipController');//会员卡管理
     Route::get('search-ticket', 'TicketController@isExist');//查询该类型票券
     Route::post('insert-file', 'ServiceController@insertExcelData');//插入Excel数据到数据库
-    Route::post('upload-photo', 'UploadController@uploadFile');
+    Route::post('upload-photo', 'UploadController@uploadFile'); //上传文件
+    Route::post('change-order-status', 'ClerkController@changeOrderStatus'); //店员改变订单状态
     Route::get('achievement-statistic', 'DataStatistics@achievementsStatistic');//店员业绩统计
     Route::get('type-statistic', 'DataStatistics@customersTypeStatistic');//顾客类型统计
     Route::get('visitors-num', 'DataStatistics@statisticVisitors');//顾客流量统计

@@ -256,3 +256,31 @@ function iKnow(obj, orderId) {
         'json'
     );
 }
+
+//造型师改变订单状态
+function changeOrderStatus(orderId, option) {
+    swal({
+        html: '<i class="am-icon-spinner am-icon-pulse am-icon-md"></i>&nbsp;<span style="color: #fff;font-size: 18px;">正在执行操作，请稍后...</span>',
+        width: 300,
+        height: 60,
+        background: '#000',
+        showConfirmButton: false,
+    });
+    $.post(
+        '/admin/change-order-status',
+        {
+            _token: $("input[name='_token']").val(),
+            orderId: orderId,
+            option: option
+        },
+        function (data) {
+            if(data.code == '1001'){
+                window.location.reload();
+            }else {
+                tip(data.msg);
+                return false;
+            }
+        },
+        'json'
+    );
+}

@@ -12,29 +12,29 @@
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">我的订单</div>
                     </div>
-                    <div class="widget-body  am-fr">
+                    <form id="orderForm" class="widget-body  am-fr" method="get" action="/admin/clerk">
                         <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <div class="am-form-group tpl-table-list-select">
-                                <select data-am-selected="{btnSize: 'sm'}">
-                                    <option value="option1">所有类别</option>
-                                    <option value="option2">IT业界</option>
-                                    <option value="option3">数码产品</option>
-                                    <option value="option3">笔记本电脑</option>
-                                    <option value="option3">平板电脑</option>
-                                    <option value="option3">只能手机</option>
-                                    <option value="option3">超极本</option>
+                                <select name="condition" data-am-selected="{btnSize: 'sm'}" onchange="$('#orderForm').submit();">
+                                    <option value="0" @if(is_null($condition) || $condition == 0) selected @endif>全部状态</option>
+                                    <option value="1" @if($condition == 1) selected @endif>已完成</option>
+                                    <option value="2" @if($condition == 2) selected @endif>待赴约</option>
+                                    <option value="3" @if($condition == 3) selected @endif>失约</option>
+                                    <option value="4" @if($condition == 4) selected @endif>支付成功</option>
+                                    <option value="5" @if($condition == 5) selected @endif>未支付</option>
+                                    <option value="6" @if($condition == 6) selected @endif>已退款</option>
                                 </select>
                             </div>
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
                             <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                <input type="text" class="am-form-field ">
+                                <input type="text" name="key" class="am-form-field" value="{{$key}}" placeholder="检索订单号，预订人昵称">
                                 <span class="am-input-group-btn">
-            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
-                    type="button"></button>
-          </span>
+                                    <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" onclick="$('#orderForm').submit();"></button>
+                                </span>
                             </div>
                         </div>
+                    </form>
                         @csrf
                         <div class="am-u-sm-12">
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black ">
@@ -83,35 +83,35 @@
                                             <div class="tpl-table-black-operation">
                                                 @if($order->status == 3)
                                                     @if($order->pay == 1)
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','refund');">
                                                             <i class="am-icon-reply"></i> 退款
                                                         </a>
                                                     @else
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','delete');">
                                                             <i class="am-icon-trash"></i> 删除
                                                         </a>
                                                     @endif
                                                 @endif
                                                 @if($order->status == 2)
                                                     @if($order->pay == 2)
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','delete');">
                                                             <i class="am-icon-trash"></i> 删除
                                                         </a>
                                                     @elseif($order->pay == 0)
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','ok');">
                                                             <i class="am-icon-check"></i> 已完成
                                                         </a>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','break');">
                                                             <i class="am-icon-close"></i> 失约
                                                         </a>
                                                     @else
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','ok');">
                                                             <i class="am-icon-check"></i> 已完成
                                                         </a>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','refund');">
                                                             <i class="am-icon-reply"></i> 退款
                                                         </a>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:changeOrderStatus('{{$order->id}}','break');">
                                                             <i class="am-icon-close"></i> 失约
                                                         </a>
                                                     @endif
@@ -128,7 +128,7 @@
 
                             <div class="am-fr">
                                 @if($oOrders)
-                                    {!! $oOrders->render('vendor.pagination.default'); !!}
+                                    {!! $oOrders->appends(['condition'=>\Illuminate\Support\Facades\Input::get('condition'),'key'=>\Illuminate\Support\Facades\Input::get('key')])->render('vendor.pagination.default'); !!}
                                 @endif
                             </div>
                         </div>

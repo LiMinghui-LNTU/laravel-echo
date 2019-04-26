@@ -11,7 +11,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Designer;
+use App\Model\Members;
 use App\Model\Order;
+use App\Model\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -36,15 +38,21 @@ class ClerkController extends Controller
         });
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $sTitle = '我的订单';
         $sidebar = $this->sidebar;
         $content = 'admin.clerk.order';
         if (count($this->iDesignerId)) { //已经完善个人信息成为造型师
-            //获取本人所有订单
-            $oOrders = Order::getAllOrdersByDesignerId($this->iDesignerId);
-            return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oOrders'));
+            $condition = $request->input('condition');
+            $key = $request->input('key');
+            if(is_null($condition) || ($condition == 0 && is_null($key))) {
+                //获取本人所有订单
+                $oOrders = Order::getAllOrdersByDesignerId($this->iDesignerId);
+            }else{
+                $oOrders = Order::getOrdersLimitedByCondition($this->iDesignerId, $condition, $key);
+            }
+            return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oOrders', 'condition', 'key'));
         } else {
             return redirect('/admin/clerk/' . $this->oUser->id);
         }
@@ -163,6 +171,43 @@ class ClerkController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //店员改变订单状态
+    public function changeOrderStatus(Request $request)
+    {
+        $iOrderId  =$request->input('orderId');
+        $sOption = $request->input('option');
+        //查询该订单
+        $oOrder = Order::getOrderById($iOrderId);
+        if($oOrder){
+            $res = 0; //数据更新结果标志
+            if($sOption == 'delete'){ //删除操作
+                $res = Order::destroy($oOrder->id);
+            }elseif ($sOption == 'ok'){
+                if($oOrder->pay == 0){ //确认赴约，未付款
+                    $res = Order::where('id', $oOrder->id)->update(['status'=>1, 'pay'=>1, 'updated_at'=>date('Y-m-d H:i:s')]);
+                }else{ //确认赴约，已付款
+                    $res = Order::where('id', $oOrder->id)->update(['status'=>1, 'updated_at'=>date('Y-m-d H:i:s')]);
+                }
+            }elseif ($sOption == 'break'){ //失约操作，只修改订单状态，不修改支付状态
+                //计算订单总信誉值
+                $iReputationValue = Service::calculateReputationValue(json_decode($oOrder->service_number, true));
+                //扣除信誉值
+                Members::changeReputationValue($oOrder->member_id, $iReputationValue, 0);
+                $res = Order::where('id', $oOrder->id)->update(['status'=>3]);
+            }else{ //退款操作，订单款额返回账户，不返还优惠券
+                Members::changeBalanceByMemberId($oOrder->member_id, $oOrder->total_money, 1);
+                $res = Order::where('id', $oOrder->id)->update(['pay'=>2]);
+            }
+            if($res){
+                return json_encode(['code'=>1001, 'msg'=>'操作成功']);
+            }else{
+                return json_encode(['code'=>'1012', 'msg'=>'数据更新失败']);
+            }
+        }else{
+            return json_encode(['code'=>1011, 'msg'=>'该订单不存在或已删除']);
+        }
     }
 
 }

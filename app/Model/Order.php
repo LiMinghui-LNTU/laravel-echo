@@ -66,6 +66,36 @@ class Order extends Model
             ->paginate(10);
         return $oOrders;
     }
+    
+    /*
+     * 带条件查询订单
+     */
+    public static function getOrdersLimitedByCondition($iDesignerId = 0, $iCondition = 0, $sKey = '')
+    {
+        $oData = self::leftJoin('members as m', 'member_id', '=', 'm.id')->leftJoin('vip as v', 'm.vip_id', '=', 'v.id')
+            ->select('orders.id', 'order_number', 'm.nickname', 'v.title', 'service_number', 'total_money', 'status', 'pay', 'm.account_number', 'is_read', 'orders.created_at')
+            ->where('designer_id', $iDesignerId);
+        if($iCondition != 0){
+            $k = ''; $v = 0;
+            switch ((int)$iCondition){
+                case 1:$k = 'status';$v = 1;break;
+                case 2:$k = 'status';$v = 2;break;
+                case 3:$k = 'status';$v = 3;break;
+                case 4:$k = 'pay';$v = 1;break;
+                case 5:$k = 'pay';$v = 0;break;
+                case 6:$k = 'pay';$v = 2;break;
+            }
+            $oData = $oData->where($k, $v);
+        }
+        if($sKey != null){
+            $oData = $oData->where(function ($query) use ($sKey){
+                $query->where('order_number', 'like', '%' . $sKey . '%');
+            })->orWhere(function ($query) use ($sKey){
+                $query->where('nickname', 'like', '%' . $sKey . '%');
+            });
+        }
+        return $oData->orderBy('created_at', 'desc')->paginate(10);
+    }
 
     /**
      * 根据订单号查询订单

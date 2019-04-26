@@ -207,7 +207,7 @@
                                             <th>造型师</th>
                                             <th>订单金额</th>
                                             <th>完成时间</th>
-                                            <th>操作</th>
+                                            <th>信誉值</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -225,12 +225,7 @@
                                                     <td>{{\App\Model\Designer::getDesignerNameById($order->designer_id)[0]}}</td>
                                                     <td>&yen;{{$order->total_money}}</td>
                                                     <td>{{$order->updated_at}}</td>
-                                                    <td>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                            <small>删除</small>
-                                                        </a>
-                                                    </td>
+                                                    <td>{{\App\Model\Service::calculateReputationValue(json_decode($order->service_number, true))}}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
