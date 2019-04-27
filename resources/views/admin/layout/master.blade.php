@@ -37,6 +37,8 @@
     <script type="text/javascript" src="{{ asset('assets/ueditor/ueditor.all.js') }}"></script>
     <!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
     <script type="text/javascript" src="{{ asset('assets/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+    {{--图片上传插件--}}
+    <script src="{{asset('assets/js/plupload/plupload.full.min.js')}}"></script>
 
     @if(substr(Request::getPathInfo(), 7) == 'clerk' && !is_null(\App\Model\Designer::getDesignerByUserId(Auth::User()->id)))
         <script>
@@ -56,6 +58,34 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="{{asset('js/app.js')}}"></script>
     @endif
+
+    <style type="text/css">
+        .photo-upload{
+            padding: 0 8px;
+            cursor: pointer;
+            border: 1px solid #444;
+            border-radius: 5px;
+            font-size: 10pt;
+            display: none;
+        }
+        .username-icon-edit{
+            cursor: pointer;
+        }
+        .username-icon-check{
+            cursor: pointer;
+            display: none;
+        }
+        .username-icon-close{
+            cursor: pointer;
+            display: none;
+        }
+        .user-head-img{
+            cursor: pointer;
+        }
+        .password-icon-edit{
+            cursor: pointer;
+        }
+    </style>
 
 </head>
 

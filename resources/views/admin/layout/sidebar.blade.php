@@ -1,15 +1,17 @@
 <div class="left-sidebar">
+    @csrf
     <!-- 用户信息 -->
     <div class="tpl-sidebar-user-panel">
         <div class="tpl-user-panel-slide-toggleable">
             <div class="tpl-user-panel-profile-picture">
-                <img src="{{Auth::User()->head_url}}" alt="">
+                <img id="user-head-img" class="user-head-img" src="{{Auth::User()->head_url}}" alt="">
             </div>
+            <span class="photo-upload"> <i class="am-icon-upload">上传</i> </span>
             <span class="user-panel-logged-in-text">
               <i class="am-icon-user am-text-success tpl-user-panel-status-icon"></i>
-              {{Auth::User()->username}}
+              <span class="username-input">{{Auth::User()->username}}</span> <i class="username-icon-edit am-icon-edit am-text-primary tpl-user-panel-status-icon"></i> <i class="username-icon-check am-icon-check am-text-success tpl-user-panel-status-icon"></i> <i class="username-icon-close am-icon-close am-text-danger tpl-user-panel-status-icon"></i>
           </span>
-            <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
+            <span class="password-icon-edit tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 修改密码</span>
         </div>
     </div>
 

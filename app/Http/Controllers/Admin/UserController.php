@@ -17,6 +17,7 @@ use App\Model\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -196,6 +197,41 @@ class UserController extends Controller
                 broadcast(new MessageEvent($oMessages));
             }
             return json_encode(['code' => 1001, 'msg' => (string)view($this->sViewPath . 'message.message-content', compact('oMessages'))]);
+        }
+    }
+
+    //修改用户个人信息
+    public function editInfo(Request $request)
+    {
+        $sColumn = $request->input('column');
+        $iUserId = Auth::User()->id;
+        $res = 0; //修改结果
+        if($sColumn == 'username'){ //修改用户名
+            $sNewUsername = trim($request->input('newUsername'));
+            if (strlen($sNewUsername) > 0 && strlen($sNewUsername) < 7){
+                //修改用户名
+                $res = User::updateUserInfo($iUserId, 'username', $sNewUsername);
+            }else{
+                return json_encode(['code'=>1013, 'msg'=>'请将用户名限制在6字以内']);
+            }
+        }else{ //修改密码
+            $sNewPassword = trim($request->input('newPassword'));
+            $sOldPassword = trim($request->input('oldPassword'));
+            $sConfirmPassword = trim($request->input('confirmPassword'));
+            if(strlen($sNewPassword) == 0){
+                return json_encode(['code'=>1013, 'msg'=>'密码不能为空']);
+            }elseif($sNewPassword != $sConfirmPassword){
+                return json_encode(['code'=>1013, 'msg'=>'两次密码不一致']);
+            }elseif(!Hash::check($sOldPassword, User::getUserPassword($iUserId))){
+                return json_encode(['code'=>1013, 'msg'=>'原密码不正确']);
+            }else{
+                $res = User::updateUserInfo($iUserId, 'password', Hash::make($sNewPassword));
+            }
+        }
+        if($res){
+            return json_encode(['code'=>1001, 'msg'=>'修改成功']);
+        }else{
+            return json_encode(['code'=>1012, 'msg'=>'数据更新失败']);
         }
     }
 }

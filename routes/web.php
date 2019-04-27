@@ -61,6 +61,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 //后台用户路由
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('/', 'UserController');
+    Route::post('edit-info', 'UserController@editInfo');
     Route::get('my-message', 'UserController@myMessage');
     Route::post('admin-reply', 'UserController@adminReply');
     Route::resource('shopowner', 'ShopownerController'); //店长

@@ -152,4 +152,20 @@ class User extends Authenticatable
         return self::where('id', $iId)->first();
     }
 
+    /**
+     * 获取用户密码
+     */
+    public static function getUserPassword($iId = 0)
+    {
+        return self::where('id', $iId)->pluck('password')[0];
+    }
+
+    /**
+     * 修改用信息
+     */
+    public static function updateUserInfo($iId = 0, $sColumn = '', $sValue = '')
+    {
+        return self::where('id', $iId)->update([$sColumn=>$sValue, 'updated_at'=>date('Y-m-d H:i:s')]);
+    }
+
 }

@@ -10,7 +10,9 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UploadController extends Controller
 {
@@ -37,7 +39,7 @@ class UploadController extends Controller
             $sExtension = $oFile->getClientOriginalExtension();
             //上传文件路径
             $sPublicPath = public_path();
-            $sUploadPath = '/uploadfile/designer_photo';
+            $sUploadPath = $sFileId == 'user-head-img' ? '/uploadfile/user_photo' : '/uploadfile/designer_photo';
             $sFullPath = $sPublicPath . $sUploadPath;
             $this->mkdir_upload($sFullPath);
             $sFileName = $sExtension . date('YmdHis') . '.' . $sExtension;
@@ -45,6 +47,10 @@ class UploadController extends Controller
             $sRealFile = $oFile->move($sFullPath, $sFileName);
             //上传成功，返回相对路径
             if (file_exists($sRealFile)) {
+                if($sFileId == 'user-head-img'){
+                    //更新用户头像
+                    User::updateUserInfo(Auth::User()->id, 'head_url', $sUploadPath . '/' . $sFileName);
+                }
                 return json_encode(['code' => '1001', 'msg' => $sUploadPath . '/' . $sFileName]);
             } else {
                 return json_encode(['code' => '1009', 'msg' => '图片保存失败']);
