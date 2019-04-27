@@ -156,6 +156,10 @@ class UserController extends Controller
         $content = 'admin.admin.message';
         //查询当前登录者
         $oUser = User::getUserById(Auth::User()->id);
+        if($oUser->role_id == 3){ //店员
+            $sidebar = 'admin.layout.sidebar3';
+            $content = 'admin.clerk.message';
+        }
         //查询消息
         $oMyMessages = Message::getMessages($oUser->id, $oUser->id, $oUser->role_id, $oUser->role_id);
         return view($this->sViewPath . 'index', compact('sTitle', 'sidebar', 'content', 'oUser', 'oMyMessages'));
@@ -171,12 +175,15 @@ class UserController extends Controller
         if (is_null($iTo) || is_null($iType) || is_null($sContent)) {
             return json_encode(['code' => 1013, 'msg' => '非法参数']);
         } else {
+            $oUser = User::getUserById(Auth::User()->id);
+            $from = $oUser->id;
+            $pre_type = $oUser->role_id;
             //构建消息并保存
             $aMessage = array(
-                'from' => 1,
+                'from' => $from,
                 'to' => $iTo,
                 'content' => $sContent,
-                'pre_type' => 1,
+                'pre_type' => $pre_type,
                 'type' => $iType,
                 'created_at' => date('Y-m-d H:i:s')
             );

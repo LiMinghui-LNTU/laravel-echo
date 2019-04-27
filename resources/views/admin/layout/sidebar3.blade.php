@@ -35,7 +35,7 @@
         </li>
 
         <li class="sidebar-nav-link">
-            <a href="calendar.html">
+            <a href="/admin/my-message" @if(Request::getPathInfo() =='/admin/my-message') class="active" @endif>
                 <i class="am-icon-phone sidebar-nav-link-logo"></i> 联系店长
             </a>
         </li>

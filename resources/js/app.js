@@ -66,7 +66,24 @@ Echo.private('message.' + window.localStorage.getItem('to') + window.localStorag
         // console.log(e.message);
         if (e.message.pre_type == 2) { //发送者为店长，店长可将消息发送给店员、顾客和管理员(发给顾客走公有频道，再次不做处理)
             if (e.message.type == 3) { //发给店员
-
+                $.post(
+                    '/from-shopowner',
+                    {
+                        _token: $("input[name='_token']").val(),
+                        id: e.message.id
+                    },
+                    function (data) {
+                        if (data.code == '1001'){
+                            messageTip(e.message.pre_type);
+                            $("#clerk-ul").append(data.msg);
+                            $("#msg-num").html(parseInt($("#msg-num")) + 1);
+                        }else {
+                            showMessage(data.msg);
+                            return false;
+                        }
+                    },
+                    'json'
+                );
             } else { //发给管理员
                 $.post(
                     '/from-shopowner',
