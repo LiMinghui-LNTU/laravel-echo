@@ -60,6 +60,11 @@
 </head>
 
 <body data-type="index">
+<audio id="message-tip" preload="auto">
+    <source src="{{asset('assets/audio/message.mp3')}}" type="audio/mpeg" />
+    Your browser does not support the audio element.
+</audio>
+<button id="play-message-tip" style="display: none;" onclick="document.getElementById('message-tip').play()"></button>
 <script src="{{asset('assets/js/theme.js')}}"></script>
 <div class="am-g tpl-g">
     <!-- 头部 -->

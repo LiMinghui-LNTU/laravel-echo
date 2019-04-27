@@ -68,7 +68,24 @@ Echo.private('message.' + window.localStorage.getItem('to') + window.localStorag
             if (e.message.type == 3) { //发给店员
 
             } else { //发给管理员
-
+                $.post(
+                    '/from-shopowner',
+                    {
+                        _token: $("input[name='_token']").val(),
+                        id: e.message.id
+                    },
+                    function (data) {
+                        if (data.code == '1001'){
+                            messageTip(e.message.pre_type);
+                            $("#my-ul").append(data.msg);
+                            $("#msg-num").html(parseInt($("#msg-num")) + 1);
+                        }else {
+                            showMessage(data.msg);
+                            return false;
+                        }
+                    },
+                    'json'
+                );
             }
         } else { //发送者为顾客或店员或管理员，这些角色只能将消息发送给店长
             $.post(
