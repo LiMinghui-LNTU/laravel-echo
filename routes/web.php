@@ -43,6 +43,8 @@ Route::group(['namespace' => 'Home'], function () {
     Route::post('get-schedule', 'SelfController@postThisDesignerSchedule');
     Route::post('to-shopowner', 'SelfController@sendMsg2Shopowner');
     Route::post('from-shopowner', 'SelfController@getMsgFromShopowner');
+    Route::post('order-cancel', 'SelfController@doCancel'); //取消订单
+    Route::post('make-comments', 'SelfController@makeComments'); //评价订单
     Route::post('order-pay', 'SelfController@orderPay'); //订单支付
     Route::post('ticket-id', 'SelfController@getIdArr'); //获取使用的卡券id
     Route::post('handle-member', 'PayController@handleMember'); //办理会员

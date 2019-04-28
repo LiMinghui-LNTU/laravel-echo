@@ -17,6 +17,7 @@ use App\Model\MailActive;
 use App\Model\Members;
 use App\Model\Message;
 use App\Model\Order;
+use App\Model\OrderComment;
 use App\Model\Schedule;
 use App\Model\Service;
 use App\Model\TicketLog;
@@ -342,5 +343,43 @@ class SelfController extends Controller
         }
         $aLogId = array_map(function ($i){return (int)$i;},$aLogId);
         return json_encode(['arr'=>$aLogId]);
+    }
+
+    //取消订单操作
+    public function doCancel(Request $request)
+    {
+        $iId = (int)$request->input('orderId');
+        //查询该订单
+        $oOrder = Order::getOrderById($iId);
+        if(is_null($oOrder)){
+            return json_encode(['code'=>1010, 'msg'=>'该订单不存在或已删除']);
+        }else{
+            //对已支付订单进行退款
+            if($oOrder->pay == 1){
+                Members::changeBalanceByMemberId(Members::getIdByAccount(session()->get('member')[0])[0], $oOrder->total_money, 1);
+                Order::changeOrderInfo($iId, 'pay', 2);
+            }
+            //删除该订单对应日程
+            Schedule::destroy($oOrder->schedule_id);
+            //删除该订单
+            Order::destroy($iId);
+            return json_encode(['code'=>1001, 'msg'=>'订单已取消']);
+        }
+    }
+
+    //给订单评分
+    public function makeComments(Request $request)
+    {
+        //获取当前顾客
+        $iMemberId = Members::getIdByAccount(session()->get('member')[0])[0];
+        $iOrderId = (int)$request->input('order');
+        $iScore = (int)$request->input('score');
+        //评论入库
+        $res = OrderComment::addComment($iMemberId, $iOrderId, $iScore);
+        if($res){
+            return json_encode(['code'=>1001, 'msg'=>'感谢您的评价']);
+        }else{
+            return json_encode(['code'=>1012, 'msg'=>'提交失败']);
+        }
     }
 }

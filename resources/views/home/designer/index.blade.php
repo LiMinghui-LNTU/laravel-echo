@@ -35,9 +35,15 @@
 											<a href="">{{$designer->introduction}}</a>
 										</span>
                                         <ul class="team_member--links">
-                                            @for($j = 0; $j < $designer->stars; $j++)
-                                                <li><span class="am-icon-star am-icon-sm"></span></li>
-                                            @endfor
+                                            @if(!is_null(\App\Model\OrderComment::getAvgScoreByDesignerId($designer->id)))
+                                                <?php $integer = floor(\App\Model\OrderComment::getAvgScoreByDesignerId($designer->id)); $float = \App\Model\OrderComment::getAvgScoreByDesignerId($designer->id) - $integer; ?>
+                                                @for($j = 0; $j < $integer; $j++)
+                                                    <li><span class="am-icon-star am-icon-sm"></span></li>
+                                                @endfor
+                                                @if($float > 0.5)
+                                                    <li><span class="am-icon-star-half am-icon-sm"></span></li>
+                                                @endif
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>

@@ -72,7 +72,7 @@
                             </div>
                             <label class="am-u-sm-4 am-form-label">账户余额：</label>
                             <div class="am-u-sm-8">
-                                <small>{{$oInfo->balance}} 元</small>
+                                <small id="account-balance">{{$oInfo->balance}}</small> <small>元</small>
                             </div>
                             <button id="changePassword" class="am-btn am-btn-primary am-btn-xs">
                                 <i class="am-icon-edit"></i>
@@ -128,7 +128,7 @@
                                         </thead>
                                         <tbody>
                                         @foreach($oOrders as $order)
-                                            <tr>
+                                            <tr id="tr-order-{{$order->id}}">
                                                 <td>{{$order->order_number}}</td>
                                                 <td>
                                                     @if(count(json_decode($order->service_number, true)) > 1)
@@ -185,10 +185,17 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash am-btn-group am-btn-group-xs"></i>
-                                                            <small>取消订单</small>
-                                                        </a>
+                                                        @if(strtotime(\App\Model\Schedule::getTimeById($order->schedule_id, 'start')[0]) - time() > 24 * 60 * 60)
+                                                            <a onclick="doCancel(this, '{{$order->id}}', '{{$order->total_money}}');" class="tpl-table-black-operation-del">
+                                                                <i class="am-icon-close am-btn-group am-btn-group-xs"></i>
+                                                                <small>取消订单</small>
+                                                            </a>
+                                                        @else
+                                                            <a class="tpl-table-black-operation-del" style="color: red;cursor: text;">
+                                                                <i class="am-icon-hand-paper-o am-btn-group am-btn-group-xs"></i>
+                                                                <small>不可取消</small>
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endif
@@ -207,7 +214,7 @@
                                             <th>造型师</th>
                                             <th>订单金额</th>
                                             <th>完成时间</th>
-                                            <th>信誉值</th>
+                                            <th>满意度</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -225,7 +232,15 @@
                                                     <td>{{\App\Model\Designer::getDesignerNameById($order->designer_id)[0]}}</td>
                                                     <td>&yen;{{$order->total_money}}</td>
                                                     <td>{{$order->updated_at}}</td>
-                                                    <td>{{\App\Model\Service::calculateReputationValue(json_decode($order->service_number, true))}}</td>
+                                                    <td>
+                                                        @if(count(\App\Model\OrderComment::getScoreByOrderId($order->id)) == 0)
+                                                            <span class="{{$order->id}}"><i class="hover-star am-icon-star-o"></i> <i class="hover-star am-icon-star-o"></i> <i class="hover-star am-icon-star-o"></i> <i class="hover-star am-icon-star-o"></i> <i class="hover-star am-icon-star-o"></i></span>
+                                                        @else
+                                                            @for($i = 0; $i < \App\Model\OrderComment::getScoreByOrderId($order->id)[0]; $i++)
+                                                                <i class="am-icon-star"></i>
+                                                            @endfor
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -284,7 +299,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 @csrf
@@ -360,6 +374,43 @@
         </div>
     </div>
     <script>
+        $(function () {
+            $(".hover-star").mouseover(function () {
+                $(this).removeClass("am-icon-star-o").addClass("am-icon-star");
+                $(this).prevAll("i").removeClass("am-icon-star-o").addClass("am-icon-star");
+            }).mouseout(function () {
+                $(this).removeClass("am-icon-star").addClass("am-icon-star-o");
+                $(this).prevAll("i").removeClass("am-icon-star").addClass("am-icon-star-o");
+            });
+            $(".hover-star").click(function () {
+                var score = $(this).prevAll("i").length + 1; //顾客给出的星数
+                var order = $(this).parent("span").attr("class"); //订单id
+                var html = '';
+                for (var i = 0; i < score; i++){
+                    html += "<i class='am-icon-star'></i> ";
+                }
+                $(this).parent('span').parent('td').html(html);
+                wait("正在提交...");
+                $.post(
+                    '/make-comments',
+                    {
+                        _token: $("input[name='_token']").val(),
+                        order: order,
+                        score: score
+                    },
+                    function (data) {
+                        if(data.code == '1001'){
+                            tip(data.msg);
+                            return false;
+                        }else {
+                            tip(data.msg);
+                            return false;
+                        }
+                    },
+                    'json'
+                );
+            });
+        });
         //实例化一个plupload上传对象
         var uploader = new plupload.Uploader({
             browse_button : 'show-photo', //触发文件选择对话框的按钮，为那个元素id
@@ -535,6 +586,41 @@
                     'json'
                 );
             }
+        }
+
+        function doCancel(obj, id, balance) {
+            Swal.fire({
+                title: '确定取消该订单?',
+                text: "若已支付，订单金额将会返回到您的账户",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '确定'
+            }).then((result) => {
+                if(result.value){
+                    wait("正在处理......");
+                    $.post(
+                        'order-cancel',
+                        {
+                            _token: $("input[name='_token']").val(),
+                            orderId: id
+                        },
+                        function (data) {
+                            if(data.code == '1001'){
+                                tip(data.msg);
+                                $("#account-balance").html(parseInt($("#account-balance").html()) + parseInt(balance));
+                                $(obj).parent().parent().remove();
+                                $("#tr-order-"+id).remove();
+                                return false;
+                            }else {
+                                tip(data.msg);
+                                return false;
+                            }
+                        },
+                        'json'
+                    );
+                }
+            });
         }
     </script>
 @endsection

@@ -176,4 +176,20 @@ class Order extends Model
         return $aResult;
     }
 
+    /**
+     * 根据订单id查询订单对应造型师
+     */
+    public static function getDesignerIdByOrderId($iOrderId = 0)
+    {
+        return self::where('id', $iOrderId)->pluck('designer_id')[0];
+    }
+
+    /**
+     * 修改订单信息
+     */
+    public static function changeOrderInfo($iId = 0, $sColumn = '', $sValue = 0)
+    {
+        return self::where('id', $iId)->update([$sColumn=>$sValue]);
+    }
+
 }
