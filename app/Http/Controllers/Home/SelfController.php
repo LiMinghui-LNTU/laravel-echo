@@ -203,8 +203,6 @@ class SelfController extends Controller
     {
         //获取注册类型 1-邮箱注册 2-手机号注册
         $reg_type = Input::get('reg-type');
-        $account = ''; //账号
-        $password = ''; //密码
         if ($reg_type == 1) {
             $account = Input::get('account-email');
             $password = Input::get('password-email');

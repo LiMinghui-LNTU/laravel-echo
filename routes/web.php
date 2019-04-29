@@ -30,6 +30,8 @@ Route::group(['namespace' => 'Home'], function () {
 Route::group(['namespace' => 'Home'], function () {
     Route::resource('home', 'HomeController');
     Route::post('upload-file', 'HomeController@uploadFile');
+    Route::post('send-msg', 'HomeController@sendValidateCode');
+    Route::post('check-code', 'HomeController@checkValidateCode');
     Route::resource('designer', 'DesignerController');
     Route::resource('display', 'DisplayController');
     Route::resource('knowledge', 'KnowledgeController');

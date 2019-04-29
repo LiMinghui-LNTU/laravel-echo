@@ -140,11 +140,21 @@ $("#sendMobileCode").click(function () {
         tip("该手机号有误");
         return false;
     }
-    //发送验证码并保存
-
-
     $("#sendMobileCode").attr("disabled", true);
     settime();
+    //发送验证码并保存
+    $.post(
+        '/send-msg',
+        {
+            _token: $("input[name='_token']").val(),
+            phone_number: phone
+        },
+        function (data) {
+            tip(data.msg);
+            return false;
+        },
+        'json'
+    );
 });
 
 var countdown = 60;
@@ -238,9 +248,6 @@ $("#reg-email-btn").click(function () {
 
 //手机号注册
 $("#reg-phone-btn").click(function () {
-    //查询刚刚发送的手机号及验证码
-    var p = '13582853262';
-    var c = '123456';
     var phone = $("#phone_number").val();
     var check_code = $("#check_code").val();
     var password = $("#password-phone").val();
@@ -257,10 +264,21 @@ $("#reg-phone-btn").click(function () {
         tip("请填写验证码");
         return false;
     }
-    if (check_code != c) { //可在此验证发送的验证码
-        tip("验证码错误");
-        return false;
-    }
+
+    $.post(
+        '/check-code',
+        {
+            _token: $("input[name='_token']").val(),
+            phone_number: phone.trim()
+        },
+        function (data) {
+            if(!(data.code == '1001' && data.msg == check_code.trim())){
+                tip(data.msg);
+                return false;
+            }
+        },
+        'json'
+    );
     if (password.length < 6) {
         tip("密码至少6位");
         return false;

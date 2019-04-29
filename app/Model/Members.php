@@ -53,6 +53,7 @@ class Members extends Model
             return false;
         } else {
             $data = ['account_number' => $account, 'password' => Hash::make($password), 'regist_type' => $regist_type, 'created_at' => date('Y-m-d H:i:s')];
+            $data['is_active'] = $regist_type == 1 ? 0 : 1;
             return self::insert($data);
         }
     }

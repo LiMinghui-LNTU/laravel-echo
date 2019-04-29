@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Model\Knowledge;
 use App\Model\Members;
+use App\Model\MsgCode;
 use App\Model\Recruit;
 use App\Model\Resume;
 use App\Model\Sowmap;
@@ -222,6 +223,67 @@ class HomeController extends Controller
         if (!file_exists($sPath)) {
             $this->mkdir_upload(dirname($sPath), $sMode);
             mkdir($sPath, $sMode);
+        }
+    }
+
+    //调用聚合数据接口发送验证码
+    public function sendValidateCode(Request $request)
+    {
+        $phone = trim($request->input('phone_number'));
+        $preg_phone = '/^1[3|4|5|6|7|8][0-9]{9}$/';
+        if(preg_match($preg_phone, $phone)){
+            //生成验证码
+            $sCode = MsgCode::generateCode(6);
+            //构建参数，调用接口
+            $sendUrl = 'http://v.juhe.cn/sms/send'; //短信接口的URL
+            $smsConf = array(
+                'key'   => env('TPL_APP_KEY'), //您申请的APPKEY
+                'mobile'    => $phone, //接受短信的用户手机号码
+                'tpl_id'    => env('TPL_ID'), //您申请的短信模板ID，根据实际情况修改
+                'tpl_value' =>'#code#=' . $sCode //您设置的模板变量，根据实际情况修改
+            );
+
+            $content = MsgCode::juHeCurl($sendUrl,$smsConf,1); //请求发送短信
+
+            if($content){
+                $result = json_decode($content,true);
+                $error_code = $result['error_code'];
+                $reason = $result['reason'];
+                if($error_code == 0){
+                    //状态为0，说明短信发送成功，入库
+                    MsgCode::addMsg($result['result']['sid'], $phone, $sCode);
+                    return json_encode(['code'=>1001, 'msg'=>$reason]);
+                }else{
+                    //状态非0，说明失败
+                    return json_encode(['code'=>$error_code, 'msg'=>$reason]);
+                }
+            }else{
+                //返回内容异常，以下可根据业务逻辑自行修改
+                return json_encode(['code'=>1016, 'msg'=>'接口请求失败']);
+            }
+        }else{
+            return json_encode(['code'=>1013, 'msg'=>'无效号码']);
+        }
+    }
+
+    //获取验证码
+    public function checkValidateCode(Request $request)
+    {
+        $phone = trim($request->input('phone_number'));
+        $preg_phone = '/^1[3|4|5|6|7|8][0-9]{9}$/';
+        if(preg_match($preg_phone, $phone)){
+            $oCode = MsgCode::getCodeByPhoneNumber($phone);
+            if(is_null($oCode)){
+                return json_encode(['code'=>1010, 'msg'=>'验证码错误']);
+            }else{
+                if((int)time() - (int)strtotime($oCode->created_at) > 3 * 60){ //设置验证码过期时间为3分钟
+                    return json_encode(['code'=>1017, 'msg'=>'验证码已过期']);
+                }else{
+                    return json_encode(['code'=>1001, 'msg'=>$oCode->code]);
+                }
+            }
+        }else{
+            return json_encode(['code'=>1013, 'msg'=>'无效号码']);
         }
     }
 }

@@ -95,7 +95,8 @@
                                     <div class="am-progress-bar am-progress-bar-success"
                                          style="width: {{$oInfo->reputation_value}}%"></div>
                                 </div>
-                                <p class="user-info-order">信用积分：<strong>{{$oInfo->reputation_value}}</strong> 信用等级：<strong>极好</strong>
+                                <p class="user-info-order">信用积分：<strong>{{$oInfo->reputation_value}}</strong>
+                                    信用等级：<strong>@if($oInfo->reputation_value > 90)极好@elseif($oInfo->reputation_value>80)良好@elseif($oInfo->reputation_value>60)及格@elseif($oInfo->reputation_value>20)偏低@else暂无等级@endif</strong>
                                 </p>
                             </div>
                         </div>
