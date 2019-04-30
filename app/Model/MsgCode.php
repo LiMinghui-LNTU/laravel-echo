@@ -31,9 +31,9 @@ class MsgCode extends Model
     /**
      * 根据手机号查询对应的验证码
      */
-    public static function getCodeByPhoneNumber($sPhone = '')
+    public static function isValidateCode($sPhone = '', $sCode = '')
     {
-        return self::where('phone_number', $sPhone)->orderBy('created_at', 'desc')->first();
+        return self::where('phone_number', $sPhone)->where('code', $sCode)->orderBy('created_at', 'desc')->first();
     }
 
     /**

@@ -270,16 +270,17 @@ class HomeController extends Controller
     public function checkValidateCode(Request $request)
     {
         $phone = trim($request->input('phone_number'));
+        $code = trim($request->input('code'));
         $preg_phone = '/^1[3|4|5|6|7|8][0-9]{9}$/';
         if(preg_match($preg_phone, $phone)){
-            $oCode = MsgCode::getCodeByPhoneNumber($phone);
+            $oCode = MsgCode::isValidateCode($phone, $code);
             if(is_null($oCode)){
                 return json_encode(['code'=>1010, 'msg'=>'验证码错误']);
             }else{
                 if((int)time() - (int)strtotime($oCode->created_at) > 3 * 60){ //设置验证码过期时间为3分钟
                     return json_encode(['code'=>1017, 'msg'=>'验证码已过期']);
                 }else{
-                    return json_encode(['code'=>1001, 'msg'=>$oCode->code]);
+                    return json_encode(['code'=>1001, 'msg'=>'验证通过']);
                 }
             }
         }else{

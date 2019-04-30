@@ -265,20 +265,6 @@ $("#reg-phone-btn").click(function () {
         return false;
     }
 
-    $.post(
-        '/check-code',
-        {
-            _token: $("input[name='_token']").val(),
-            phone_number: phone.trim()
-        },
-        function (data) {
-            if(!(data.code == '1001' && data.msg == check_code.trim())){
-                tip(data.msg);
-                return false;
-            }
-        },
-        'json'
-    );
     if (password.length < 6) {
         tip("密码至少6位");
         return false;
@@ -298,23 +284,39 @@ $("#reg-phone-btn").click(function () {
                 tip("该手机号已注册");
                 return false;
             } else {
-                wait("请稍后...");
-                $("#reg-phone-btn").attr('disabled', true);
                 $.post(
-                    '/reg',
+                    '/check-code',
                     {
                         _token: $("input[name='_token']").val(),
-                        'reg-type': 2,
-                        phone_number: phone,
-                        password_phone: password
+                        phone_number: phone.trim(),
+                        code: check_code.trim()
                     },
                     function (data) {
-                        if (data.success) {
-                            tip("注册成功");
-                            window.location.reload();
-                        } else {
-                            tip("注册失败");
+                        if(data.code != '1001'){
+                            tip(data.msg);
                             return false;
+                        }else {
+                            wait("请稍后...");
+                            $("#reg-phone-btn").attr('disabled', true);
+                            $.post(
+                                '/reg',
+                                {
+                                    _token: $("input[name='_token']").val(),
+                                    'reg-type': 2,
+                                    phone_number: phone,
+                                    password_phone: password
+                                },
+                                function (data) {
+                                    if (data.success) {
+                                        tip("注册成功");
+                                        window.location.reload();
+                                    } else {
+                                        tip("注册失败");
+                                        return false;
+                                    }
+                                },
+                                'json'
+                            );
                         }
                     },
                     'json'
