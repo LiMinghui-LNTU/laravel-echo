@@ -482,7 +482,7 @@ function checkPrice(obj, index) {
                 var old_price = $("#service-price").html();
                 var old_time = $("#service-time").html();
                 var old_reputation = $("#service-reputation").html();
-                $("#service-price").html(parseInt(old_price) + data.price);
+                $("#service-price").html((parseFloat(old_price) + data.price).toFixed(2));
                 $("#service-time").html(parseInt(old_time) + parseInt(data.time));
                 $("#service-reputation").html(parseInt(old_reputation) + parseInt(data.reputation));
             },

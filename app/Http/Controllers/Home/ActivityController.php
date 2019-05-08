@@ -102,14 +102,19 @@ class ActivityController extends Controller
                     if(TicketLog::hasLog(session()->get('member'), 3)){
                         return json_encode(['code'=>1015, 'msg'=>'本月已领']);
                     }else{
-                        //随机抽取一张随机券（按剩余券比例）
-                        $iTicketId = Ticket::luckDraw(4);
-                        $oTicket = Ticket::getTicketById($iTicketId);
-                        if ($iTicketId == 0){
-                            return json_encode(['code'=>1015, 'msg'=>'月券已抢空']);
+                        //判断顾客是否为会员身份
+                        if(Members::getMemberById($iMemberId)->vip_id == 1){ //非会员
+                            return json_encode(['code'=>1015, 'msg'=>'此券仅限会员领取']);
                         }else{
-                            //发放票券
-                            return Ticket::sendTicket($iMemberId, $iTicketId, $oTicket->quota, 4);
+                            //随机抽取一张随机券（按剩余券比例）
+                            $iTicketId = Ticket::luckDraw(4);
+                            $oTicket = Ticket::getTicketById($iTicketId);
+                            if ($iTicketId == 0){
+                                return json_encode(['code'=>1015, 'msg'=>'月券已抢空']);
+                            }else{
+                                //发放票券
+                                return Ticket::sendTicket($iMemberId, $iTicketId, $oTicket->quota, 4);
+                            }
                         }
                     }
                     break;

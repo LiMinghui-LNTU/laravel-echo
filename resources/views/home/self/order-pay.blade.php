@@ -102,21 +102,21 @@
         //定义存放卡券领取记录id数组
         var aId = [];
         function selectTicket(obj, type, quota) {
-            var now_money = parseInt($("#terminal_money").html());
+            var now_money = parseFloat($("#terminal_money").html());
             if($(obj).parent().hasClass('m-contact-infobox')){
                 if(now_money - quota < 0){
                     tip("禁用该卡券");
                     return false;
                 }else {
-                    $("#terminal_money").html(now_money - quota);
+                    $("#terminal_money").html((now_money - quota).toFixed(2));
                     $(obj).next().children('p').hide();
                     $(obj).next().children('div').show();
                     $(obj).parent().removeClass('m-contact-infobox').addClass('ticket-click');
                     changeIdaArr(type, quota, 0, 1, 1);
                 }
             }else {
-                var num = parseInt($(obj).next().children('div').children('span').html());
-                $("#terminal_money").html(now_money + quota * num);
+                var num = parseFloat($(obj).next().children('div').children('span').html());
+                $("#terminal_money").html((now_money + quota * num).toFixed(2));
                 $(obj).next().children('div').hide();
                 $(obj).next().children('p').show();
                 $(obj).next().children('div').children('span').html(1);
@@ -127,7 +127,7 @@
 
         function calculateMoney(obj, type, num, quota, flag) {
             var  temp = 0;
-            var now_money = parseInt($("#terminal_money").html());
+            var now_money = parseFloat($("#terminal_money").html());
             if (flag == 1){
                 temp = parseInt($(obj).next().html());
                 if(temp+1>num){
@@ -138,7 +138,7 @@
                         return false;
                     }else {
                         $(obj).next().html(temp+1);
-                        $("#terminal_money").html(now_money - quota);
+                        $("#terminal_money").html((now_money - quota).toFixed(2));
                         changeIdaArr(type, quota, temp, 1, 1);
                     }
                 }
@@ -148,7 +148,7 @@
                     return false;
                 }else {
                     $(obj).prev().html(temp-1);
-                    $("#terminal_money").html(now_money + parseInt(quota));
+                    $("#terminal_money").html((now_money + parseInt(quota)).toFixed(2));
                     changeIdaArr(type, quota, temp-1, 1, 0);
                 }
             }

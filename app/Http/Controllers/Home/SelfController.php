@@ -21,6 +21,7 @@ use App\Model\OrderComment;
 use App\Model\Schedule;
 use App\Model\Service;
 use App\Model\TicketLog;
+use App\Model\Vip;
 use ArrayObject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -259,7 +260,16 @@ class SelfController extends Controller
     {
         $sServiceNum = Input::get('service_num');
         $oService = Service::getServiceByNum($sServiceNum);
-        return json_encode(['price' => $oService->price, 'time' => $oService->continue_to, 'reputation' => $oService->reputation_val]);
+        //判断当前顾客会员类型，给出会员折扣
+        $oMember = Members::getMemberById(Members::getIdByAccount(session()->get('member')[0])[0]);
+        if($oMember->vip_id != 1){
+            $oVip = Vip::getVipById($oMember->vip_id);
+            $fDiscount = $oVip->discount / 100;
+            $fNewPrice = $oService->price * $fDiscount;
+            return json_encode(['price' => $fNewPrice, 'time' => $oService->continue_to, 'reputation' => $oService->reputation_val]);
+        }else{
+            return json_encode(['price' => $oService->price, 'time' => $oService->continue_to, 'reputation' => $oService->reputation_val]);
+        }
     }
 
     //前台获取某造型师日程

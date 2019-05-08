@@ -92,12 +92,6 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="table-list-img.html">
-                        <span class="am-icon-file-text sidebar-nav-link-logo"></span> 注册日志
-                    </a>
-                </li>
-
-                <li class="sidebar-nav-link">
                     <a href="/admin/achievement-statistic">
                         <span class="am-icon-bar-chart sidebar-nav-link-logo"></span> 员工业绩
                     </a>

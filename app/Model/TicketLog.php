@@ -83,7 +83,7 @@ class TicketLog extends Model
      */
     public static function calculateTicketsNum($iMenberId = 0)
     {
-        return self::where('member_id', $iMenberId)->where('is_use', 0)->get()->count();
+        return self::where('member_id', $iMenberId)->where('ticket_type', '<>', 5)->where('is_use', 0)->get()->count();
     }
 
     /**

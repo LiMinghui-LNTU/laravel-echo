@@ -81,6 +81,13 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="am-u-lg-12 am-cf">
+                            <div class="am-fr">
+                                @if($oSchedule)
+                                    {!! $oSchedule->render('vendor.pagination.default'); !!}
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
