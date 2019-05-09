@@ -28,20 +28,40 @@
     <td>{{$order->created_at}}</td>
     <td>
         <div class="tpl-table-black-operation">
+            @if($order->status == 3)
+                @if($order->pay == 1)
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','refund');">
+                        <i class="am-icon-reply"></i> 退款
+                    </a>
+                @else
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','delete');">
+                        <i class="am-icon-trash"></i> 删除
+                    </a>
+                @endif
+            @endif
             @if($order->status == 2)
-            <a href="javascript:;">
-                <i class="am-icon-close"></i> 取消订单
-            </a>
-            @endif
-            @if($order->status == 1 || ($order->status == 3 && $order->pay == 0) || ($order->status == 3 && $order->pay == 2))
-            <a href="javascript:;" class="tpl-table-black-operation-del">
-                <i class="am-icon-trash"></i> 删除
-            </a>
-            @endif
-            @if($order->pay == 1 && $order->status != 1)
-            <a href="javascript:;" class="tpl-table-black-operation-del">
-                <i class="am-icon-undo"></i> 退款
-            </a>
+                @if($order->pay == 2)
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','delete');">
+                        <i class="am-icon-trash"></i> 删除
+                    </a>
+                @elseif($order->pay == 0)
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','ok');">
+                        <i class="am-icon-check"></i> 已完成
+                    </a>
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','break');">
+                        <i class="am-icon-close"></i> 失约
+                    </a>
+                @else
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','ok');">
+                        <i class="am-icon-check"></i> 已完成
+                    </a>
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','refund');">
+                        <i class="am-icon-reply"></i> 退款
+                    </a>
+                    <a href="javascript:changeOrderStatus('{{$order->id}}','break');">
+                        <i class="am-icon-close"></i> 失约
+                    </a>
+                @endif
             @endif
         </div>
     </td>
