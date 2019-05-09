@@ -107,10 +107,10 @@
             <div class="part-5-title">更多信息</div>
             <div class="part-5-words2">
                 <ul class="part-5-words2-ul">
-                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm1}}" style="width:130px;height:130px;"/>
+                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm1}}" style="width:100%"/>
                     </li>
                     <li class="am-u-lg-2 am-u-md-6 am-u-sm-4"></li>
-                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm2}}" style="width:130px;height:130px;"/>
+                    <li class="am-u-lg-4 am-u-md-6 am-u-sm-4"><img src="{{$site_info->ewm2}}" style="width: 100%;"/>
                     </li>
                     <div class="clear"></div>
                 </ul>
