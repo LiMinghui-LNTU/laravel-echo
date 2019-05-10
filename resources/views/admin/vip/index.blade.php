@@ -34,7 +34,6 @@
                                     <th>折扣</th>
                                     <th>奖励信誉值</th>
                                     <th>奖励发币</th>
-                                    <th>办理人数</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -50,7 +49,6 @@
                                         <td>{{$vip->discount}}</td>
                                         <td>{{$vip->reputation_value}} 个</td>
                                         <td>{{$vip->coins}} 枚</td>
-                                        <td>{{$vip->handle_count}}</td>
                                         <td>
                                             <div class="tpl-table-black-operation">
                                                 <a href="/admin/vip/{{$vip->id}}/edit"

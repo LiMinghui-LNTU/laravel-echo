@@ -17,15 +17,6 @@
                                                 onclick="window.location.href='case/create';">
                                             <span class="am-icon-plus"></span> 新增
                                         </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
-                                                    class="am-icon-save"></span> 保存
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-warning"><span
-                                                    class="am-icon-archive"></span> 审核
-                                        </button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span
-                                                    class="am-icon-trash-o"></span> 删除
-                                        </button>
                                     </div>
                                 </div>
                             </div>

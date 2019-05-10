@@ -89,7 +89,7 @@
                         <div class="am-form-group">
                             <label for="user-email" class="am-u-sm-12 am-form-label am-text-left">发券时间 <span class="tpl-form-line-small-title">Send Time</span></label>
                             <div class="am-u-sm-12">
-                                <input type="text" class="tpl-form-input am-margin-top-xs" name="created_at" placeholder="请设置发券时间" value="{{$oTicket->created_at}}" readonly required>
+                                <input type="text" class="tpl-form-input am-margin-top-xs" name="created_at" placeholder="请设置发券时间" value="{{$oTicket->created_at}}" onFocus="WdatePicker({isShowClear:true,dateFmt:'yyyy-MM-dd HH:mm:00',readOnly:true})" required>
                                 <small>票券的开抢时间。</small>
                             </div>
                         </div>
